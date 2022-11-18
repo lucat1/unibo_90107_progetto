@@ -29,9 +29,9 @@ CREATE TABLE venues (
   type int NOT NULL,
   name text NOT NULL,
   coords point NOT NULL,
-  price float NOT NULL,                                    -- per hour
+  price float NOT NULL,                                    -- per day
 
-  CHECK(price > 0),
+  CHECK(price >= 0),
   PRIMARY KEY (id),
   FOREIGN KEY (type) REFERENCES venue_types
 );
@@ -70,7 +70,7 @@ CREATE TABLE venue_sector_seats (
   FOREIGN KEY (sector) REFERENCES venue_sectors
 );
 
-CREATE TABLE venue_sector_events (
+CREATE TABLE venue_sector_events_price (
   sector int NOT NULL,
   event int NOT NULL,
   price float NOT NULL,
