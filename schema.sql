@@ -21,6 +21,7 @@ CREATE TABLE venue_types (
   id serial,
   name varchar(256) NOT NULL,
 
+  UNIQUE (name),
   PRIMARY KEY (id)
 );
 
@@ -39,8 +40,8 @@ CREATE TABLE venues (
 CREATE TABLE events (
   id serial,
   show int NOT NULL,
-  title text NOT NULL,
   venue int NOT NULL,
+  title text NOT NULL,
   starts_at timestamp NOT NULL,
   ends_at timestamp NOT NULL,
 
