@@ -21,15 +21,19 @@ const (
 	USER   = "postgres"
 	PASSWD = "postgres"
 
-	ARTISTS_MIN    = 500
-	ARTISTS_MAX    = 1000
-	SHOWS_MIN      = 5000
-	SHOWS_MAX      = 10000
-	VENUE_TYPE_MAX = 5
-	VENUES_MIN     = 5000
-	VENUES_MAX     = 10000
-	EVENTS_MIN     = 5000
-	EVENTS_MAX     = 10000
+	ARTISTS_MIN            = 500
+	ARTISTS_MAX            = 1000
+	SHOWS_MIN              = 5000
+	SHOWS_MAX              = 10000
+	VENUE_TYPE_MAX         = 5
+	EVENTS_MIN             = 5000
+	EVENTS_MAX             = 10000
+	VENUES_MIN             = 500
+	VENUES_MAX             = 1000
+	VENUE_SECTORS_MIN      = VENUES_MIN * 10
+	VENUE_SECTORS_MAX      = VENUES_MAX * 10
+	VENUE_SECTOR_SEATS_MIN = VENUE_SECTORS_MIN * 100
+	VENUE_SECTOR_SEATS_MAX = VENUE_SECTORS_MAX * 100
 )
 
 type Populate interface {
@@ -157,12 +161,52 @@ func EventFields() []string {
 	return []string{"id", "show", "venue", "title", "starts_at", "ends_at"}
 }
 
-func (s Event) Populate(stmt *sql.Stmt) (err error) {
-	_, err = stmt.Exec(s.ID, s.Show, s.Venue, s.Title, s.StartsAt, s.EndAt)
+func (e Event) Populate(stmt *sql.Stmt) (err error) {
+	_, err = stmt.Exec(e.ID, e.Show, e.Venue, e.Title, e.StartsAt, e.EndAt)
 	return
 }
 
-func (s Event) GetID() int {
+func (e Event) GetID() int {
+	return e.ID
+}
+
+type VenueSector struct {
+	ID       int
+	Venue    int
+	Name     string `faker:"century"`
+	Capacity string `faker:"year"`
+}
+
+func VenueSectorFields() []string {
+	return []string{"id", "venue", "name", "capacity"}
+}
+
+func (s VenueSector) Populate(stmt *sql.Stmt) (err error) {
+	_, err = stmt.Exec(s.ID, s.Venue, s.Name, s.Capacity)
+	return
+}
+
+func (s VenueSector) GetID() int {
+	return s.ID
+}
+
+type VenueSectorSeat struct {
+	ID     int
+	Sector int
+	Row    byte
+	Col    int `faker:"oneof: 1,2,3,4,5,6,7,8,9,10"`
+}
+
+func VenueSectorSeatsFields() []string {
+	return []string{"id", "sector", "row", "col"}
+}
+
+func (s VenueSectorSeat) Populate(stmt *sql.Stmt) (err error) {
+	_, err = stmt.Exec(s.ID, s.Sector, s.Row, s.Col)
+	return
+}
+
+func (s VenueSectorSeat) GetID() int {
 	return s.ID
 }
 
@@ -185,6 +229,11 @@ func title() (interface{}, error) {
 
 func point() (interface{}, error) {
 	return "(" + fmt.Sprintf("%f", faker.Latitude()) + "," + fmt.Sprintf("%f", faker.Longitude()) + ")", nil
+}
+
+func row() (interface{}, error) {
+	chars := []byte{'A', 'B', 'C', 'D', 'E', 'F'}
+	return chars[rand.Intn(len(chars))], nil
 }
 
 func main() {
@@ -281,4 +330,35 @@ func main() {
 	}
 	bulkInsert("events", EventFields(), events)
 	log.Printf("Populated %d events", len(events))
+
+	venueSectors := []VenueSector{}
+	if err = faker.FakeData(
+		&venueSectors,
+		options.WithCustomFieldProvider("Venue", onlyIDs(venues)),
+		options.WithRandomMapAndSliceMinSize(VENUE_SECTORS_MIN),
+		options.WithRandomMapAndSliceMaxSize(VENUE_SECTORS_MAX),
+	); err != nil {
+		log.Fatalf("Could not fill venue sectors data: %v", err)
+	}
+	for i := range venueSectors {
+		venueSectors[i].ID = i + 1
+	}
+	bulkInsert("venue_sectors", VenueSectorFields(), venueSectors)
+	log.Printf("Populated %d venue sectors", len(venueSectors))
+
+	venueSectorsSeats := []VenueSectorSeat{}
+	if err = faker.FakeData(
+		&venueSectorsSeats,
+		options.WithCustomFieldProvider("Sector", onlyIDs(venueSectors)),
+		options.WithCustomFieldProvider("Row", row),
+		options.WithRandomMapAndSliceMinSize(VENUE_SECTOR_SEATS_MIN),
+		options.WithRandomMapAndSliceMaxSize(VENUE_SECTOR_SEATS_MAX),
+	); err != nil {
+		log.Fatalf("Could not fill venue sectors data: %v", err)
+	}
+	for i := range venueSectorsSeats {
+		venueSectorsSeats[i].ID = i + 1
+	}
+	bulkInsert("venue_sector_seats", VenueSectorSeatsFields(), venueSectorsSeats)
+	log.Printf("Populated %d venue sectors seats", len(venueSectorsSeats))
 }
