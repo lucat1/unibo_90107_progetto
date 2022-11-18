@@ -2,13 +2,13 @@ CREATE TABLE events (
   id serial,
   show int NOT NULL,
   title text NOT NULL,
-  location int NOT NULL,
+  venue int NOT NULL,
   start datetime NOT NULL,
   end datetime NOT NULL,
 
   PRIMARY KEY (id),
   FOREIGN KEY (show) REFERENCES shows,
-  FOREIGN KEY (location) REFERENCES locations
+  FOREIGN KEY (venue) REFERENCES venues
 );
 
 CREATE TABLE shows (
@@ -30,7 +30,7 @@ CREATE TABLE artists (
   PRIMARY KEY(id)
 );
 
-CREATE TABLE locations (
+CREATE TABLE venues (
   id serial,
   type int NOT NULL,
   name text NOT NULL,
@@ -39,21 +39,31 @@ CREATE TABLE locations (
 
   CHECK(price > 0),
   PRIMARY KEY (id),
-  FOREIGN KEY (type) REFERENCES location_types
+  FOREIGN KEY (type) REFERENCES venue_types
 );
 
-CREATE TABLE location_sectors (
+CREATE TABLE venue_sectors (
   id serial,
-  location int NOT NULL,
+  venue int NOT NULL,
   name text NOT NULL,
   capacity int NOT NULL,
 
   CHECK(capacity > 0),
   PRIMARY KEY (id),
-  FOREIGN KEY (location) REFERENCES locations
+  FOREIGN KEY (venue) REFERENCES venues
 );
 
-CREATE TABLE location_sector_events (
+CREATE TABLE venue_sector_seats (
+  id serial,
+  sector int NOT NULL,
+  row char NOT NULL,
+  column int NOT NULL,
+
+  PRIMARY KEY (id),
+  FOREIGN KEY (sector) REFERENCES venue_sectors
+)
+
+CREATE TABLE venue_sector_events (
   sector int NOT NULL,
   event int NOT NULL,
   price float64 NOT NULL,
@@ -64,7 +74,7 @@ CREATE TABLE location_sector_events (
   FOREIGN KEY (event) REFERENCES events
 );
 
-CREATE TABLE location_types (
+CREATE TABLE venue_types (
   id serial,
   name varchar(256) NOT NULL,
 
@@ -100,10 +110,10 @@ CREATE TABLE service_providers_events (
 
 CREATE TABLE tickets (
   id serial,
-  sector int NOT NULL,
+  seat int NOT NULL,
   event int NOT NULL,
 
   PRIMARY KEY (id),
-  FOREIGN KEY (sector) REFERENCES location_sectors,
+  FOREIGN KEY (seat) REFERENCES venue_sector_seats,
   FOREIGN KEY (event) REFERENCES events
 );
