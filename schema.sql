@@ -64,7 +64,7 @@ CREATE TABLE venue_sectors (
 CREATE TABLE venue_sector_seats (
   id serial,
   sector int NOT NULL,
-  row char NOT NULL,
+  row varchar(1) NOT NULL,
   col int NOT NULL,
 
   PRIMARY KEY (id),

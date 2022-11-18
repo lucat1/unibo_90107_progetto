@@ -193,7 +193,7 @@ func (s VenueSector) GetID() int {
 type VenueSectorSeat struct {
 	ID     int
 	Sector int
-	Row    byte
+	Row    string
 	Col    int `faker:"oneof: 1,2,3,4,5,6,7,8,9,10"`
 }
 
@@ -232,7 +232,7 @@ func point() (interface{}, error) {
 }
 
 func row() (interface{}, error) {
-	chars := []byte{'A', 'B', 'C', 'D', 'E', 'F'}
+	chars := []string{"A", "B", "C", "D", "E", "F"}
 	return chars[rand.Intn(len(chars))], nil
 }
 
