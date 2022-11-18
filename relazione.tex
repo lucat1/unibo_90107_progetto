@@ -1,15 +1,78 @@
-\documentclass{article}
+\documentclass[a4paper,11pt]{article}
 \usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
+\usepackage{tabularx}
 
-\title{Database Project}
+\title{Progetto Database: organizzatore eventi}
 \author{Luca Bassi, Gabriele Genovese, Gianmaria Rovelli, Luca Tagliavini}
-\date{November 2022}
+\date{Dicembre 2022}
 
 \begin{document}
 
 \maketitle
 
-\section{Introduction}
+\tableofcontents
+
+\section{Analisi dei requisiti}
+
+\subsection{Requisiti espressi in linguaggio naturale}
+
+Vogliamo realizzare un database per un'azienda di organizzazione di eventi e spettacoli, che comprende la gestione dei biglietti, dei luoghi e del personale necessario alla realizzazione.
+Un artista è rappresentato come un nome. Uno spettacolo è rappresentato da un titolo, un artista, dal costo della SIAE e da un chacet. Uno spettacolo è una serie di eventi e di ogni evento vogliamo memorizzare il titolo, il luogo, la data di inizio e fine, oltre allo spettacolo al quale è associato. L'azienda può organizzare gli eventi in infrastrutture diverse (palazzetti, stadi, fiere, parchi pubblici, etc...) di conseguenza serve memorizzare un luogo di cui specificare un nome, un tipo (rappresentato da un nome), le coordinate e un prezzo giornaliero per l'affitto. Un luogo potrebbe avere posti (a sedere o in piedi) più convenienti o confortevoli per vendere biglietti a prezzo più alto, quindi rappresentiamo un settore di un luogo con la sua capienza, un nome e collegandolo a un luogo. Un posto di un settore viene identificato da una codice (che è una coppia riga e colonna). Il prezzo dei biglietti associati a un settore di un luogo può variare a seconda dell'evento. Ogni biglietto è quindi rappresentato da un posto a sedere e un evento. Infine, vogliamo tenere traccia di tutti i servizi erogati dall'azienda (maschere, facchini, biglietteria, sicurezza) e richiesti dagli artisti (tecnico delle luci e del suono). Il tipo di un servizio è rappresentato da un nome e da una descrizione. Il fornitore di un servizio è rappresentato dal tipo e da un prezzo all'ora.
+
+\subsection{Glossario dei termini}
+
+\begin{tabularx}{\textwidth}{|X|X|X|X|}
+\hline
+Termine & Descrizione & Sinonimi & Collegamenti\\
+\hline
+Evento & La singola data di un concerto o di uno spettacolo &  & Spettacolo, Luogo, Artista\\
+\hline
+Spettacolo & L'insieme di eventi di un determinato artista &  & Evento, Artista\\
+\hline
+Artista & Singola persona o gruppo di persone che esegue uno spettacolo &  & Spettacolo, Evento\\
+\hline
+Luogo & Un luogo è un edificio o un parco (privato/pubblico) nel quale si organizza uno spettacolo & Posto, Location  & Spettacolo\\
+\end{tabularx}
+
+\subsection{Eliminazione delle ambiguità presenti}
+TODO: capire se necessario
+
+
+\subsection{Strutturazione dei requisiti}
+
+\subsection{Specifica operazioni}
+
+\section{Progettazione concettuale}
+
+\subsection{Identificazione delle entità e relazioni}
+
+\subsection{Un primo scheletro dello schema}
+
+\subsection{Sviluppo delle componenti dello scheletro}
+
+\subsection{Unione delle componenti nello schema finale ridotto}
+
+\subsection{Dizionario dei dati}
+
+\subsection{Regole aziendali}
+
+\section{Progettazione logica}
+
+\subsection{Tavole dei volumi e delle operazioni}
+
+\subsection{Ristrutturazione dello schema concettuale}
+
+\subsection{Normalizzazione}
+
+\subsection{Traduzione verso il modello relazionale}
+
+\section{Codice SQL}
+
+\subsection{Definizione dello schema}
+
+\subsection{Codifica delle operazioni}
+
+\section{Esempi di interrogazioni}
 
 \end{document}
-
