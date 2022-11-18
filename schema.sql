@@ -1,14 +1,8 @@
-CREATE TABLE events (
+CREATE TABLE artists (
   id serial,
-  show int NOT NULL,
-  title text NOT NULL,
-  venue int NOT NULL,
-  start datetime NOT NULL,
-  end datetime NOT NULL,
-
-  PRIMARY KEY (id),
-  FOREIGN KEY (show) REFERENCES shows,
-  FOREIGN KEY (venue) REFERENCES venues
+  name text NOT NULL,
+  
+  PRIMARY KEY(id)
 );
 
 CREATE TABLE shows (
@@ -23,11 +17,11 @@ CREATE TABLE shows (
   FOREIGN KEY (artist) REFERENCES artists
 );
 
-CREATE TABLE artists (
+CREATE TABLE venue_types (
   id serial,
-  name text NOT NULL,
-  
-  PRIMARY KEY(id)
+  name varchar(256) NOT NULL,
+
+  PRIMARY KEY (id)
 );
 
 CREATE TABLE venues (
@@ -40,6 +34,19 @@ CREATE TABLE venues (
   CHECK(price > 0),
   PRIMARY KEY (id),
   FOREIGN KEY (type) REFERENCES venue_types
+);
+
+CREATE TABLE events (
+  id serial,
+  show int NOT NULL,
+  title text NOT NULL,
+  venue int NOT NULL,
+  starts_at timestamp NOT NULL,
+  ends_at timestamp NOT NULL,
+
+  PRIMARY KEY (id),
+  FOREIGN KEY (show) REFERENCES shows,
+  FOREIGN KEY (venue) REFERENCES venues
 );
 
 CREATE TABLE venue_sectors (
@@ -57,26 +64,27 @@ CREATE TABLE venue_sector_seats (
   id serial,
   sector int NOT NULL,
   row char NOT NULL,
-  column int NOT NULL,
+  col int NOT NULL,
 
   PRIMARY KEY (id),
   FOREIGN KEY (sector) REFERENCES venue_sectors
-)
+);
 
 CREATE TABLE venue_sector_events (
   sector int NOT NULL,
   event int NOT NULL,
-  price float64 NOT NULL,
+  price float NOT NULL,
 
   CHECK(price > 0),
   UNIQUE (sector, event),
-  FOREIGN KEY (sector) REFERENCES sectors,
+  FOREIGN KEY (sector) REFERENCES venue_sectors,
   FOREIGN KEY (event) REFERENCES events
 );
 
-CREATE TABLE venue_types (
+CREATE TABLE service_types (
   id serial,
   name varchar(256) NOT NULL,
+  description text NOT NULL,
 
   PRIMARY KEY (id)
 );
@@ -89,14 +97,6 @@ CREATE TABLE service_providers (
   CHECK(price > 0),
   PRIMARY KEY (id),
   FOREIGN KEY (type) REFERENCES service_types
-);
-
-CREATE TABLE service_types (
-  id serial,
-  name varchar(256) NOT NULL,
-  description text NOT NULL,
-
-  PRIMARY KEY (id)
 );
 
 CREATE TABLE service_providers_events (
