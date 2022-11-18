@@ -102,4 +102,8 @@ CREATE TABLE tickets (
   id int NOT NULL AUTO_INCREMENT,
   sector int NOT NULL,
   event int NOT NULL,
+
+  PRIMARY KEY (id),
+  FOREIGN KEY (sector) REFERENCES (location_sectors),
+  FOREIGN KEY (event) REFERENCES (events)
 )
