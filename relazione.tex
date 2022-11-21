@@ -22,17 +22,28 @@ Un artista è rappresentato come un nome. Uno spettacolo è rappresentato da un 
 
 \subsection{Glossario dei termini}
 
-\begin{tabularx}{\textwidth}{|X|X|X|X|}
+\begin{tabularx}{\textwidth}{|X|>{\raggedright\arraybackslash}X|X|>{\raggedright\arraybackslash}X|}
 \hline
-Termine & Descrizione & Sinonimi & Collegamenti\\
+\textbf{Termine} & \textbf{Descrizione} & \textbf{Sinonimi} & \textbf{Collegamenti}\\
 \hline
-Evento & La singola data di un concerto o di uno spettacolo &  & Spettacolo, Luogo, Artista\\
+Evento & La singola data di uno spettacolo o di un concerto & Event & Spettacolo, Luogo, Settore, Biglietto, Servizio\\
 \hline
-Spettacolo & L'insieme di eventi di un determinato artista &  & Evento, Artista\\
+Spettacolo & L'insieme di eventi di un determinato artista & Concerto, Show & Evento, Artista\\
 \hline
-Artista & Singola persona o gruppo di persone che esegue uno spettacolo &  & Spettacolo, Evento\\
+Artista & Singola persona o gruppo di persone che esegue uno spettacolo & Artist & Spettacolo\\
 \hline
-Luogo & Un luogo è un edificio o un parco (privato/pubblico) nel quale si organizza uno spettacolo & Posto, Location  & Spettacolo\\
+Luogo & Edificio, piazza o parco (privato/pubblico) nel quale si organizza uno spettacolo & Location, Venue & Evento, Settore\\
+\hline
+Settore & Le parti in cui sono suddivisi i posti in un luogo & Sector & Evento, Luogo, Posto\\
+\hline
+Posto & Posto (a sedere o in piedi) in un settore & Seat & Settore, Biglietto\\
+\hline
+Biglietto & Il biglietto di ingresso per un evento & Ticket & Evento, Posto\\
+\hline
+Servizio & Un servizio richiesto per un evento & Service & Evento, Fornitore\\
+\hline
+Fornitore & Un fornitore di servizi & Provider & Servizio\\
+\hline
 \end{tabularx}
 
 \subsection{Eliminazione delle ambiguità presenti}
