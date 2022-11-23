@@ -52,7 +52,58 @@ TODO: capire se necessario
 
 \subsection{Strutturazione dei requisiti}
 
+\subsubsection*{Frasi di carattere generale}
+
+Vogliamo realizzare un database per un'azienda di organizzazione di eventi e spettacoli, che comprende la gestione dei biglietti, dei luoghi e del personale necessario alla realizzazione.
+
+\subsubsection*{Frasi relative agli artisti}
+
+Un artista è rappresentato come un nome.
+
+\subsubsection*{Frasi relative agli spettacoli e agli eventi}
+
+Uno spettacolo è una serie di eventi e di ogni evento vogliamo memorizzare il titolo, il luogo, la data di inizio e fine, oltre allo spettacolo al quale è associato.
+
+\subsubsection*{Frasi relative ai luoghi}
+
+L'azienda può organizzare gli eventi in infrastrutture diverse (palazzetti, stadi, fiere, parchi pubblici, etc...) di conseguenza serve memorizzare un luogo di cui specificare un nome, un tipo (rappresentato da un nome), le coordinate e un prezzo giornaliero per l'affitto.
+
+\subsubsection*{Frasi relative ai settori}
+
+Un luogo potrebbe avere posti (a sedere o in piedi) più convenienti o confortevoli per vendere biglietti a prezzo più alto, quindi rappresentiamo un settore di un luogo con la sua capienza, un nome e collegandolo a un luogo.
+
+\subsubsection*{Frasi relative ai posti}
+
+Un posto di un settore viene identificato da una codice (che è una coppia riga e colonna).
+
+\subsubsection*{Frasi relative ai biglietti}
+
+Il prezzo dei biglietti associati a un settore di un luogo può variare a seconda dell'evento. Ogni biglietto è quindi rappresentato da un posto a sedere e un evento.
+
+\subsubsection*{Frasi relative ai servizi}
+
+Infine, vogliamo tenere traccia di tutti i servizi erogati dall'azienda (maschere, facchini, biglietteria, sicurezza) e richiesti dagli artisti (tecnico delle luci e del suono). Il tipo di un servizio è rappresentato da un nome e da una descrizione.
+
+\subsubsection*{Frasi relative ai fornitori}
+
+Il fornitore di un servizio è rappresentato dal tipo e da un prezzo all'ora.
+
 \subsection{Specifica operazioni}
+
+\begin{enumerate}
+    \item Inserire un artista (in media 10 volte all'anno)
+    \item Inserire uno spettacolo (in media 35 volte all'anno)
+    \item Inserire un fornitore di servizi (in media 5 volte all'anno)
+    \item Inserire un luogo suddiviso in settori (in media 3 volte all'anno)
+    \item Inserire un evento (in media 50 volte all'anno)
+    \item Prenotare un servizio (in media 200 volte all'anno)
+    \item Vendere un biglietto (in media 30 000 volte all'anno)
+    \item Rimborsare un biglietto (in media 300 volte l'anno)
+    \item Controllare la validità del biglietto (in media 28 000 volte all'anno)
+    \item Visualizzare tutti gli eventi di un artista (in media 50 000 all'anno)
+    \item Visualizzare gli incassi di un evento (in media 50 volte all'anno)
+    \item
+\end{enumerate}
 
 \section{Progettazione concettuale}
 
