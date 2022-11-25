@@ -26,14 +26,14 @@ const (
 	SHOWS_MIN              = 5000
 	SHOWS_MAX              = 10000
 	VENUE_TYPE_MAX         = 5
-	EVENTS_MIN             = 5000
-	EVENTS_MAX             = 10000
+	EVENTS_MIN             = 100
+	EVENTS_MAX             = 500
 	VENUES_MIN             = 500
 	VENUES_MAX             = 1000
-	VENUE_SECTORS_MIN      = VENUES_MIN * 10
-	VENUE_SECTORS_MAX      = VENUES_MAX * 10
-	VENUE_SECTOR_SEATS_MIN = VENUE_SECTORS_MIN * 100
-	VENUE_SECTOR_SEATS_MAX = VENUE_SECTORS_MAX * 100
+	VENUE_SECTORS_MIN      = VENUES_MIN * 4
+	VENUE_SECTORS_MAX      = VENUES_MAX * 6
+	VENUE_SECTOR_SEATS_MIN = VENUE_SECTORS_MIN * 30
+	VENUE_SECTOR_SEATS_MAX = VENUE_SECTORS_MAX * 50
 )
 
 type Populate interface {
@@ -197,7 +197,7 @@ type VenueSectorSeat struct {
 	Col    int `faker:"oneof: 1,2,3,4,5,6,7,8,9,10"`
 }
 
-func VenueSectorSeatsFields() []string {
+func VenueSectorSeatFields() []string {
 	return []string{"id", "sector", "row", "col"}
 }
 
@@ -207,6 +207,40 @@ func (s VenueSectorSeat) Populate(stmt *sql.Stmt) (err error) {
 }
 
 func (s VenueSectorSeat) GetID() int {
+	return s.ID
+}
+
+type VenueSectorEventsPrice struct {
+	Sector int
+	Event  int
+	Price  float64 `faker:"amount"`
+}
+
+func VenueSectorEventsPriceFields() []string {
+	return []string{"sector", "event", "price"}
+}
+
+func (s VenueSectorEventsPrice) Populate(stmt *sql.Stmt) (err error) {
+	_, err = stmt.Exec(s.Sector, s.Event, s.Price)
+	return
+}
+
+type Ticket struct {
+	ID    int
+	Seat  int
+	Event int
+}
+
+func TicketFields() []string {
+	return []string{"id", "seat", "event"}
+}
+
+func (s Ticket) Populate(stmt *sql.Stmt) (err error) {
+	_, err = stmt.Exec(s.ID, s.Seat, s.Event)
+	return
+}
+
+func (s Ticket) GetID() int {
 	return s.ID
 }
 
@@ -359,6 +393,41 @@ func main() {
 	for i := range venueSectorsSeats {
 		venueSectorsSeats[i].ID = i + 1
 	}
-	bulkInsert("venue_sector_seats", VenueSectorSeatsFields(), venueSectorsSeats)
+	bulkInsert("venue_sector_seats", VenueSectorSeatFields(), venueSectorsSeats)
 	log.Printf("Populated %d venue sectors seats", len(venueSectorsSeats))
+
+	venueSectorsEventsPrices := []VenueSectorEventsPrice{}
+	for _, event := range events {
+		for _, sector := range venueSectors {
+			if sector.Venue == event.Venue {
+				var ele VenueSectorEventsPrice
+				if err = faker.FakeData(&ele); err != nil {
+					log.Fatalf("Could not generate one venue sector events price: %v", err)
+				}
+				ele.Event = event.GetID()
+				ele.Sector = sector.GetID()
+				ele.Price += 1
+				venueSectorsEventsPrices = append(venueSectorsEventsPrices, ele)
+			}
+		}
+	}
+	bulkInsert("venue_sector_events_prices", VenueSectorEventsPriceFields(), venueSectorsEventsPrices)
+	log.Printf("Populated %d venue sectors events prices", len(venueSectorsEventsPrices))
+
+	tickets := []Ticket{}
+	i := 0
+	for _, event := range events {
+		for _, seat := range venueSectors {
+			if rand.Intn(10) > 7 {
+				var ticket Ticket
+				ticket.ID = i
+				ticket.Event = event.GetID()
+				ticket.Seat = seat.GetID()
+				i++
+				tickets = append(tickets, ticket)
+			}
+		}
+	}
+	bulkInsert("tickets", TicketFields(), tickets)
+	log.Printf("Populated %d tickets", len(tickets))
 }

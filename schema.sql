@@ -71,7 +71,7 @@ CREATE TABLE venue_sector_seats (
   FOREIGN KEY (sector) REFERENCES venue_sectors
 );
 
-CREATE TABLE venue_sector_events_price (
+CREATE TABLE venue_sector_events_prices (
   sector int NOT NULL,
   event int NOT NULL,
   price float NOT NULL,
