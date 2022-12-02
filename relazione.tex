@@ -2,6 +2,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[italian]{babel}
 \usepackage{tabularx}
+\usepackage{graphicx}
 
 \title{Progetto Database: organizzatore eventi}
 \author{Luca Bassi, Gabriele Genovese, Gianmaria Rovelli, Luca Tagliavini}
@@ -99,19 +100,48 @@ Il fornitore di un servizio è rappresentato dal tipo e da un prezzo all'ora.
     \item Prenotare un servizio (in media 200 volte all'anno)
     \item Vendere un biglietto (in media 30 000 volte all'anno)
     \item Rimborsare un biglietto (in media 300 volte l'anno)
-    \item Controllare la validità del biglietto (in media 28 000 volte all'anno)
+    \item Trovare un biglietto dato il posto (in media 28 000 volte all'anno)
     \item Visualizzare tutti gli eventi di un artista (in media 50 000 all'anno)
+    \item Visualizzare tutti gli eventi di uno spettacolo (in media 10 000 all'anno)
+    \item Visualizzare le spese di un evento (in media 50 volte all'anno)
     \item Visualizzare gli incassi di un evento (in media 50 volte all'anno)
-    \item
+    \item Visualizzare i guadagni di un evento (in media 50 volte all'anno)
+    \item Visualizzare il numero di posti liberi di un determinato evento (in media 1000 volte l'anno)
+    \item Visualizzare la percentuale media di biglietti venduti da un determinato artista per ogni evento (in media 100 volte l'anno)
+    \item Visualizzare quali eventi hanno fatto sold out (in media 50 volte l'anno)
+    \item Visualizzare gli eventi presenti in un arco temporale
+    \item Visualizzare tutti gli eventi che si svolgeranno in un determinato luogo
+    \item Visualizzare lo spettacolo che ha guadagnato di più nell'ultimo periodo
 \end{enumerate}
 
 \section{Progettazione concettuale}
 
 \subsection{Identificazione delle entità e relazioni}
 
+Abbiamo identificato le seguenti entità: evento, spettacolo, artista, luogo, settore, posto biglietto, servizio, fornitore.
+
 \subsection{Un primo scheletro dello schema}
 
+A un livello di astrazione più alto abbiamo i biglietti venduti per un evento.
+
+\includegraphics[width=\textwidth]{base.png}
+ 
 \subsection{Sviluppo delle componenti dello scheletro}
+
+\subsubsection*{Spettacolo e artista}
+
+Abbiamo poi sviluppato lo spettacolo come un'entità con un titolo, un cachet, un costo SIAE ed è composto da vari eventi, ognuno con un titolo, un luogo, un inizio e una fine.\\
+Un evento è composto da un solo spettacolo.
+
+Ogni spettacolo è eseguito da un artista che ha un nome, un artista può eseguire più spettacoli.
+
+\includegraphics[width=\textwidth]{EventShowArtist.png}
+
+\subsubsection*{Fornitore}
+
+Ogni fornitore può offrire servizi a più eventi e ogni evento può avere più fornitori di servizi.
+
+\includegraphics[width=\textwidth]{EventShowArtistProvider.png}
 
 \subsection{Unione delle componenti nello schema finale ridotto}
 
