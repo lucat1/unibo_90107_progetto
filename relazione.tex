@@ -236,6 +236,25 @@ Servizio & Associa un tipo di servizio a un fornitore e a un evento & Costo & Ti
 
 \subsection{Regole aziendali}
 
+\textbf{Vincoli}
+
+\begin{itemize}
+    \item Il cachet e il costo della SIAE devono essere maggiori o uguali a zero.
+    \item Il costo di affitto del luogo deve essere maggiore o uguale a zero.
+    \item La capacità di un settore deve essere maggiore di 0.
+    \item Il prezzo di un settore deve essere maggiore di 0.
+    \item Il costo di un servizio deve essere maggiore di 0.
+    \item Il numero di posti in un settore è pari alla capacità.
+\end{itemize}
+
+\textbf{Derivazioni}
+
+\begin{itemize}
+    \item Il prezzo di un biglietto è il costo del settore in cui si trova il posto del biglietto.
+    \item Il costo di un evento è la somma tra il cachet e il costo SIAE per l'affitto, il costo di affitto del luogo e i costi dei servizi.
+    \item Il guadagno di un evento è la somma dei prezzi dei biglietti venduti.
+\end{itemize}
+
 \section{Progettazione logica}
 
 \subsection{Tavole dei volumi e delle operazioni}
