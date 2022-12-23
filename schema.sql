@@ -17,24 +17,19 @@ CREATE TABLE shows (
   FOREIGN KEY (artist) REFERENCES artists
 );
 
-CREATE TABLE venue_types (
-  id serial,
-  name varchar(256) NOT NULL,
-
-  UNIQUE (name),
-  PRIMARY KEY (id)
-);
+-- TODO
+CREATE TYPE service_type AS ENUM ('stadium', 'theatre', 'arena');
 
 CREATE TABLE venues (
   id serial,
-  type int NOT NULL,
+  type venue_type NOT NULL,
   name text NOT NULL,
   coords point NOT NULL,
   price float NOT NULL,                                    -- per day
 
   CHECK(price >= 0),
   PRIMARY KEY (id),
-  FOREIGN KEY (type) REFERENCES venue_types
+  UNIQUE(name, coords)
 );
 
 CREATE TABLE events (
@@ -82,31 +77,26 @@ CREATE TABLE venue_sector_events_prices (
   FOREIGN KEY (event) REFERENCES events
 );
 
-CREATE TABLE service_types (
-  id serial,
+CREATE TABLE service_providers (
   name varchar(256) NOT NULL,
   description text NOT NULL,
 
-  PRIMARY KEY (id)
+  PRIMARY KEY (name),
 );
 
-CREATE TABLE service_providers (
-  id serial,
-  type int NOT NULL,
+-- TODO
+CREATE TYPE service_type AS ENUM ('audio', 'visual', 'guarding');
+
+CREATE TABLE service_providers_events (
+  provider varchar(256) NOT NULL,
+  type service_type,
+  event int NOT NULL,
   price float NOT NULL,                                    -- per hour
 
   CHECK(price > 0),
-  PRIMARY KEY (id),
-  FOREIGN KEY (type) REFERENCES service_types
-);
-
-CREATE TABLE service_providers_events (
-  provider int NOT NULL, 
-  event int NOT NULL,
-
   FOREIGN KEY (provider) REFERENCES service_providers,
   FOREIGN KEY (event) REFERENCES events,
-  UNIQUE (provider, event)
+  UNIQUE (provider, type, event)
 );
 
 CREATE TABLE tickets (
