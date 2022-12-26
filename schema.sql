@@ -25,7 +25,7 @@ CREATE TABLE venues (
   type venue_type NOT NULL,
   name text NOT NULL,
   coords point NOT NULL,
-  price float NOT NULL,                                    -- per day
+  price float NOT NULL,                          -- per day
 
   CHECK(price >= 0),
   PRIMARY KEY (id),
@@ -91,7 +91,7 @@ CREATE TABLE service_providers_events (
   provider varchar(256) NOT NULL,
   type service_type,
   event int NOT NULL,
-  price float NOT NULL,                                    -- per hour
+  price float NOT NULL,                          -- per hour
 
   CHECK(price > 0),
   FOREIGN KEY (provider) REFERENCES service_providers,

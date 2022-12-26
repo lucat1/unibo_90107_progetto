@@ -4,6 +4,27 @@
 \usepackage{tabularx}
 \usepackage{graphicx}
 
+\usepackage{listings}
+\usepackage{inconsolata}
+\lstset{
+  basicstyle=\footnotesize\ttfamily,
+  breakatwhitespace=false,
+  breaklines=true,
+  % commentstyle=\color{dkgreen},
+  deletekeywords={...},
+  escapeinside={\%*}{*)},
+  extendedchars=true,
+  % frame=single,
+  keepspaces=true,
+  language=SQL,
+  otherkeywords={IS},
+  morekeywords={*,MODIFY,text,serial,...},
+  % keywordstyle=\keywordcheck,
+  % identifierstyle=\setidcolor,
+  % ew
+  tabsize=4
+}
+
 \title{Progetto Database: organizzatore eventi}
 \author{Luca Bassi, Gabriele Genovese, Gianmaria Rovelli, Luca Tagliavini}
 \date{Dicembre 2022}
@@ -268,9 +289,28 @@ Servizio & Associa un tipo di servizio a un fornitore e a un evento & Costo & Ti
 \section{Codice SQL}
 
 \subsection{Definizione dello schema}
+\lstinputlisting{schema.sql}
 
 \subsection{Codifica delle operazioni}
 
 \section{Esempi di interrogazioni}
+
+\subsection{Inserire un artista}
+\lstinputlisting{queries/insert-artist.sql}
+
+\subsection{Inserire uno show}
+\lstinputlisting{queries/insert-show.sql}
+
+\subsection{Inserire un luogo}
+\lstinputlisting{queries/insert-venue.sql}
+
+\subsection{Inserire un settore per un luogo}
+\lstinputlisting{queries/insert-sector.sql}
+
+\subsection{Inserire una sedia in un settore}
+\lstinputlisting{queries/insert-sector-seat.sql}
+
+\subsection{Inserire un evento}
+\lstinputlisting{queries/insert-event.sql}
 
 \end{document}
