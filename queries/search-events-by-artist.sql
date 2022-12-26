@@ -1,0 +1,3 @@
+SELECT e.title, v.name
+FROM events AS e, venues AS v, shows AS s, artists AS a
+WHERE v.id = e.venue AND s.id = e.show AND s.artist = ...
