@@ -1,0 +1,3 @@
+SELECT *
+FROM events AS e
+WHERE starts_at = ... AND ends_at = ...

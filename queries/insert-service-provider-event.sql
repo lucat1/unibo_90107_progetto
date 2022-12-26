@@ -1,2 +1,2 @@
-INSERT INTO service_providers_events (provider, type, event, price)
+INSERT INTO events_service_providers_serve (provider, type, event, price)
 VALUES (...)

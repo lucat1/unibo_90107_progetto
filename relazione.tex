@@ -2,6 +2,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[italian]{babel}
 \usepackage{tabularx}
+\usepackage{hyperref}
 \usepackage{graphicx}
 
 \usepackage{listings}
@@ -17,7 +18,7 @@
   % frame=single,
   keepspaces=true,
   language=SQL,
-  otherkeywords={IS},
+  otherkeywords={EXISTS},
   morekeywords={*,MODIFY,text,serial,...},
   % keywordstyle=\keywordcheck,
   % identifierstyle=\setidcolor,
@@ -293,45 +294,99 @@ Servizio & Associa un tipo di servizio a un fornitore e a un evento & Costo & Ti
 
 \subsection{Codifica delle operazioni}
 
-\section{Esempi di interrogazioni}
-
-\subsection{Inserire un artista}
+\subsubsection{Inserire un artista}
 \lstinputlisting{queries/insert-artist.sql}
 
-\subsection{Inserire uno show}
+\subsubsection{Inserire uno show}
 \lstinputlisting{queries/insert-show.sql}
 
-\subsection{Inserire un luogo}
+\subsubsection{Inserire un luogo}
 \lstinputlisting{queries/insert-venue.sql}
 
-\subsection{Inserire un settore per un luogo}
+\subsubsection{Inserire un settore per un luogo}
 \lstinputlisting{queries/insert-sector.sql}
 
-\subsection{Inserire una sedia in un settore}
+\subsubsection{Inserire una sedia in un settore}
 \lstinputlisting{queries/insert-sector-seat.sql}
 
-\subsection{Inserire un evento}
+\subsubsection{Inserire un evento}
 \lstinputlisting{queries/insert-event.sql}
 
-\subsection{Dare un perzzo ad un settore per un evento}
+\subsubsection{Dare un perzzo ad un settore per un evento}
 \lstinputlisting{queries/insert-sector-event-price.sql}
 
-\subsection{Inserire un ente che offre servizi}
+\subsubsection{Inserire un ente che offre servizi}
 \lstinputlisting{queries/insert-service-provider.sql}
 
-\subsection{Assegnare ad un ente un dato servizio per un evento}
+\subsubsection{Assegnare ad un ente un dato servizio per un evento}
 \lstinputlisting{queries/insert-service-provider-event.sql}
 
-\subsection{Acquistare un biglietto}
+\subsubsection{Acquistare un biglietto}
 \lstinputlisting{queries/insert-ticket.sql}
 
-\subsection{Cercare tutti gli show di un artista}
+\subsubsection{Cercare tutti gli show di un artista}
 Si vogliono selezionare i nomi di tutti gli show tenuti da un dato artista.
 \lstinputlisting{queries/search-shows-by-artist.sql}
 
-\subsection{Cercare tutti gli eventi a cui partecipa un artista}
+\subsubsection{Cercare tutti gli eventi a cui partecipa un artista}
 Si vogliono selezionare i titoli e il nome del luogo di tutti gli eventi a cui
 partecipa un dato artista.
 \lstinputlisting{queries/search-events-by-artist.sql}
+
+\subsubsection{Visualizzare tutti i posti per un evento}
+Si vogliono mostrare tutti i posti $(riga, colonna)$ per un dato evento.
+\lstinputlisting{queries/search-seats-by-event.sql}
+
+\subsubsection{Visualizzare tutti i posti prenotati per un evento}
+Si vogliono mostrare tutti i posti $(riga, colonna)$ \textbf{prenotati} per un dato evento.
+\lstinputlisting{queries/search-booked-seats-by-event.sql}
+
+\subsubsection{Visualizzare tutti i posti liberi per un evento}
+Si vogliono mostrare tutti i posti $(riga, colonna)$ \textbf{liberi} per un dato evento.
+\lstinputlisting{queries/search-free-seats-by-event.sql}
+
+\begin{quote}
+  Nota: entrambi i \texttt{...} si riferiscono allo \emph{stesso} \texttt{id}
+  dell'evento in questione.
+\end{quote}
+
+In alternativa, per avere un leggero miglioramento delle performance\footnote{
+Vedi dati empirici su \href{https://stackoverflow.com/a/66785790}{StackOverflow}.
+Sarebbe opportuno verificare quanto riportato sul proprio dataset.} si pu\`o
+ottenere lo stesso risultato tramite un \texttt{NOT EXISTS}:
+\lstinputlisting{queries/search-free-seats-by-event-ne.sql}
+
+\subsubsection{Visualizzare le spese di un evento}
+Si vogliono mostrare tutte le spese dato un evento: i costi dei diritti SIAE e del
+cachet dell'artista, il costo dell'affitto del luogo e tutti i costi relativi ai
+servizi necessari.
+\lstinputlisting{queries/search-expenses-by-event.sql}
+
+\subsubsection{Visualizzare il ricavo di un evento}
+Si vuole mostrare il ricavo di un singolo evento.
+\lstinputlisting{queries/search-earnings-by-event.sql}
+
+\subsubsection{Visualizzare eventi hanno fatto sold out}
+Si vogliono mostrare il nome degli eventi che hanno fatto sold out.
+\lstinputlisting{queries/search-sold-out-events.sql}
+
+\subsubsection{Visualizzare la percentuale di biglietti venduti per evento}
+Si vuole mostrare la percentuale di biglietti venduti per un singolo evento.
+\lstinputlisting{queries/percentage-sold-tickets-by-event.sql}
+
+\subsubsection{Visualizza percentuale media di biglietti venduti per artista}
+Si vuole mostrare la percentuale media di tutti i biglietti venduti per ogni
+eventoper dato un singolo artista.
+\lstinputlisting{queries/mean-percentage-sold-tickets-by-artist.sql}
+ 
+\subsubsection{Visualizzare gli eventi per data}
+Si vuole mostrare l'elenco di tutti gli eventi che si svolgono un range di date.
+\lstinputlisting{queries/search-events-by-date.sql}
+
+\subsubsection{Visualizzare gli eventi per luogo}
+Si vuole mostrare l'elenco di tutti gli eventi che si svolgono in un determinato luogo.
+\lstinputlisting{queries/search-events-by-venue.sql}
+
+\section{Esempi di interrogazioni}
 
 \end{document}

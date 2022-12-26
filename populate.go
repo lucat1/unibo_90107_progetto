@@ -377,7 +377,7 @@ func main() {
 	for i := range venueSectors {
 		venueSectors[i].ID = i + 1
 	}
-	bulkInsert("venue_sectors", VenueSectorFields(), venueSectors)
+	bulkInsert("sectors", VenueSectorFields(), venueSectors)
 	log.Printf("Populated %d venue sectors", len(venueSectors))
 
 	venueSectorsSeats := []VenueSectorSeat{}
@@ -393,7 +393,7 @@ func main() {
 	for i := range venueSectorsSeats {
 		venueSectorsSeats[i].ID = i + 1
 	}
-	bulkInsert("venue_sector_seats", VenueSectorSeatFields(), venueSectorsSeats)
+	bulkInsert("seats", VenueSectorSeatFields(), venueSectorsSeats)
 	log.Printf("Populated %d venue sectors seats", len(venueSectorsSeats))
 
 	venueSectorsEventsPrices := []VenueSectorEventsPrice{}
@@ -411,7 +411,7 @@ func main() {
 			}
 		}
 	}
-	bulkInsert("venue_sector_events_prices", VenueSectorEventsPriceFields(), venueSectorsEventsPrices)
+	bulkInsert("sectors_events_prices", VenueSectorEventsPriceFields(), venueSectorsEventsPrices)
 	log.Printf("Populated %d venue sectors events prices", len(venueSectorsEventsPrices))
 
 	tickets := []Ticket{}

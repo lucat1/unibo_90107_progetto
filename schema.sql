@@ -45,7 +45,7 @@ CREATE TABLE events (
   FOREIGN KEY (venue) REFERENCES venues
 );
 
-CREATE TABLE venue_sectors (
+CREATE TABLE sectors (
   id serial,
   venue int NOT NULL,
   name text NOT NULL,
@@ -56,24 +56,24 @@ CREATE TABLE venue_sectors (
   FOREIGN KEY (venue) REFERENCES venues
 );
 
-CREATE TABLE venue_sector_seats (
+CREATE TABLE seats (
   id serial,
   sector int NOT NULL,
   row varchar(1) NOT NULL,
   col int NOT NULL,
 
   PRIMARY KEY (id),
-  FOREIGN KEY (sector) REFERENCES venue_sectors
+  FOREIGN KEY (sector) REFERENCES sectors
 );
 
-CREATE TABLE venue_sector_events_prices (
+CREATE TABLE sectors_events_cost (
   sector int NOT NULL,
   event int NOT NULL,
-  price float NOT NULL,
+  price float NOT NULL,                -- per ticket
 
   CHECK(price > 0),
   UNIQUE (sector, event),
-  FOREIGN KEY (sector) REFERENCES venue_sectors,
+  FOREIGN KEY (sector) REFERENCES sectors,
   FOREIGN KEY (event) REFERENCES events
 );
 
@@ -87,11 +87,11 @@ CREATE TABLE service_providers (
 -- TODO
 CREATE TYPE service_type AS ENUM ('audio', 'visual', 'guarding');
 
-CREATE TABLE service_providers_events (
+CREATE TABLE events_service_providers_serve (
   provider varchar(256) NOT NULL,
   type service_type,
   event int NOT NULL,
-  price float NOT NULL,                          -- per hour
+  price float NOT NULL,                -- for the whole job
 
   CHECK(price > 0),
   FOREIGN KEY (provider) REFERENCES service_providers,
@@ -105,6 +105,6 @@ CREATE TABLE tickets (
   event int NOT NULL,
 
   PRIMARY KEY (id),
-  FOREIGN KEY (seat) REFERENCES venue_sector_seats,
+  FOREIGN KEY (seat) REFERENCES seats,
   FOREIGN KEY (event) REFERENCES events
 );

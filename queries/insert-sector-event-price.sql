@@ -1,2 +1,2 @@
-INSERT INTO venue_sector_events_prices (sector, event, price)
+INSERT INTO sectors_events_cost (sector, event, price)
 VALUES (...)

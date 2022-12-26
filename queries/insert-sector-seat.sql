@@ -1,2 +1,2 @@
-INSERT INTO venue_sector_seats (id, sector, row, col)
+INSERT INTO seats (id, sector, row, col)
 VALUES (...)
