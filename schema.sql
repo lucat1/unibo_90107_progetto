@@ -56,7 +56,8 @@ CREATE TABLE settore (
 
   CHECK (capienza > 0),
   PRIMARY KEY (id),
-  FOREIGN KEY (luogo) REFERENCES luogo
+  FOREIGN KEY (luogo) REFERENCES luogo,
+  UNIQUE (luogo, nome)
 );
 
 CREATE TABLE posto (
