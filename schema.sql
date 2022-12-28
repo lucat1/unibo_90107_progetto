@@ -1,110 +1,116 @@
-CREATE TABLE artists (
+CREATE TABLE artista (
   id serial,
-  name text NOT NULL,
-  
-  PRIMARY KEY(id)
+  nome text NOT NULL,
+
+  PRIMARY KEY (id),
+  UNIQUE (nome)
 );
 
-CREATE TABLE shows (
+CREATE TABLE spettacolo (
   id serial,
-  title text NOT NULL,
-  artist int NOT NULL,
-  siae_price float NOT NULL,
+  titolo text NOT NULL,
+  artista int NOT NULL,
+  prezzo_siae float NOT NULL,
   cachet float NOT NULL,
 
-  CHECK(cachet > 0 AND siae_price > 0),
+  CHECK (cachet >= 0 AND prezzo_siae >= 0),
   PRIMARY KEY (id),
-  FOREIGN KEY (artist) REFERENCES artists
+  FOREIGN KEY (artista) REFERENCES artista,
+  UNIQUE (titolo, artista)
 );
 
--- TODO
-CREATE TYPE service_type AS ENUM ('stadium', 'theatre', 'arena');
+CREATE TYPE tipo_luogo AS ENUM ('arena', 'palazzetto', 'parco', 'piazza', 'stadio', 'teatro');
 
-CREATE TABLE venues (
+CREATE TABLE luogo (
   id serial,
-  type venue_type NOT NULL,
-  name text NOT NULL,
-  coords point NOT NULL,
-  price float NOT NULL,                          -- per day
+  tipo tipo_luogo NOT NULL,
+  nome text NOT NULL,
+  indirizzo text NOT NULL,
+  citta text NOT NULL,
+  costo float NOT NULL, -- per day
 
-  CHECK(price >= 0),
+  CHECK (costo >= 0),
   PRIMARY KEY (id),
-  UNIQUE(name, coords)
+  UNIQUE (nome, indirizzo, citta)
 );
 
-CREATE TABLE events (
+CREATE TABLE evento (
   id serial,
-  show int NOT NULL,
-  venue int NOT NULL,
-  title text NOT NULL,
-  starts_at timestamp NOT NULL,
-  ends_at timestamp NOT NULL,
+  spettacolo int NOT NULL,
+  luogo int NOT NULL,
+  titolo text NOT NULL,
+  inizio timestamp NOT NULL,
+  fine timestamp NOT NULL,
 
   PRIMARY KEY (id),
-  FOREIGN KEY (show) REFERENCES shows,
-  FOREIGN KEY (venue) REFERENCES venues
+  FOREIGN KEY (spettacolo) REFERENCES spettacolo,
+  FOREIGN KEY (luogo) REFERENCES luogo,
+  UNIQUE (titolo, inizio, luogo)
 );
 
-CREATE TABLE sectors (
+CREATE TABLE settore (
   id serial,
-  venue int NOT NULL,
-  name text NOT NULL,
-  capacity int NOT NULL,
+  luogo int NOT NULL,
+  nome text NOT NULL,
+  capienza int NOT NULL,
 
-  CHECK(capacity > 0),
+  CHECK (capienza > 0),
   PRIMARY KEY (id),
-  FOREIGN KEY (venue) REFERENCES venues
+  FOREIGN KEY (luogo) REFERENCES luogo
 );
 
-CREATE TABLE seats (
+CREATE TABLE posto (
   id serial,
-  sector int NOT NULL,
-  row varchar(1) NOT NULL,
-  col int NOT NULL,
+  settore int NOT NULL,
+  fila varchar(1) NOT NULL,
+  numero int NOT NULL,
 
   PRIMARY KEY (id),
-  FOREIGN KEY (sector) REFERENCES sectors
+  FOREIGN KEY (settore) REFERENCES settore,
+  UNIQUE (settore, fila, numero)
 );
 
-CREATE TABLE sectors_events_cost (
-  sector int NOT NULL,
-  event int NOT NULL,
-  price float NOT NULL,                -- per ticket
+CREATE TABLE settore_evento_costo (
+  settore int NOT NULL,
+  evento int NOT NULL,
+  prezzo float NOT NULL, -- per ticket
 
-  CHECK(price > 0),
-  UNIQUE (sector, event),
-  FOREIGN KEY (sector) REFERENCES sectors,
-  FOREIGN KEY (event) REFERENCES events
+  CHECK (prezzo >= 0),
+  UNIQUE (settore, evento),
+  FOREIGN KEY (settore) REFERENCES settore,
+  FOREIGN KEY (evento) REFERENCES evento
 );
 
-CREATE TABLE service_providers (
-  name varchar(256) NOT NULL,
-  description text NOT NULL,
-
-  PRIMARY KEY (name),
-);
-
--- TODO
-CREATE TYPE service_type AS ENUM ('audio', 'visual', 'guarding');
-
-CREATE TABLE events_service_providers_serve (
-  provider varchar(256) NOT NULL,
-  type service_type,
-  event int NOT NULL,
-  price float NOT NULL,                -- for the whole job
-
-  CHECK(price > 0),
-  FOREIGN KEY (provider) REFERENCES service_providers,
-  FOREIGN KEY (event) REFERENCES events,
-  UNIQUE (provider, type, event)
-);
-
-CREATE TABLE tickets (
+CREATE TABLE fornitore (
   id serial,
-  seat int NOT NULL,
-  event int NOT NULL,
+  nome text NOT NULL,
+  descrizione text NOT NULL,
 
   PRIMARY KEY (id),
-  FOREIGN KEY (seat) REFERENCES seats,
-  FOREIGN KEY (event) REFERENCES events
+  UNIQUE (nome)
+);
+
+CREATE TYPE tipo_servizio AS ENUM ('audio', 'biglietteria', 'luci', 'maschere', 'sicurezza', 'regia');
+
+CREATE TABLE evento_fornitore_servizio (
+  fornitore int NOT NULL,
+  tipo tipo_servizio,
+  evento int NOT NULL,
+  prezzo float NOT NULL, -- for the whole job
+
+  CHECK (prezzo > 0),
+  FOREIGN KEY (fornitore) REFERENCES fornitore,
+  FOREIGN KEY (evento) REFERENCES evento,
+  UNIQUE (fornitore, tipo, evento)
+);
+
+CREATE TABLE biglietto (
+  codice serial,
+  nome text NOT NULL,
+  posto int NOT NULL,
+  evento int NOT NULL,
+
+  PRIMARY KEY (codice),
+  FOREIGN KEY (posto) REFERENCES posto,
+  FOREIGN KEY (evento) REFERENCES evento
 );
