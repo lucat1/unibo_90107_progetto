@@ -1,5 +1,18 @@
-SELECT s.row, s.col
-FROM seats AS s, sectors_events_cost AS sep
-WHERE s.sector = sep.sector AND NOT EXISTS (
-  SELECT seat FROM tickets WHERE seat = s.id AND event = ...
-) AND sep.event = ...
+SELECT
+  p.fila,
+  p.numero
+FROM
+  posto AS p,
+  settore_evento_costo AS sec
+WHERE
+  p.settore = sec.settore
+  AND NOT EXISTS (
+    SELECT
+      posto
+    FROM
+      biglietto
+    WHERE
+      posto = p.id
+      AND evento =...
+  )
+  AND sec.evento =...

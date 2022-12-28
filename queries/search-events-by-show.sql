@@ -1,1 +1,6 @@
-SELECT * FROM events WHERE show = ...
+SELECT
+    *
+FROM
+    evento
+WHERE
+    spettacolo = ...

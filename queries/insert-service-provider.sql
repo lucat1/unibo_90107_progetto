@@ -1,2 +1,4 @@
-INSERT INTO service_providers (name, description)
-VALUES (...)
+INSERT INTO
+    fornitore_servizio (nome, descrizione)
+VALUES
+    (...)

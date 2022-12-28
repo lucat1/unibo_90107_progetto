@@ -1,3 +1,12 @@
-SELECT s.row, s.col
-FROM seats AS s, sectors_events_cost AS sep, tickets AS t
-WHERE s.sector = sep.sector AND t.seat = s.id AND t.event = sep.event AND sep.event = ...
+SELECT
+    p.fila,
+    p.numero
+FROM
+    posto AS p,
+    settore_evento_costo AS sec,
+    biglietto AS b
+WHERE
+    p.sector = sec.sector
+    AND b.seat = p.id
+    AND b.event = sec.event
+    AND sec.event = ...

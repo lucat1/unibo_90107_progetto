@@ -1,1 +1,6 @@
-SELECT * FROM events WHERE venue = ...
+SELECT
+    *
+FROM
+    evento
+WHERE
+    luogo =...

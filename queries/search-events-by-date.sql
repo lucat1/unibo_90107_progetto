@@ -1,3 +1,7 @@
-SELECT *
-FROM events AS e
-WHERE starts_at = ... AND ends_at = ...
+SELECT
+    *
+FROM
+    evento AS e
+WHERE
+    inzio = ...
+    AND fine = ...

@@ -1,1 +1,6 @@
-SELECT name FROM shows WHERE artist = ...
+SELECT
+    nome
+FROM
+    spettacolo
+WHERE
+    artista = ...

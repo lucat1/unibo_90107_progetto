@@ -1,5 +1,11 @@
-SELECT SUM(sep.price)
-FROM seats AS s, sectors_events_cost AS sec, tickets AS t
-WHERE s.sector = sep.sector AND t.seat = s.id
-  AND sep.event = ... AND t.event = ... 
-
+SELECT
+  SUM(sec.prezzo)
+FROM
+  posto AS p,
+  settore_evento_costo AS sec,
+  biglietto AS b
+WHERE
+  p.settore = sec.settore
+  AND b.posto = p.id
+  AND sec.evento = ...
+  AND b.evento = ...

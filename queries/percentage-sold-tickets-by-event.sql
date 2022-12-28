@@ -1,7 +1,15 @@
-SELECT (
-  SELECT COUNT(*)
-  FROM tickets
-  WHERE event = ...
-) * 100.0 / SUM(s.capacity)
-FROM sectors_events_cost AS sec, sectors AS s
-WHERE s.id = sec.sector AND sec.event = ... 
+SELECT
+  (
+    SELECT
+      COUNT(*)
+    FROM
+      biglietto
+    WHERE
+      evento = ...
+  ) * 100.0 / SUM(s.capienza)
+FROM
+  settore_evento_costo AS sec,
+  settore AS s
+WHERE
+  s.id = sec.settore
+  AND sec.evento = ...

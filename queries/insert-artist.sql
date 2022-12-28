@@ -1,2 +1,4 @@
-INSERT INTO artists (id, name)
-VALUES (...)
+INSERT INTO
+    artista (id, nome)
+VALUES
+    (...)

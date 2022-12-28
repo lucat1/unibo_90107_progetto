@@ -1,2 +1,4 @@
-INSERT INTO seats (id, sector, row, col)
-VALUES (...)
+INSERT INTO
+    posto (id, settore, fila, numero)
+VALUES
+    (...)

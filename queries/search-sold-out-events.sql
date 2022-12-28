@@ -1,9 +1,23 @@
-SELECT e.title
-FROM events AS e
-WHERE ( 
-  SELECT COUNT(s.id)
-  FROM seats AS s, sectors_events_cost AS sep
-  WHERE s.sector = sep.sector AND s.id NOT IN (
-    SELECT seat FROM tickets WHERE event = e.id
-  ) AND sep.event = e.id
-) = 0
+SELECT
+  e.titolo
+FROM
+  evento AS e
+WHERE
+  (
+    SELECT
+      COUNT(p.id)
+    FROM
+      posto AS p,
+      settore_evento_costo AS sec
+    WHERE
+      p.settore = sec.settore
+      AND p.id NOT IN (
+        SELECT
+          posto
+        FROM
+          biglietto
+        WHERE
+          event = e.id
+      )
+      AND sec.evento = e.id
+  ) = 0

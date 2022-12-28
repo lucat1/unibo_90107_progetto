@@ -1,3 +1,12 @@
-SELECT s.siae_price + s.cachet + SUM(spe.price) + v.price
-FROM shows AS s, events AS e, events_service_providers_serve AS spe, venues AS v
-WHERE e.show = s.id AND spe.event = e.id AND e.venue = v.id AND e.id = ...
+SELECT
+    s.prezzo_siae + s.cachet + SUM(efs.prezzo) + l.prezzo
+FROM
+    shows AS s,
+    evento AS e,
+    evento_fornitore_servizio AS efs,
+    luogo AS l
+WHERE
+    e.spettacolo = s.id
+    AND efs.evento = e.id
+    AND e.luogo = l.id
+    AND e.id = ...

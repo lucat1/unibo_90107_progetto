@@ -1,5 +1,17 @@
-SELECT s.row, s.col
-FROM seats AS s, sectors_events_cost AS sep
-WHERE s.sector = sep.sector AND s.id NOT IN (
-  SELECT seat FROM tickets WHERE event = ...
-) AND sep.event = ...
+SELECT
+  p.fila,
+  p.numero
+FROM
+  posto AS p,
+  settore_evento_costo AS sec
+WHERE
+  p.settore = sec.settore
+  AND p.id NOT IN (
+    SELECT
+      posto
+    FROM
+      biglietto
+    WHERE
+      evento = ...
+  )
+  AND sec.evento = ...

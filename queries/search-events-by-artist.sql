@@ -1,3 +1,12 @@
-SELECT e.title, v.name
-FROM events AS e, venues AS v, shows AS s, artists AS a
-WHERE v.id = e.venue AND s.id = e.show AND s.artist = ...
+SELECT
+    e.titolo,
+    l.nome
+FROM
+    evento AS e,
+    luogo AS l,
+    spettacolo AS s,
+    artista AS a
+WHERE
+    l.id = e.luogo
+    AND s.id = e.spettacolo
+    AND s.artista = ...

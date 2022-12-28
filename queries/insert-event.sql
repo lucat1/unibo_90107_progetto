@@ -1,2 +1,4 @@
-INSERT INTO (id, show, venue, title, starts_at, ends_at)
-VALUES (...)
+INSERT INTO
+    (id, spettacolo, luogo, titolo, inizio, fine)
+VALUES
+    (...)

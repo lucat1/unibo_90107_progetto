@@ -1,2 +1,4 @@
-INSERT INTO tickets (id, seat, event)
-VALUES (...)
+INSERT INTO
+    biglietto (id, posto, evento)
+VALUES
+    (...)

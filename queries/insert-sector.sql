@@ -1,2 +1,4 @@
-INSERT INTO venue_sectors (id, venue, name, capacity)
-VALUES (...)
+INSERT INTO
+    settore_luogo (id, luogo, nome, capienza)
+VALUES
+    (...)
