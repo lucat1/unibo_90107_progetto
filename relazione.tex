@@ -124,6 +124,8 @@ Il fornitore di un servizio è rappresentato dal tipo e da un prezzo all'ora.
     \item Rimborsare un biglietto (in media 300 volte l'anno)
     \item Inserire un entità che offre un servizio (in media 20 volte all'anno)
     \item Trovare un biglietto dato il posto (in media 28 000 volte all'anno)
+    \item Visualizzare la capacità totale di un luogo (100 volte l'anno)
+    \item Visualizzare i luoghi che soddisfano una capienza (50 volte l'anno)
     \item Visualizzare tutti gli eventi di un artista (in media 50 000 all'anno)
     \item Visualizzare tutti gli eventi di uno spettacolo (in media 10 000 all'anno)
     \item Visualizzare le spese di un evento (in media 50 volte all'anno)
@@ -388,6 +390,12 @@ biglietto corrisponde ad eliminare il biglietto dalla tabella \texttt{tickets}.
 
 \subsubsection{Trovare un biglietto dato il posto}
 \lstinputlisting{queries/search-ticket-by-seat.sql}
+
+\subsubsection{Visualizzare la capacità totale di un luogo}
+\lstinputlisting{queries/view-venue-capacity.sql}
+
+\subsubsection{Visualizzare i luoghi che soddisfano una capienza}
+\lstinputlisting{queries/view-venue-capacity-limit.sql}
 
 \subsubsection{Cercare tutti gli eventi a cui partecipa un artista}
 Si vogliono selezionare i titoli e il nome del luogo di tutti gli eventi a cui
