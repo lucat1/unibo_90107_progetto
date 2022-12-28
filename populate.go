@@ -149,20 +149,20 @@ func (v Venue) GetID() int {
 }
 
 type Event struct {
-	ID       int
-	Show     int
-	Venue    int
-	Title    string `faker:"first_name"`
-	StartsAt string `faker:"timestamp"`
-	EndAt    string `faker:"timestamp"`
+	ID         int
+	Spettacolo int
+	Luogo      int
+	Titolo     string `faker:"first_name"`
+	Inizio     string `faker:"timestamp"`
+	Fine       string `faker:"timestamp"`
 }
 
 func EventFields() []string {
-	return []string{"id", "show", "venue", "title", "starts_at", "ends_at"}
+	return []string{"id", "spettacolo", "luogo", "luogo", "inizio", "fine"}
 }
 
 func (e Event) Populate(stmt *sql.Stmt) (err error) {
-	_, err = stmt.Exec(e.ID, e.Show, e.Venue, e.Title, e.StartsAt, e.EndAt)
+	_, err = stmt.Exec(e.ID, e.Spettacolo, e.Luogo, e.Titolo, e.Inizio, e.Fine)
 	return
 }
 
