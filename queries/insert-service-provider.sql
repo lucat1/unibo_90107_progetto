@@ -1,4 +1,4 @@
 INSERT INTO
-    fornitore_servizio (nome, descrizione)
+    fornitore (nome, descrizione)
 VALUES
     (...)

@@ -1,7 +1,6 @@
 CREATE TABLE artista (
   id serial,
   nome text NOT NULL,
-
   PRIMARY KEY (id),
   UNIQUE (nome)
 );
@@ -12,14 +11,23 @@ CREATE TABLE spettacolo (
   artista int NOT NULL,
   prezzo_siae float NOT NULL,
   cachet float NOT NULL,
-
-  CHECK (cachet >= 0 AND prezzo_siae >= 0),
+  CHECK (
+    cachet >= 0
+    AND prezzo_siae >= 0
+  ),
   PRIMARY KEY (id),
   FOREIGN KEY (artista) REFERENCES artista,
   UNIQUE (titolo, artista)
 );
 
-CREATE TYPE tipo_luogo AS ENUM ('arena', 'palazzetto', 'parco', 'piazza', 'stadio', 'teatro');
+CREATE TYPE tipo_luogo AS ENUM (
+  'arena',
+  'palazzetto',
+  'parco',
+  'piazza',
+  'stadio',
+  'teatro'
+);
 
 CREATE TABLE luogo (
   id serial,
@@ -27,8 +35,8 @@ CREATE TABLE luogo (
   nome text NOT NULL,
   indirizzo text NOT NULL,
   citta text NOT NULL,
-  costo float NOT NULL, -- per day
-
+  costo float NOT NULL,
+  -- per day
   CHECK (costo >= 0),
   PRIMARY KEY (id),
   UNIQUE (nome, indirizzo, citta)
@@ -41,7 +49,6 @@ CREATE TABLE evento (
   titolo text NOT NULL,
   inizio timestamp NOT NULL,
   fine timestamp NOT NULL,
-
   PRIMARY KEY (id),
   FOREIGN KEY (spettacolo) REFERENCES spettacolo,
   FOREIGN KEY (luogo) REFERENCES luogo,
@@ -53,7 +60,6 @@ CREATE TABLE settore (
   luogo int NOT NULL,
   nome text NOT NULL,
   capienza int NOT NULL,
-
   CHECK (capienza > 0),
   PRIMARY KEY (id),
   FOREIGN KEY (luogo) REFERENCES luogo,
@@ -65,7 +71,6 @@ CREATE TABLE posto (
   settore int NOT NULL,
   fila varchar(1) NOT NULL,
   numero int NOT NULL,
-
   PRIMARY KEY (id),
   FOREIGN KEY (settore) REFERENCES settore,
   UNIQUE (settore, fila, numero)
@@ -74,8 +79,8 @@ CREATE TABLE posto (
 CREATE TABLE settore_evento_costo (
   settore int NOT NULL,
   evento int NOT NULL,
-  prezzo float NOT NULL, -- per ticket
-
+  -- prezzo per biglietto
+  prezzo float NOT NULL,
   CHECK (prezzo >= 0),
   UNIQUE (settore, evento),
   FOREIGN KEY (settore) REFERENCES settore,
@@ -86,19 +91,25 @@ CREATE TABLE fornitore (
   id serial,
   nome text NOT NULL,
   descrizione text NOT NULL,
-
   PRIMARY KEY (id),
   UNIQUE (nome)
 );
 
-CREATE TYPE tipo_servizio AS ENUM ('audio', 'biglietteria', 'luci', 'maschere', 'sicurezza', 'regia');
+CREATE TYPE tipo_servizio AS ENUM (
+  'audio',
+  'biglietteria',
+  'luci',
+  'maschere',
+  'sicurezza',
+  'regia'
+);
 
 CREATE TABLE evento_fornitore_servizio (
   fornitore int NOT NULL,
   tipo tipo_servizio,
   evento int NOT NULL,
-  prezzo float NOT NULL, -- for the whole job
-
+  prezzo float NOT NULL,
+  -- for the whole job
   CHECK (prezzo > 0),
   FOREIGN KEY (fornitore) REFERENCES fornitore,
   FOREIGN KEY (evento) REFERENCES evento,
@@ -107,10 +118,9 @@ CREATE TABLE evento_fornitore_servizio (
 
 CREATE TABLE biglietto (
   codice serial,
-  nome text NOT NULL,
+  nominativo text NOT NULL,
   posto int NOT NULL,
   evento int NOT NULL,
-
   PRIMARY KEY (codice),
   FOREIGN KEY (posto) REFERENCES posto,
   FOREIGN KEY (evento) REFERENCES evento

@@ -6,7 +6,7 @@ FROM
     settore_evento_costo AS sec,
     biglietto AS b
 WHERE
-    p.sector = sec.sector
-    AND b.seat = p.id
-    AND b.event = sec.event
-    AND sec.event = ...
+    p.settore = sec.settore
+    AND b.posto = p.id
+    AND b.evento = sec.evento
+    AND sec.evento = ...

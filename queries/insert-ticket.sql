@@ -1,4 +1,4 @@
 INSERT INTO
-    biglietto (id, posto, evento)
+    biglietto (nominativo, posto, evento)
 VALUES
     (...)

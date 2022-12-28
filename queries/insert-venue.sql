@@ -1,4 +1,4 @@
 INSERT INTO
-    luogo (id, tipe, nome, indirizzo, citta, costo)
+    luogo (tipo, nome, indirizzo, citta, costo)
 VALUES
     (...)

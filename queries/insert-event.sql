@@ -1,4 +1,4 @@
 INSERT INTO
-    (id, spettacolo, luogo, titolo, inizio, fine)
+    evento (spettacolo, luogo, titolo, inizio, fine)
 VALUES
     (...)

@@ -1,7 +1,7 @@
 SELECT
     s.prezzo_siae + s.cachet + SUM(efs.prezzo) + l.prezzo
 FROM
-    shows AS s,
+    spettacolo AS s,
     evento AS e,
     evento_fornitore_servizio AS efs,
     luogo AS l

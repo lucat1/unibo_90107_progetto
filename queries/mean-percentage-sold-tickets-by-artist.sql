@@ -17,5 +17,5 @@ FROM
 WHERE
   s.id = sec.settore
   AND sec.evento = e.id
-  AND sp.artista = ...
   AND sp.id = e.spettacolo
+  AND sp.artista = ...

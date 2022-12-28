@@ -17,7 +17,7 @@ WHERE
         FROM
           biglietto
         WHERE
-          event = e.id
+          evento = e.id
       )
       AND sec.evento = e.id
   ) = 0

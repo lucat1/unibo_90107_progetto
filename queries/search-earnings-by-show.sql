@@ -20,10 +20,10 @@ SELECT
       settore_evento_costo AS sec,
       biglietto AS b
     WHERE
-      p.sector = sec.sector
+      p.settore = sec.settore
       AND b.seat = p.id
-      AND sec.event = t_e.id
-      AND b.event = t_e.id
+      AND sec.evento = t_e.id
+      AND b.evento = t_e.id
   )
 FROM
   evento AS t_e
