@@ -20,3 +20,5 @@ services:
   populate:
     image: populate
     build: .
+    depends_on:
+      - db
