@@ -211,8 +211,6 @@ Artista & Un artista che esegue degli spettacoli & & Nome (stringa)\\
 \hline
 Spettacolo & Un serie di eventi di un artista & Title (stringa), Cachet (float), costo SIAE (float) & ID (numero)\\
 \hline
-Tipo di luogo & La tipologia di luogo (es. edificio, piazza, parco...) & & Nome (stringa)\\
-\hline
 Luogo & Il luogo dove si svolge un evento & Prezzo (float) & Nome (stringa) e coordinate (point)\\
 \hline
 Evento & Una singola data di uno spettacolo & Titolo (stringa), Data e ora di inizio (timestamp) e fine (timestamp) & ID (numero)\\
@@ -220,8 +218,6 @@ Evento & Una singola data di uno spettacolo & Titolo (stringa), Data e ora di in
 Settore & Un settore di un luogo & Capacità (numero) & Nome (stringa) e \textit{luogo} (riferimento)\\
 \hline
 Posto & Un posto in un settore & & Fila (carattere), numero (numero) e \textit{settore} (riferimento)\\
-\hline
-Tipo di servizio & La tipologia di servizio offerto & & Nome (stringa)\\
 \hline
 Fornitore & Un fornitore di servizi & Descrizione (stringa) & Nome (stringa)\\
 \hline
@@ -235,25 +231,21 @@ Biglietto & Il biglietto di ingresso per un evento & Nominativo (stringa) & ID (
 \hline
 \textbf{Nome} & \textbf{Descrizione} & \textbf{Attributi} & \textbf{Entità coinvolte}\\
 \hline
-Esegue & Associa un artista a uno spettacolo & & Artista (0,N), Spettacolo (1,1)\\
+Performa & Associa un artista a uno spettacolo & & Artista (0,N), Spettacolo (1,1)\\
 \hline
-Compone & Associa un evento con uno spettacolo & & Evento (1,1), Spettacolo (1,N)\\
+Composto da & Associa un evento con uno spettacolo & & Evento (1,1), Spettacolo (1,N)\\
 \hline
-Tenersi & Associa un evento a un luogo & & Evento (1,1), Luogo (1,N)\\
+Si tiene in & Associa un evento a un luogo & & Evento (1,1), Luogo (1,N)\\
 \hline
-Tipo luogo & Associa un luogo a una tipologia & & Luogo (1,1), Tipo (1,N)\\
+Diviso in & Associa un settore a un luogo & & Luogo (1,N), Settore (1,1)\\
 \hline
-Diviso & Associa un settore a un luogo & & Luogo (1,N), Settore (1,1)\\
+Composto da & Associa un posto a un settore & & Settore(1,N), Posto (1,1)\\
 \hline
-Composto & Associa un posto a un settore & & Settore(1,N), Posto (1,1)\\
+Costo & Associa un settore a un evento & Prezzo & Evento (1,N), Settore (1,N)\\
 \hline
-Costa & Associa un settore a un evento & Prezzo & Evento (1,N), Settore (1,N)\\
+Vendita & Associa un biglietto a un evento & & Evento (1,N), Biglietto (1,1)\\
 \hline
-Vende & Associa un biglietto a un evento & & Evento (1,N), Biglietto (1,1)\\
-\hline
-& Associa un biglietto a un posto & & Biglietto (1,1), Posto (1,N)\\
-\hline
-Servizio & Associa un tipo di servizio a un fornitore e a un evento & Costo & Tipo (1,N), Fornitore (1,N), Evento (1,N)\\
+Servizio & Associa un tipo di servizio a un fornitore e a un evento & Costo & Fornitore (1,N), Evento (1,N)\\
 \hline
 \end{tabularx}
 
@@ -262,20 +254,20 @@ Servizio & Associa un tipo di servizio a un fornitore e a un evento & Costo & Ti
 \textbf{Vincoli}
 
 \begin{itemize}
-    \item Il cachet e il costo della SIAE devono essere maggiori o uguali a zero.
-    \item Il costo di affitto del luogo deve essere maggiore o uguale a zero.
-    \item La capacità di un settore deve essere maggiore di 0.
-    \item Il prezzo di un settore deve essere maggiore di 0.
-    \item Il costo di un servizio deve essere maggiore di 0.
-    \item Il numero di posti in un settore è pari alla capacità.
+  \item (RV1) Il cachet e il costo della SIAE devono essere maggiori o uguali a zero.
+  \item (RV2) Il costo di affitto del luogo deve essere maggiore o uguale a zero.
+  \item (RV3) La capacità di un settore deve essere maggiore di 0.
+  \item (RV4) Il prezzo di un settore deve essere maggiore di 0.
+  \item (RV5) Il costo di un servizio deve essere maggiore di 0.
+  \item (RV6) Il numero di posti in un settore è pari alla capacità.
 \end{itemize}
 
 \textbf{Derivazioni}
 
 \begin{itemize}
-    \item Il prezzo di un biglietto è il costo del settore in cui si trova il posto del biglietto.
-    \item Il costo di un evento è la somma tra il cachet e il costo SIAE per l'affitto, il costo di affitto del luogo e i costi dei servizi.
-    \item Il guadagno di un evento è la somma dei prezzi dei biglietti venduti.
+  \item (RD1) Il prezzo di un biglietto è il costo del settore in cui si trova il posto del biglietto.
+  \item (RD2) Il costo di un evento è la somma tra il cachet e il costo SIAE per l'affitto, il costo di affitto del luogo e i costi dei servizi.
+  \item (RD3) Il guadagno di un evento è la somma dei prezzi dei biglietti venduti meno il costo dell'evento.
 \end{itemize}
 
 \section{Progettazione logica}
@@ -316,6 +308,32 @@ Costo & R & 6000\\
 \subsection{Normalizzazione}
 
 \subsection{Traduzione verso il modello relazionale}
+
+\begin{tabularx}{\textwidth}{|X|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}X|}
+\hline
+  \textbf{Entit\`a - Relazione} & \textbf{Traduzione}\\
+\hline
+  Artista & Artista(\underline{id},name) \\
+\hline
+  Spettacolo & Spettacolo(\underline{id},title,artist,siae_price,cachet) \\
+\hline
+  Luogo & Luogo(\underline{id},venue_type,name,coords,price) \\
+\hline
+  Evento & Evento(\underline{id},show,venue,title,starts_at,ends_at) \\
+\hline
+  Settore & Settore(\underline{id},venue,name,capacity) \\
+\hline
+  Posto & Posto(\underline{id},sector,row,col) \\
+\hline
+  Fornitore & Fornitore(\underline{name},description) \\
+\hline
+  Biglietto & Biglietto(\underline{id},seat,event) \\
+\hline
+  Costo & Costo(\underline{sector},\underline{event},price) \\
+\hline
+  Servizio & Servizio(\underline{provider},\underline{type},\underline{event},price) \\
+\hline
+\end{tabularx}
 
 \section{Codice SQL}
 
