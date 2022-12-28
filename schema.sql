@@ -55,9 +55,9 @@ CREATE TABLE luogo (
   nome text NOT NULL, 
   indirizzo text NOT NULL, 
   citta text NOT NULL, 
-  costo float NOT NULL, 
+  prezzo float NOT NULL, 
   -- per day
-  CHECK (costo >= 0), 
+  CHECK (prezzo >= 0), 
   PRIMARY KEY (id), 
   UNIQUE (nome, indirizzo, citta)
 );

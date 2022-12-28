@@ -316,25 +316,29 @@ associazioni sono binarie, quindi sono già nella forma normale Boyce e Codd.
 \hline
   \textbf{Entità - Relazione} & \textbf{Traduzione}\\
 \hline
-  Artista & Artista(\underline{id}, nome) \\
+  Persona & Persona(\underline{id}, nome, cognome, data\_nascita) \\
 \hline
-  Spettacolo & Spettacolo(\underline{id}, titolo, artista, prezzo\_siae, cachet) \\
+  Gruppo & Gruppo(\underline{id}, data\_formazione) \\
 \hline
-  Luogo & Luogo(\underline{id}, tipo\_luogo, nome, indirizzo, città, prezzo) \\
+  Artista & Artista(\underline{id}, nome\_arte, \underline{persona}, \underline{gruppo}) \\
 \hline
-  Evento & Evento(\underline{id}, spettacolo, luogo, titolo, inizio, fine) \\
+  Spettacolo & Spettacolo(\underline{id}, titolo, \underline{artista}, prezzo\_siae, cachet) \\
 \hline
-  Settore & Settore(\underline{id}, luogo, nome, capacità) \\
+  Luogo & Luogo(\underline{id}, tipo, nome, indirizzo, citta, prezzo) \\
 \hline
-  Posto & Posto(\underline{id}, settore, fila, numero) \\
+  Evento & Evento(\underline{id}, \underline{spettacolo}, \underline{luogo}, titolo, inizio, fine) \\
 \hline
-  Fornitore & Fornitore(\underline{nome}, descrizione) \\
+  Settore & Settore(\underline{id}, \underline{luogo}, nome, capienza) \\
 \hline
-  Biglietto & Biglietto(\underline{id}, posto, evento) \\
+  Posto & Posto(\underline{id}, \underline{settore}, fila, numero) \\
 \hline
-  Costo & Costo(\underline{settore}, \underline{evento}, prezzo) \\
+  Settore Evento Costo & Settore\_Evento\_Costo(\underline{settore}, \underline{evento}, prezzo) \\
 \hline
-  Servizio & Servizio(\underline{fornitore}, \underline{tipo}, \underline{evento}, prezzo) \\
+  Fornitore & Fornitore(\underline{id}, nome, descrizione) \\
+\hline
+  Evento Fornitore Servizio & Evento\_Fornitore\_Servizio(\underline{fornitore}, tipo, \underline{evento}, prezzo) \\
+\hline
+  Biglietto & Biglietto(\underline{codice}, nominativo, \underline{posto}, \underline{evento}) \\
 \hline
 \end{tabularx}
 
