@@ -8,14 +8,14 @@ CREATE TABLE persona (
 CREATE TABLE gruppo (
   id serial, 
   data_formazione date NOT NULL, 
-  PRIMARY KEY (id), 
+  PRIMARY KEY (id) 
   );
 CREATE TABLE persona_gruppo_appartenenza (
   persona int NOT NULL, 
   gruppo int NOT NULL, 
   FOREIGN KEY (persona) REFERENCES persona, 
   FOREIGN KEY (gruppo) REFERENCES gruppo, 
-  UNIQUE (persona, gruppo), 
+  UNIQUE (persona, gruppo) 
   );
 CREATE TABLE artista (
   id serial, 
