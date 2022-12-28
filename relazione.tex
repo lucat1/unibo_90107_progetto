@@ -49,23 +49,23 @@ Un artista è rappresentato come un nome. Uno spettacolo è rappresentato da un 
 \hline
 \textbf{Termine} & \textbf{Descrizione} & \textbf{Sinonimi} & \textbf{Collegamenti}\\
 \hline
-Evento & La singola data di uno spettacolo o di un concerto & Event & Spettacolo, Luogo, Settore, Biglietto, Servizio\\
+Evento & La singola data di uno spettacolo o di un concerto &  & Spettacolo, Luogo, Settore, Biglietto, Servizio\\
 \hline
-Spettacolo & L'insieme di eventi di un determinato artista & Concerto, Show & Evento, Artista\\
+Spettacolo & L'insieme di eventi di un determinato artista & Concerto & Evento, Artista\\
 \hline
-Artista & Singola persona o gruppo di persone che esegue uno spettacolo & Artist & Spettacolo\\
+Artista & Singola persona o gruppo di persone che esegue uno spettacolo & Gruppo, Compagnia teatrale & Spettacolo\\
 \hline
-Luogo & Edificio, piazza o parco (privato/pubblico) nel quale si organizza uno spettacolo & Location, Venue & Evento, Settore\\
+Luogo & Edificio, piazza o parco (privato/pubblico) nel quale si organizza uno spettacolo & Spazio & Evento, Settore\\
 \hline
-Settore & Le parti in cui sono suddivisi i posti in un luogo & Sector & Evento, Luogo, Posto\\
+Settore & Le parti in cui sono suddivisi i posti in un luogo & Divisioni & Evento, Luogo, Posto\\
 \hline
-Posto & Posto (a sedere o in piedi) in un settore & Seat & Settore, Biglietto\\
+Posto & Posto (a sedere o in piedi) in un settore & Sedia & Settore, Biglietto\\
 \hline
-Biglietto & Il biglietto di ingresso per un evento & Ticket & Evento, Posto\\
+Biglietto & Il biglietto di ingresso per un evento &  & Evento, Posto\\
 \hline
-Servizio & Un servizio richiesto per un evento & Service & Evento, Fornitore\\
+Servizio & Un servizio richiesto per un evento &  & Evento, Fornitore\\
 \hline
-Fornitore & Un fornitore di servizi & Provider & Servizio\\
+Fornitore & Un fornitore di servizi & Azienda & Servizio\\
 \hline
 \end{tabularx}
 
@@ -156,7 +156,7 @@ Possiamo dividere le entità in quattro gruppi:
 
 A un livello di astrazione più alto abbiamo un evento, parte di uno spettacolo di un artista, che si svolge in un luogo, di cui vengono venduti i biglietti e in cui ci sono dei fornitori che offrono dei servizi.
 
- \includegraphics[width=\textwidth]{ERScheletro.png}
+%  \includegraphics[width=\textwidth]{ERScheletro.png}
  
 \subsection{Sviluppo delle componenti dello scheletro}
 
@@ -166,14 +166,14 @@ Abbiamo poi sviluppato lo spettacolo come un'entità con un titolo, un cachet, u
 Un evento è composto da un solo spettacolo.\\
 Ogni spettacolo è eseguito da un artista che ha un nome, un artista può eseguire più spettacoli.
 
- \includegraphics[width=\textwidth]{ERSpettacoloArtista.png}
+%  \includegraphics[width=\textwidth]{ERSpettacoloArtista.png}
 
 \subsubsection*{Fornitore}
 
 Ogni fornitore può offrire servizi a più eventi e ogni evento può avere più fornitori di servizi, i servizi sono di diverse tipologie.\\
 Ogni fornitore può fornire vari tipi di servizi e ogni evento può aver necessità di diversi tipi di servizi.
 
- \includegraphics[width=\textwidth]{ERFornitore.png}
+%  \includegraphics[width=\textwidth]{ERFornitore.png}
 
 \subsubsection*{Luogo, tipologia di luogo, settore, posto}
 
@@ -184,20 +184,20 @@ Ogni luogo è diviso in settori.
 Ogni settore ha un nome (che è univoco all'interno del luogo), una capienza massima e un prezzo dei biglietti per ogni evento.\\
 In ogni settore sono presenti dei posti segnati con una lettera e un numero (univoci all'interno del loro settore).
 
- \includegraphics[width=\textwidth]{ERLuogo.png}
+%  \includegraphics[width=\textwidth]{ERLuogo.png}
 
 \subsubsection*{Biglietto}
 
 Di ogni evento vendiamo diversi biglietti, ma ogni biglietto è valido per un solo evento.
 Ogni biglietto ha un ID e un nominativo.
 
- \includegraphics[width=\textwidth]{ERBiglietto.png}
+%  \includegraphics[width=\textwidth]{ERBiglietto.png}
 
 \subsection{Unione delle componenti nello schema finale ridotto}
 
 Ogni biglietto è associato a un posto.
 
- \includegraphics[width=\textwidth]{ER.png}
+%  \includegraphics[width=\textwidth]{ER.png}
 
 \subsection{Dizionario dei dati}
 
@@ -302,36 +302,37 @@ Costo & R & 6000\\
 \hline
 \end{tabularx}
 
-
 \subsection{Ristrutturazione dello schema concettuale}
 
 \subsection{Normalizzazione}
+Osservando la ristrutturazione dello schema concettuale si nota che tutte le
+associazioni sono binarie, quindi sono già nella forma normale Boyce e Codd.
 
 \subsection{Traduzione verso il modello relazionale}
 
 \begin{tabularx}{\textwidth}{|X|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}X|}
 \hline
-  \textbf{Entit\`a - Relazione} & \textbf{Traduzione}\\
+  \textbf{Entità - Relazione} & \textbf{Traduzione}\\
 \hline
-  Artista & Artista(\underline{id},name) \\
+  Artista & Artista(\underline{id}, nome) \\
 \hline
-  Spettacolo & Spettacolo(\underline{id},title,artist,siae_price,cachet) \\
+  Spettacolo & Spettacolo(\underline{id}, titolo, artista, prezzo\_siae, cachet) \\
 \hline
-  Luogo & Luogo(\underline{id},venue_type,name,coords,price) \\
+  Luogo & Luogo(\underline{id}, tipo\_luogo, nome, indirizzo, città, prezzo) \\
 \hline
-  Evento & Evento(\underline{id},show,venue,title,starts_at,ends_at) \\
+  Evento & Evento(\underline{id}, spettacolo, luogo, titolo, inizio, fine) \\
 \hline
-  Settore & Settore(\underline{id},venue,name,capacity) \\
+  Settore & Settore(\underline{id}, luogo, nome, capacità) \\
 \hline
-  Posto & Posto(\underline{id},sector,row,col) \\
+  Posto & Posto(\underline{id}, settore, fila, numero) \\
 \hline
-  Fornitore & Fornitore(\underline{name},description) \\
+  Fornitore & Fornitore(\underline{nome}, descrizione) \\
 \hline
-  Biglietto & Biglietto(\underline{id},seat,event) \\
+  Biglietto & Biglietto(\underline{id}, posto, evento) \\
 \hline
-  Costo & Costo(\underline{sector},\underline{event},price) \\
+  Costo & Costo(\underline{settore}, \underline{evento}, prezzo) \\
 \hline
-  Servizio & Servizio(\underline{provider},\underline{type},\underline{event},price) \\
+  Servizio & Servizio(\underline{fornitore}, \underline{tipo}, \underline{evento}, prezzo) \\
 \hline
 \end{tabularx}
 

@@ -1,9 +1,2 @@
-Questione artisti:
-Uno spettacolo è un insieme di eventi, ora nel db un artista è associato
-a uno spettacolo, ma potrebbe essere che un evento abbiamo più artisti 
-quindi sposterei l'attributo artist da show ad event e fare una many to many.
-Aggiornare schema e relazione.
-
-Biglietti speciali
-
-Aggiornare foto
+capire meglio normalizzazione
+Ristrutturazione dello schema concettuale
