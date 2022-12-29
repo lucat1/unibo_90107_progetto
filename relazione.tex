@@ -158,7 +158,7 @@ Possiamo dividere le entità in quattro gruppi:
 
 A un livello di astrazione più alto abbiamo un evento, parte di uno spettacolo di un artista, che si svolge in un luogo, di cui vengono venduti i biglietti e in cui ci sono dei fornitori che offrono dei servizi.
 
-%  \includegraphics[width=\textwidth]{ERScheletro.png}
+%  \includegraphics[width=\textwidth]{ERScheletro.png} TODO deccommentare
  
 \subsection{Sviluppo delle componenti dello scheletro}
 
@@ -168,14 +168,14 @@ Abbiamo poi sviluppato lo spettacolo come un'entità con un titolo, un cachet, u
 Un evento è composto da un solo spettacolo.\\
 Ogni spettacolo è eseguito da un artista che ha un nome, un artista può eseguire più spettacoli.
 
-%  \includegraphics[width=\textwidth]{ERSpettacoloArtista.png}
+%  \includegraphics[width=\textwidth]{ERSpettacoloArtista.png} TODO deccommentare
 
 \subsubsection*{Fornitore}
 
 Ogni fornitore può offrire servizi a più eventi e ogni evento può avere più fornitori di servizi, i servizi sono di diverse tipologie.\\
 Ogni fornitore può fornire vari tipi di servizi e ogni evento può aver necessità di diversi tipi di servizi.
 
-%  \includegraphics[width=\textwidth]{ERFornitore.png}
+%  \includegraphics[width=\textwidth]{ERFornitore.png} TODO deccommentare
 
 \subsubsection*{Luogo, tipologia di luogo, settore, posto}
 
@@ -186,20 +186,20 @@ Ogni luogo è diviso in settori.
 Ogni settore ha un nome (che è univoco all'interno del luogo), una capienza massima e un prezzo dei biglietti per ogni evento.\\
 In ogni settore sono presenti dei posti segnati con una lettera e un numero (univoci all'interno del loro settore).
 
-%  \includegraphics[width=\textwidth]{ERLuogo.png}
+%  \includegraphics[width=\textwidth]{ERLuogo.png} TODO deccommentare
 
 \subsubsection*{Biglietto}
 
 Di ogni evento vendiamo diversi biglietti, ma ogni biglietto è valido per un solo evento.
 Ogni biglietto ha un ID e un nominativo.
 
-%  \includegraphics[width=\textwidth]{ERBiglietto.png}
+%  \includegraphics[width=\textwidth]{ERBiglietto.png} TODO deccommentare
 
 \subsection{Unione delle componenti nello schema finale ridotto}
 
 Ogni biglietto è associato a un posto.
 
-%  \includegraphics[width=\textwidth]{ER.png}
+%  \includegraphics[width=\textwidth]{ER.png} TODO deccommentare
 
 \subsection{Dizionario dei dati}
 
@@ -487,6 +487,6 @@ Si vuole mostrare il guadagno di un singolo show.
 Si vuole mostrare il guadagno pi\`u alto raggiunto da uno show e il suo titolo.
 \lstinputlisting{queries/show-max-earnings.sql}
 
-\section{Esempi di interrogazioni}
+\section{Testing}
 
 \end{document}
