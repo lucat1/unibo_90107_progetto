@@ -400,8 +400,9 @@ Poiché quando si visualizza un evento si vuole molto spesso conoscere anche il 
 Per migliorare le prestazioni abbiamo preferito dunque lasciare una relazione ridondante, imponendo gli opportuni vincoli affinché non si verifichino inconsistenze (vedi \ref{rv7}, \ref{rv8}).
 
 \subsection{Normalizzazione}
-Osservando la ristrutturazione dello schema concettuale si nota che tutte le
-associazioni sono binarie, quindi sono già nella forma normale Boyce e Codd.
+
+Osservando la ristrutturazione dello schema concettuale si nota che tutte le relazioni sono binarie, quindi sono già nella forma normale Boyce e Codd.\\
+Non esistono dipendenze non banali tra gli attributi delle entità.
 
 \subsection{Traduzione verso il modello relazionale}
 
@@ -446,8 +447,7 @@ nella specifica delle operazioni, perché utili alla comprensione o perché
 compongono le interrogazioni successive.
 
 \begin{quote}
-  NB: i \texttt{...} si riferiscono ad un input dato da un utente o da
-  un applicazione.
+  NB: i \texttt{...} si riferiscono a un input dato da un utente o da un'applicazione.
 \end{quote}
 
 \subsubsection{Inserire un artista}
