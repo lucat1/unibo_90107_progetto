@@ -23,8 +23,8 @@ CREATE TABLE artista (
   persona int, 
   gruppo int, 
   CHECK(
-    persona IS NOT NULL 
-    OR gruppo IS NOT NULL
+    (persona IS NOT NULL AND gruppo is NULL)
+    OR (gruppo IS NOT NULL AND persona is NULL)
   ), 
   PRIMARY KEY (id), 
   FOREIGN KEY (persona) REFERENCES persona, 

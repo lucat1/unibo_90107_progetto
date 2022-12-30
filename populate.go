@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"math/rand"
+	"time"
 
 	"github.com/go-faker/faker/v4"
 	"github.com/go-faker/faker/v4/pkg/interfaces"
@@ -21,19 +22,24 @@ const (
 	USER   = "postgres"
 	PASSWD = "postgres"
 
-	ARTISTS_MIN            = 500
-	ARTISTS_MAX            = 1000
-	SHOWS_MIN              = 5000
-	SHOWS_MAX              = 10000
-	VENUE_TYPE_MAX         = 5
-	EVENTS_MIN             = 100
-	EVENTS_MAX             = 500
-	VENUES_MIN             = 500
-	VENUES_MAX             = 1000
-	VENUE_SECTORS_MIN      = VENUES_MIN * 4
-	VENUE_SECTORS_MAX      = VENUES_MAX * 6
-	VENUE_SECTOR_SEATS_MIN = VENUE_SECTORS_MIN * 30
-	VENUE_SECTOR_SEATS_MAX = VENUE_SECTORS_MAX * 50
+	PERSONE_MIN    = 500
+	PERSONE_MAX    = 1000
+	GRUPPI_MIN     = 500
+	GRUPPI_MAX     = 1000
+	ARTISTI_MIN    = 500
+	ARTISTI_MAX    = 1000
+	SPETTACOLI_MIN = 5000
+	SPETTACOLI_MAX = 10000
+	EVENTI_MIN     = 100
+	EVENTI_MAX     = 500
+	LUOGHI_MIN     = 500
+	LUOGHI_MAX     = 1000
+	FORNITORI_MIN  = 100
+	FORNITORI_MAX  = 100
+	SETTORI_MIN    = LUOGHI_MIN * 4
+	SETTORI_MAX    = LUOGHI_MAX * 6
+	POSTI_MIN      = SETTORI_MIN * 30
+	POSTI_MAX      = SETTORI_MAX * 50
 )
 
 type Populate interface {
@@ -70,178 +76,242 @@ func bulkInsert[T Populate](table string, fields []string, vec []T) {
 	}
 }
 
-type Artist struct {
-	ID   int
-	Name string `faker:"first_name"`
+type Persona struct {
+	ID          int
+	Nome        string `faker:"first_name"`
+	Cognome     string `faker:"last_name"`
+	DataNascita string `faker:"date"`
 }
 
-func ArtistFields() []string {
-	return []string{"id", "name"}
+func PersonaFields() []string {
+	return []string{"id", "nome", "cognome", "data_nascita"}
 }
 
-func (a Artist) Populate(stmt *sql.Stmt) (err error) {
-	_, err = stmt.Exec(a.ID, a.Name)
+func (a Persona) Populate(stmt *sql.Stmt) (err error) {
+	_, err = stmt.Exec(a.ID, a.Nome, a.Cognome, a.DataNascita)
 	return
 }
 
-func (a Artist) GetID() int {
+func (a Persona) GetID() int {
 	return a.ID
 }
 
-type Show struct {
+type Gruppo struct {
+	ID             int
+	DataFormazione string `faker:"date"`
+}
+
+func GruppoFields() []string {
+	return []string{"id", "data_formazione"}
+}
+
+func (a Gruppo) Populate(stmt *sql.Stmt) (err error) {
+	_, err = stmt.Exec(a.ID, a.DataFormazione)
+	return
+}
+
+func (a Gruppo) GetID() int {
+	return a.ID
+}
+
+type PersonaGruppoAppartenenza struct {
+	Persona int
+	Gruppo  int
+}
+
+type Artista struct {
+	ID       int
+	NomeArte string `faker:"username"`
+	Persona  *int   `faker:"-"`
+	Gruppo   *int   `faker:"-"`
+}
+
+func ArtistaFields() []string {
+	return []string{"id", "nome_arte", "persona", "gruppo"}
+}
+
+func (a Artista) Populate(stmt *sql.Stmt) (err error) {
+	_, err = stmt.Exec(a.ID, a.NomeArte, a.Persona, a.Gruppo)
+	return
+}
+
+func (a Artista) GetID() int {
+	return a.ID
+}
+
+type Spettacolo struct {
+	ID         int
+	Titolo     string `faker:"username"`
+	Artista    int
+	PrezzoSIAE float32 `faker:"amount"`
+	Cachet     float32 `faker:"amount"`
+}
+
+func SpettacoloFields() []string {
+	return []string{"id", "titolo", "artista", "prezzo_siae", "cachet"}
+}
+
+func (s Spettacolo) Populate(stmt *sql.Stmt) (err error) {
+	_, err = stmt.Exec(s.ID, s.Titolo, s.Artista, s.PrezzoSIAE, s.Cachet)
+	return
+}
+
+func (s Spettacolo) GetID() int {
+	return s.ID
+}
+
+type Luogo struct {
 	ID        int
-	Title     string
-	Artist    int
-	SIAEPrice float32
-	Cachet    float32
+	Tipo      string  `faker:"oneof: arena, palazzetto, parco, piazza, stadio, teatro"`
+	Nome      string  `faker:"username,unique"`
+	Indirizzo string  `faker:"oneof: roma 23,napoli 11"`
+	Citta     string  `faker:"oneof: Bologna,Milano,Roma"`
+	Prezzo    float32 `faker:"amount"`
 }
 
-func ShowFields() []string {
-	return []string{"id", "title", "artist", "siae_price", "cachet"}
+func LuogoFields() []string {
+	return []string{"id", "tipo", "nome", "indirizzo", "citta", "prezzo"}
 }
 
-func (s Show) Populate(stmt *sql.Stmt) (err error) {
-	_, err = stmt.Exec(s.ID, s.Title, s.Artist, s.SIAEPrice, s.Cachet)
+func (v Luogo) Populate(stmt *sql.Stmt) (err error) {
+	_, err = stmt.Exec(v.ID, v.Tipo, v.Nome, v.Indirizzo, v.Citta, v.Prezzo)
 	return
 }
 
-func (s Show) GetID() int {
-	return s.ID
-}
-
-type VenueType struct {
-	ID   int
-	Name string
-}
-
-func VenueTypeFields() []string {
-	return []string{"id", "name"}
-}
-
-func (s VenueType) Populate(stmt *sql.Stmt) (err error) {
-	_, err = stmt.Exec(s.ID, s.Name)
-	return
-}
-
-func (s VenueType) GetID() int {
-	return s.ID
-}
-
-type Venue struct {
-	ID     int
-	Type   int    `faker:"oneof: 1,2,3,4,5"`
-	Name   string `faker:"first_name"`
-	Coords string
-	Price  float32
-}
-
-func VenueFields() []string {
-	return []string{"id", "type", "name", "coords", "price"}
-}
-
-func (v Venue) Populate(stmt *sql.Stmt) (err error) {
-	_, err = stmt.Exec(v.ID, v.Type, v.Name, v.Coords, v.Price)
-	return
-}
-
-func (v Venue) GetID() int {
+func (v Luogo) GetID() int {
 	return v.ID
 }
 
-type Event struct {
+type Evento struct {
 	ID         int
 	Spettacolo int
 	Luogo      int
 	Titolo     string `faker:"first_name"`
-	Inizio     string `faker:"timestamp"`
-	Fine       string `faker:"timestamp"`
+	Inizio     string
+	Fine       string
 }
 
-func EventFields() []string {
-	return []string{"id", "spettacolo", "luogo", "luogo", "inizio", "fine"}
+func EventoFields() []string {
+	return []string{"id", "spettacolo", "luogo", "titolo", "inizio", "fine"}
 }
 
-func (e Event) Populate(stmt *sql.Stmt) (err error) {
+func (e Evento) Populate(stmt *sql.Stmt) (err error) {
 	_, err = stmt.Exec(e.ID, e.Spettacolo, e.Luogo, e.Titolo, e.Inizio, e.Fine)
 	return
 }
 
-func (e Event) GetID() int {
+func (e Evento) GetID() int {
 	return e.ID
 }
 
-type VenueSector struct {
+type Settore struct {
 	ID       int
-	Venue    int
-	Name     string `faker:"century"`
-	Capacity string `faker:"year"`
+	Luogo    int
+	Nome     string `faker:"username,unique"`
+	Capienza int    `faker:"oneof: 30,40,60"`
 }
 
-func VenueSectorFields() []string {
-	return []string{"id", "venue", "name", "capacity"}
+func SettoreFields() []string {
+	return []string{"id", "luogo", "nome", "capienza"}
 }
 
-func (s VenueSector) Populate(stmt *sql.Stmt) (err error) {
-	_, err = stmt.Exec(s.ID, s.Venue, s.Name, s.Capacity)
+func (s Settore) Populate(stmt *sql.Stmt) (err error) {
+	_, err = stmt.Exec(s.ID, s.Luogo, s.Nome, s.Capienza)
 	return
 }
 
-func (s VenueSector) GetID() int {
+func (s Settore) GetID() int {
 	return s.ID
 }
 
-type VenueSectorSeat struct {
-	ID     int
-	Sector int
-	Row    string
-	Col    int `faker:"oneof: 1,2,3,4,5,6,7,8,9,10"`
+type Fornitore struct {
+	ID          int
+	Nome        string `faker:"name,unique"`
+	Descrizione string `faker:"sentence"`
 }
 
-func VenueSectorSeatFields() []string {
-	return []string{"id", "sector", "row", "col"}
+func FornitoreFields() []string {
+	return []string{"id", "nome", "descrizione"}
 }
 
-func (s VenueSectorSeat) Populate(stmt *sql.Stmt) (err error) {
-	_, err = stmt.Exec(s.ID, s.Sector, s.Row, s.Col)
+func (s Fornitore) Populate(stmt *sql.Stmt) (err error) {
+	_, err = stmt.Exec(s.ID, s.Nome, s.Descrizione)
 	return
 }
 
-func (s VenueSectorSeat) GetID() int {
+func (s Fornitore) GetID() int {
 	return s.ID
 }
 
-type VenueSectorEventsPrice struct {
-	Sector int
-	Event  int
-	Price  float64 `faker:"amount"`
+type EventoFornitoreServizio struct {
+	Fornitore int
+	Tipo      string `faker:"oneof: audio,biglietteria,luci,maschere,sicurezza,regia"`
+	Evento    int
+	Prezzo    float64 `faker:"amount"`
 }
 
-func VenueSectorEventsPriceFields() []string {
-	return []string{"sector", "event", "price"}
+func EventoFornitoreServizioFields() []string {
+	return []string{"fornitore", "tipo", "evento", "prezzo"}
 }
 
-func (s VenueSectorEventsPrice) Populate(stmt *sql.Stmt) (err error) {
-	_, err = stmt.Exec(s.Sector, s.Event, s.Price)
+func (s EventoFornitoreServizio) Populate(stmt *sql.Stmt) (err error) {
+	_, err = stmt.Exec(s.Fornitore, s.Tipo, s.Evento, s.Prezzo)
 	return
 }
 
-type Ticket struct {
-	ID    int
-	Seat  int
-	Event int
+type Posto struct {
+	ID      int
+	Settore int
+	Fila    string
+	Numero  int
 }
 
-func TicketFields() []string {
-	return []string{"id", "seat", "event"}
+func PostoFields() []string {
+	return []string{"id", "settore", "fila", "numero"}
 }
 
-func (s Ticket) Populate(stmt *sql.Stmt) (err error) {
-	_, err = stmt.Exec(s.ID, s.Seat, s.Event)
+func (s Posto) Populate(stmt *sql.Stmt) (err error) {
+	_, err = stmt.Exec(s.ID, s.Settore, s.Fila, s.Numero)
 	return
 }
 
-func (s Ticket) GetID() int {
+func (s Posto) GetID() int {
 	return s.ID
+}
+
+type SettoreEventoCosto struct {
+	Settore int
+	Evento  int
+	Prezzo  float64 `faker:"amount"`
+}
+
+func SettoreEventoCostoFields() []string {
+	return []string{"settore", "evento", "prezzo"}
+}
+
+func (s SettoreEventoCosto) Populate(stmt *sql.Stmt) (err error) {
+	_, err = stmt.Exec(s.Settore, s.Evento, s.Prezzo)
+	return
+}
+
+type Biglietto struct {
+	Codice     int
+	Nominativo string `faker:"name"`
+	Posto      int
+	Evento     int
+}
+
+func BigliettoFields() []string {
+	return []string{"codice", "nominativo", "posto", "evento"}
+}
+
+func (s Biglietto) Populate(stmt *sql.Stmt) (err error) {
+	_, err = stmt.Exec(s.Codice, s.Nominativo, s.Posto, s.Evento)
+	return
+}
+
+func (s Biglietto) GetID() int {
+	return s.Codice
 }
 
 func onlyIDs[T WithID](vec []T) interfaces.CustomProviderFunction {
@@ -266,8 +336,15 @@ func point() (interface{}, error) {
 }
 
 func row() (interface{}, error) {
-	chars := []string{"A", "B", "C", "D", "E", "F"}
+	chars := []string{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"}
 	return chars[rand.Intn(len(chars))], nil
+}
+
+func randomTimestamp() (time.Time, time.Time) {
+	randomTime := rand.Int63n(time.Now().Unix()-94608000) + 94608000
+	randomNow := time.Unix(randomTime, 0)
+	randomAfterNow := randomNow.Add(time.Hour * time.Duration(rand.Intn(25)))
+	return randomNow, randomAfterNow
 }
 
 func main() {
@@ -290,144 +367,198 @@ func main() {
 	}
 	log.Println("Created schema")
 
-	artists := []Artist{}
+	persone := []Persona{}
 	if err = faker.FakeData(
-		&artists,
-		options.WithRandomMapAndSliceMinSize(ARTISTS_MIN),
-		options.WithRandomMapAndSliceMaxSize(ARTISTS_MAX),
+		&persone,
+		options.WithRandomMapAndSliceMinSize(PERSONE_MIN),
+		options.WithRandomMapAndSliceMaxSize(PERSONE_MAX),
 	); err != nil {
 		log.Fatalf("Could not fill artists data: %v", err)
 	}
-	for i := range artists {
-		artists[i].ID = i + 1
+	for i := range persone {
+		persone[i].ID = i + 1
 	}
-	bulkInsert("artists", ArtistFields(), artists)
-	log.Printf("Populated %d artists", len(artists))
+	bulkInsert("persona", PersonaFields(), persone)
+	log.Printf("Popolato %d persone", len(persone))
 
-	shows := []Show{}
+	gruppi := []Gruppo{}
 	if err = faker.FakeData(
-		&shows,
-		options.WithCustomFieldProvider("Title", title),
-		options.WithCustomFieldProvider("Cachet", price(100, 100000)),
-		options.WithCustomFieldProvider("SIAEPrice", price(500, 100000)),
-		options.WithCustomFieldProvider("Artist", onlyIDs(artists)),
-		options.WithRandomMapAndSliceMinSize(SHOWS_MIN),
-		options.WithRandomMapAndSliceMaxSize(SHOWS_MAX),
+		&gruppi,
+		options.WithRandomMapAndSliceMinSize(GRUPPI_MIN),
+		options.WithRandomMapAndSliceMaxSize(GRUPPI_MAX),
+	); err != nil {
+		log.Fatalf("Could not fill artists data: %v", err)
+	}
+	for i := range gruppi {
+		gruppi[i].ID = i + 1
+	}
+	bulkInsert("gruppo", GruppoFields(), gruppi)
+	log.Printf("Popolato %d gruppi", len(gruppi))
+
+	artisti := []Artista{}
+	if err = faker.FakeData(
+		&artisti,
+		options.WithRandomMapAndSliceMinSize(ARTISTI_MIN),
+		options.WithRandomMapAndSliceMaxSize(ARTISTI_MAX),
+	); err != nil {
+		log.Fatalf("Could not fill artists data: %v", err)
+	}
+	for i := range artisti {
+		artisti[i].ID = i + 1
+		if i%2 == 0 {
+			id, _ := onlyIDs(persone)()
+			rr := id.(int)
+			artisti[i].Persona = &rr
+		} else {
+			id, _ := onlyIDs(gruppi)()
+			rr := id.(int)
+			artisti[i].Gruppo = &rr
+		}
+	}
+	bulkInsert("artista", ArtistaFields(), artisti)
+	log.Printf("Popolato %d artisti", len(artisti))
+
+	spettacoli := []Spettacolo{}
+	if err = faker.FakeData(
+		&spettacoli,
+		options.WithCustomFieldProvider("Titolo", title),
+		options.WithCustomFieldProvider("Artista", onlyIDs(artisti)),
+		options.WithRandomMapAndSliceMinSize(SPETTACOLI_MIN),
+		options.WithRandomMapAndSliceMaxSize(SPETTACOLI_MAX),
 	); err != nil {
 		log.Fatalf("Could not fill shows data: %v", err)
 	}
-	for i := range shows {
-		shows[i].ID = i + 1
+	for i := range spettacoli {
+		spettacoli[i].ID = i + 1
 	}
-	bulkInsert("shows", ShowFields(), shows)
-	log.Printf("Populated %d shows", len(shows))
+	bulkInsert("spettacolo", SpettacoloFields(), spettacoli)
+	log.Printf("Popolato %d spettacoli", len(spettacoli))
 
-	venueTypes := []VenueType{
-		{1, "stadium"},
-		{2, "opera hall"},
-		{3, "fair"},
-		{4, "pub"},
-		{5, "auditorium"},
-	}
-	bulkInsert("venue_types", VenueTypeFields(), venueTypes)
-	log.Printf("Populated %d venue types", len(venueTypes))
-
-	venues := []Venue{}
+	fornitori := []Fornitore{}
 	if err = faker.FakeData(
-		&venues,
-		options.WithCustomFieldProvider("Type", onlyIDs(venueTypes)),
-		options.WithCustomFieldProvider("Coords", point),
-		options.WithCustomFieldProvider("Price", price(1000, 5000)),
-		options.WithRandomMapAndSliceMinSize(VENUES_MIN),
-		options.WithRandomMapAndSliceMaxSize(VENUES_MAX),
+		&fornitori,
+		options.WithRandomMapAndSliceMinSize(FORNITORI_MIN),
+		options.WithRandomMapAndSliceMaxSize(FORNITORI_MAX),
+	); err != nil {
+		log.Fatalf("Could not fill shows data: %v", err)
+	}
+	for i := range fornitori {
+		fornitori[i].ID = i + 1
+	}
+	bulkInsert("fornitore", FornitoreFields(), fornitori)
+	log.Printf("Popolato %d spettacoli", len(fornitori))
+
+	luoghi := []Luogo{}
+	if err = faker.FakeData(
+		&luoghi,
+		options.WithRandomMapAndSliceMinSize(LUOGHI_MIN),
+		options.WithRandomMapAndSliceMaxSize(LUOGHI_MAX),
 	); err != nil {
 		log.Fatalf("Could not fill venues data: %v", err)
 	}
-	for i := range venues {
-		venues[i].ID = i + 1
+	for i := range luoghi {
+		luoghi[i].ID = i + 1
 	}
-	bulkInsert("venues", VenueFields(), venues)
-	log.Printf("Populated %d venues", len(venues))
+	bulkInsert("luogo", LuogoFields(), luoghi)
+	log.Printf("Popolato %d luoghi", len(luoghi))
 
-	events := []Event{}
+	eventi := []Evento{}
 	if err = faker.FakeData(
-		&events,
-		options.WithCustomFieldProvider("Show", onlyIDs(shows)),
-		options.WithCustomFieldProvider("Venue", onlyIDs(venues)),
-		options.WithRandomMapAndSliceMinSize(EVENTS_MIN),
-		options.WithRandomMapAndSliceMaxSize(EVENTS_MAX),
+		&eventi,
+		options.WithCustomFieldProvider("Spettacolo", onlyIDs(spettacoli)),
+		options.WithCustomFieldProvider("Luogo", onlyIDs(luoghi)),
+		options.WithRandomMapAndSliceMinSize(EVENTI_MIN),
+		options.WithRandomMapAndSliceMaxSize(EVENTI_MAX),
 	); err != nil {
 		log.Fatalf("Could not fill events data: %v", err)
 	}
-	for i := range events {
-		events[i].ID = i + 1
+	for i := range eventi {
+		eventi[i].ID = i + 1
+		n, a := randomTimestamp()
+		eventi[i].Inizio = n.String()[:19]
+		eventi[i].Fine = a.String()[:19]
 	}
-	bulkInsert("events", EventFields(), events)
-	log.Printf("Populated %d events", len(events))
+	bulkInsert("evento", EventoFields(), eventi)
+	log.Printf("Popolato %d eventi", len(eventi))
 
-	venueSectors := []VenueSector{}
+	settori := []Settore{}
 	if err = faker.FakeData(
-		&venueSectors,
-		options.WithCustomFieldProvider("Venue", onlyIDs(venues)),
-		options.WithRandomMapAndSliceMinSize(VENUE_SECTORS_MIN),
-		options.WithRandomMapAndSliceMaxSize(VENUE_SECTORS_MAX),
+		&settori,
+		options.WithCustomFieldProvider("Luogo", onlyIDs(luoghi)),
+		options.WithRandomMapAndSliceMinSize(SETTORI_MIN),
+		options.WithRandomMapAndSliceMaxSize(SETTORI_MAX),
 	); err != nil {
 		log.Fatalf("Could not fill venue sectors data: %v", err)
 	}
-	for i := range venueSectors {
-		venueSectors[i].ID = i + 1
+	for i := range settori {
+		settori[i].ID = i + 1
 	}
-	bulkInsert("sectors", VenueSectorFields(), venueSectors)
-	log.Printf("Populated %d venue sectors", len(venueSectors))
+	bulkInsert("settore", SettoreFields(), settori)
+	log.Printf("Popolato %d settori", len(settori))
 
-	venueSectorsSeats := []VenueSectorSeat{}
-	if err = faker.FakeData(
-		&venueSectorsSeats,
-		options.WithCustomFieldProvider("Sector", onlyIDs(venueSectors)),
-		options.WithCustomFieldProvider("Row", row),
-		options.WithRandomMapAndSliceMinSize(VENUE_SECTOR_SEATS_MIN),
-		options.WithRandomMapAndSliceMaxSize(VENUE_SECTOR_SEATS_MAX),
-	); err != nil {
-		log.Fatalf("Could not fill venue sectors data: %v", err)
+	posti := []Posto{}
+	i := 0
+	chars := []string{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"}
+	for _, s := range settori {
+		nCols := s.Capienza / len(chars)
+		for _, r := range chars {
+			for c := 0; c < nCols; c++ {
+				posti = append(posti, Posto{
+					ID:      i,
+					Settore: s.ID, Fila: r, Numero: c})
+				i++
+			}
+		}
 	}
-	for i := range venueSectorsSeats {
-		venueSectorsSeats[i].ID = i + 1
-	}
-	bulkInsert("seats", VenueSectorSeatFields(), venueSectorsSeats)
-	log.Printf("Populated %d venue sectors seats", len(venueSectorsSeats))
+	bulkInsert("posto", PostoFields(), posti)
+	log.Printf("Popolato %d posti", len(posti))
 
-	venueSectorsEventsPrices := []VenueSectorEventsPrice{}
-	for _, event := range events {
-		for _, sector := range venueSectors {
-			if sector.Venue == event.Venue {
-				var ele VenueSectorEventsPrice
+	settoreEventoCosti := []SettoreEventoCosto{}
+	for _, event := range eventi {
+		for _, sector := range settori {
+			if sector.Luogo == event.Luogo {
+				var ele SettoreEventoCosto
 				if err = faker.FakeData(&ele); err != nil {
 					log.Fatalf("Could not generate one venue sector events price: %v", err)
 				}
-				ele.Event = event.GetID()
-				ele.Sector = sector.GetID()
-				ele.Price += 1
-				venueSectorsEventsPrices = append(venueSectorsEventsPrices, ele)
+				ele.Evento = event.GetID()
+				ele.Settore = sector.GetID()
+				ele.Prezzo += 1
+				settoreEventoCosti = append(settoreEventoCosti, ele)
 			}
 		}
 	}
-	bulkInsert("sectors_events_prices", VenueSectorEventsPriceFields(), venueSectorsEventsPrices)
-	log.Printf("Populated %d venue sectors events prices", len(venueSectorsEventsPrices))
+	bulkInsert("settore_evento_costo", SettoreEventoCostoFields(), settoreEventoCosti)
+	log.Printf("Popolato %d costi settore evento", len(settoreEventoCosti))
 
-	tickets := []Ticket{}
-	i := 0
-	for _, event := range events {
-		for _, seat := range venueSectors {
-			if rand.Intn(10) > 7 {
-				var ticket Ticket
-				ticket.ID = i
-				ticket.Event = event.GetID()
-				ticket.Seat = seat.GetID()
-				i++
-				tickets = append(tickets, ticket)
+	eventoFornitoreServizi := []EventoFornitoreServizio{}
+	if err = faker.FakeData(
+		&eventoFornitoreServizi,
+		options.WithCustomFieldProvider("Fornitore", onlyIDs(fornitori)),
+		options.WithCustomFieldProvider("Evento", onlyIDs(eventi)),
+	); err != nil {
+		log.Fatalf("Could not fill shows data: %v", err)
+	}
+	bulkInsert("evento_fornitore_servizio", EventoFornitoreServizioFields(), eventoFornitoreServizi)
+	log.Printf("Popolato %d evento fornitore servizio", len(eventoFornitoreServizi))
+
+	biglietti := []Biglietto{}
+	i = 0
+	for _, settoreEventoCosto := range settoreEventoCosti {
+		for _, posto := range posti {
+			if posto.Settore == settoreEventoCosto.Settore {
+				if rand.Intn(10) > 7 {
+					var ticket Biglietto
+					ticket.Codice = i
+					ticket.Evento = settoreEventoCosto.Evento
+					ticket.Posto = posto.GetID()
+					ticket.Nominativo = faker.Name()
+					i++
+					biglietti = append(biglietti, ticket)
+				}
 			}
 		}
 	}
-	bulkInsert("tickets", TicketFields(), tickets)
-	log.Printf("Populated %d tickets", len(tickets))
+	bulkInsert("biglietto", BigliettoFields(), biglietti)
+	log.Printf("Popolato %d biglietti", len(biglietti))
 }
