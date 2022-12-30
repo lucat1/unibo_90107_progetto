@@ -4,6 +4,7 @@
 \usepackage{tabularx}
 \usepackage[hidelinks,colorlinks=true,linkcolor=black,urlcolor=blue]{hyperref}
 \usepackage{graphicx}
+\usepackage{enumitem}
 
 \usepackage{listings}
 \usepackage{inconsolata}
@@ -263,6 +264,7 @@ Servizio & Associa un fornitore a un evento & Tipo, prezzo & Fornitore (0,N), Ev
 
 \textbf{Vincoli}
 
+<<<<<<< HEAD
 \begin{itemize}
   \item (RV1) Il cachet e il prezzo SIAE devono essere maggiori o uguali a 0.
   \item (RV2) Il prezzo di affitto del luogo deve essere maggiore o uguale a 0.
@@ -279,6 +281,26 @@ Servizio & Associa un fornitore a un evento & Tipo, prezzo & Fornitore (0,N), Ev
   \item (RD2) Il costo di un evento è la somma tra il cachet e il costo SIAE, il costo di affitto del luogo e i costi dei servizi.
   \item (RD3) Il guadagno di un evento è la somma dei prezzi dei biglietti venduti meno il costo dell'evento.
 \end{itemize}
+
+\begin{enumerate}[label=$\bullet$\hspace{.5em}(RV\arabic*),leftmargin=6em,ref=RV\theenumi]
+  \item Il cachet e il costo della SIAE devono essere maggiori o uguali a zero.
+  \item Il costo di affitto del luogo deve essere maggiore o uguale a zero.
+  \item La capacità di un settore deve essere maggiore di 0.
+  \item Il prezzo di un settore deve essere maggiore di 0.
+  \item Il costo di un servizio deve essere maggiore di 0.
+  \item Il numero di posti in un settore è pari alla capacità.
+  \item \label{rv7} Ogni settore del luogo di un evento deve avere un prezzo assegnato.
+  \item \label{rv8} Tutti i settori collegati allo stesso evento devono appartenere
+    allo stesso luogo.
+\end{enumerate}
+
+\textbf{Derivazioni}
+
+\begin{enumerate}[label=$\bullet$\hspace{.5em}(RV\arabic*),leftmargin=6em,ref=RV\theenumi]
+  \item Il prezzo di un biglietto è il costo del settore in cui si trova il posto del biglietto.
+  \item Il costo di un evento è la somma tra il cachet e il costo SIAE per l'affitto, il costo di affitto del luogo e i costi dei servizi.
+  \item Il guadagno di un evento è la somma dei prezzi dei biglietti venduti meno il costo dell'evento.
+\end{enumerate}
 
 \section{Progettazione logica}
 
@@ -386,6 +408,20 @@ Prenotazione & R & 30 000 000 (= vendita)\\
 \end{tabularx}
 
 \subsection{Ristrutturazione dello schema concettuale}
+
+\subsubsection*{Ridondanze}
+
+Dal diagramma ER traspare una evidente ridondanza nella relazione \emph{Posizione},
+che lega un Evento ad un Luogo. Per trovare il luogo in cui si tiene un dato evento
+si pu\`o anche sfruttare la relazione \emph{Costo} e la relazione \emph{Divione}.
+Poich\`e quando si visualizza un evento si vuole molto spesso conoscere anche
+il luogo in cui si svolge, l'utilizzo di questa operazione \`e molto alto.
+Per migliorare le prestazioni abbiamo preferito dunque lasciare una relazione
+ridondante, imponendo gli opportuni vincoli affinch\`e non si verifichino
+inconsistenze (vedi \ref{rv7}, \ref{rv8}).
+
+
+% TODO
 
 \subsection{Normalizzazione}
 Osservando la ristrutturazione dello schema concettuale si nota che tutte le
