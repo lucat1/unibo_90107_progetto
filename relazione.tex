@@ -42,7 +42,7 @@
 \subsection{Requisiti espressi in linguaggio naturale}
 
 Vogliamo realizzare un database per un'azienda di organizzazione di eventi e spettacoli, che comprende la gestione dei biglietti, dei luoghi e del personale necessario alla realizzazione.\\
-Un artista può essere una persona o un gruppo a cui appartengo più persone.\\
+Un artista ha un nome d'arte.\\
 Uno spettacolo è rappresentato da un titolo, un artista, dal costo della SIAE e da un cachet. Uno spettacolo è una serie di eventi e di ogni evento vogliamo memorizzare il titolo, il luogo, la data di inizio e fine, oltre allo spettacolo al quale è associato.\\
 L'azienda può organizzare gli eventi in infrastrutture diverse (palazzetti, stadi, piazze, teatri, etc.) di conseguenza serve memorizzare un luogo di cui specificare un nome, un tipo (rappresentato da un nome), l'indirizzo, la città e un prezzo giornaliero per l'affitto.\\
 Un luogo potrebbe avere posti (a sedere o in piedi) più convenienti o confortevoli per vendere biglietti a prezzo più alto, quindi rappresentiamo un settore di un luogo con la sua capienza, un nome e collegandolo a un luogo.\\
@@ -77,8 +77,11 @@ Fornitore & Un fornitore di servizi & Azienda & Servizio\\
 \end{tabularx}
 
 \subsection{Eliminazione delle ambiguità presenti}
-TODO: capire se necessario
 
+Dall'analisi del termine artista abbiamo convenuto che può essere una persona o un gruppo a cui appartengo più persone.\\
+Le persone hanno un nome, un cognome e una data di nascita e possono appartenere a uno o più gruppi.\\
+I gruppi hanno una data di formazione.\\
+Inoltre, abbiamo voluto specificato il ``tipo'' di spettacolo che verrà eseguito.
 
 \subsection{Strutturazione dei requisiti}
 
@@ -88,7 +91,7 @@ Vogliamo realizzare un database per un'azienda di organizzazione di eventi e spe
 
 \subsubsection*{Frasi relative agli artisti}
 
-Un artista può essere una persona o un gruppo a cui appartengo più persone.
+Un artista ha un nome d'arte.
 
 \subsubsection*{Frasi relative agli spettacoli e agli eventi}
 
@@ -264,39 +267,20 @@ Servizio & Associa un fornitore a un evento & Tipo, prezzo & Fornitore (0,N), Ev
 
 \textbf{Vincoli}
 
-<<<<<<< HEAD
-\begin{itemize}
-  \item (RV1) Il cachet e il prezzo SIAE devono essere maggiori o uguali a 0.
-  \item (RV2) Il prezzo di affitto del luogo deve essere maggiore o uguale a 0.
-  \item (RV3) La capacità di un settore deve essere maggiore di 0.
-  \item (RV4) Il prezzo di un settore deve essere maggiore o uguale a 0.
-  \item (RV5) Il prezzo di un servizio deve essere maggiore di 0.
-  \item (RV6) Il numero di posti in un settore è pari alla capacità.
-\end{itemize}
-
-\textbf{Derivazioni}
-
-\begin{itemize}
-  \item (RD1) Il prezzo di un biglietto è il costo del settore in cui si trova il posto del biglietto.
-  \item (RD2) Il costo di un evento è la somma tra il cachet e il costo SIAE, il costo di affitto del luogo e i costi dei servizi.
-  \item (RD3) Il guadagno di un evento è la somma dei prezzi dei biglietti venduti meno il costo dell'evento.
-\end{itemize}
-
 \begin{enumerate}[label=$\bullet$\hspace{.5em}(RV\arabic*),leftmargin=6em,ref=RV\theenumi]
-  \item Il cachet e il costo della SIAE devono essere maggiori o uguali a zero.
-  \item Il costo di affitto del luogo deve essere maggiore o uguale a zero.
+  \item Il cachet e il prezzo SIAE devono essere maggiori o uguali a 0.
+  \item Il prezzo di affitto del luogo deve essere maggiore o uguale a 0.
   \item La capacità di un settore deve essere maggiore di 0.
-  \item Il prezzo di un settore deve essere maggiore di 0.
-  \item Il costo di un servizio deve essere maggiore di 0.
+  \item Il prezzo di un settore deve essere maggiore o uguale a 0.
+  \item Il prezzo di un servizio deve essere maggiore di 0.
   \item Il numero di posti in un settore è pari alla capacità.
   \item \label{rv7} Ogni settore del luogo di un evento deve avere un prezzo assegnato.
-  \item \label{rv8} Tutti i settori collegati allo stesso evento devono appartenere
-    allo stesso luogo.
+  \item \label{rv8} Tutti i settori collegati allo stesso evento devono appartenere allo stesso luogo.
 \end{enumerate}
 
 \textbf{Derivazioni}
 
-\begin{enumerate}[label=$\bullet$\hspace{.5em}(RV\arabic*),leftmargin=6em,ref=RV\theenumi]
+\begin{enumerate}[label=$\bullet$\hspace{.5em}(RD\arabic*),leftmargin=6em,ref=RV\theenumi]
   \item Il prezzo di un biglietto è il costo del settore in cui si trova il posto del biglietto.
   \item Il costo di un evento è la somma tra il cachet e il costo SIAE per l'affitto, il costo di affitto del luogo e i costi dei servizi.
   \item Il guadagno di un evento è la somma dei prezzi dei biglietti venduti meno il costo dell'evento.
@@ -308,7 +292,7 @@ Servizio & Associa un fornitore a un evento & Tipo, prezzo & Fornitore (0,N), Ev
 
 \subsubsection*{Tavole dei volumi}
 
-\begin{tabularx}{\textwidth}{|X|X|>{\raggedright\arraybackslash}X|}
+\begin{tabularx}{\textwidth}{|>{\hsize=.5\hsize}X|>{\hsize=.4\hsize}X|>{\raggedright\arraybackslash\hsize=2.1\hsize}X|}
 \hline
 \textbf{Concetto} & \textbf{Tipo} & \textbf{Volume}\\
 \hline
@@ -330,7 +314,7 @@ Posto & E & 50 000\\
 \hline
 Fornitore & E & 100 \\
 \hline
-Biglietto & E & 40 000\\
+Biglietto & E & 350 000 ($\leq$ eventi · posti / luoghi)\\
 \hline
 Esibizione & R & 600\\
 \hline
@@ -344,11 +328,11 @@ Divisione & R & 600 (= settori)\\
 \hline
 Piantina & R & 50 000 (= posti)\\
 \hline
-Costo & R & 600 000 (= eventi · settori)\\
+Costo & R & 6 000 (= eventi · settori / luoghi)\\
 \hline
-Vendita & R & 30 000 000 ($\leq$ eventi · posti)\\
+Vendita & R & 350 000 (= biglietto)\\
 \hline
-Prenotazione & R & 30 000 000 (= vendita)\\
+Prenotazione & R & 350 000 (= biglietto)\\
 \hline
 \end{tabularx}
 
@@ -404,24 +388,16 @@ Prenotazione & R & 30 000 000 (= vendita)\\
   \hline
   23 & 20 volte all'anno \\
   \hline
-
 \end{tabularx}
 
 \subsection{Ristrutturazione dello schema concettuale}
 
 \subsubsection*{Ridondanze}
 
-Dal diagramma ER traspare una evidente ridondanza nella relazione \emph{Posizione},
-che lega un Evento ad un Luogo. Per trovare il luogo in cui si tiene un dato evento
-si pu\`o anche sfruttare la relazione \emph{Costo} e la relazione \emph{Divione}.
-Poich\`e quando si visualizza un evento si vuole molto spesso conoscere anche
-il luogo in cui si svolge, l'utilizzo di questa operazione \`e molto alto.
-Per migliorare le prestazioni abbiamo preferito dunque lasciare una relazione
-ridondante, imponendo gli opportuni vincoli affinch\`e non si verifichino
-inconsistenze (vedi \ref{rv7}, \ref{rv8}).
-
-
-% TODO
+Dal diagramma ER traspare una evidente ridondanza nella relazione \emph{Posizione}, che lega un Evento ad un Luogo.
+Per trovare il luogo in cui si tiene un dato evento si può anche fruttare la relazione \emph{Costo} e la relazione \emph{Divisione}.
+Poiché quando si visualizza un evento si vuole molto spesso conoscere anche il luogo in cui si svolge, l'utilizzo di questa operazione è molto alto.
+Per migliorare le prestazioni abbiamo preferito dunque lasciare una relazione ridondante, imponendo gli opportuni vincoli affinché non si verifichino inconsistenze (vedi \ref{rv7}, \ref{rv8}).
 
 \subsection{Normalizzazione}
 Osservando la ristrutturazione dello schema concettuale si nota che tutte le
