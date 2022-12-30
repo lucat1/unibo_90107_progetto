@@ -40,8 +40,14 @@
 
 \subsection{Requisiti espressi in linguaggio naturale}
 
-Vogliamo realizzare un database per un'azienda di organizzazione di eventi e spettacoli, che comprende la gestione dei biglietti, dei luoghi e del personale necessario alla realizzazione.
-Un artista è rappresentato come un nome. Uno spettacolo è rappresentato da un titolo, un artista, dal costo della SIAE e da un chacet. Uno spettacolo è una serie di eventi e di ogni evento vogliamo memorizzare il titolo, il luogo, la data di inizio e fine, oltre allo spettacolo al quale è associato. L'azienda può organizzare gli eventi in infrastrutture diverse (palazzetti, stadi, fiere, parchi pubblici, etc...) di conseguenza serve memorizzare un luogo di cui specificare un nome, un tipo (rappresentato da un nome), le coordinate e un prezzo giornaliero per l'affitto. Un luogo potrebbe avere posti (a sedere o in piedi) più convenienti o confortevoli per vendere biglietti a prezzo più alto, quindi rappresentiamo un settore di un luogo con la sua capienza, un nome e collegandolo a un luogo. Un posto di un settore viene identificato da una codice (che è una coppia riga e colonna). Il prezzo dei biglietti associati a un settore di un luogo può variare a seconda dell'evento. Ogni biglietto è quindi rappresentato da un posto a sedere e un evento. Infine, vogliamo tenere traccia di tutti i servizi erogati dall'azienda (maschere, facchini, biglietteria, sicurezza) e richiesti dagli artisti (tecnico delle luci e del suono). Il tipo di un servizio è rappresentato da un nome e da una descrizione. Il fornitore di un servizio è rappresentato dal tipo e da un prezzo all'ora.
+Vogliamo realizzare un database per un'azienda di organizzazione di eventi e spettacoli, che comprende la gestione dei biglietti, dei luoghi e del personale necessario alla realizzazione.\\
+Un artista può essere una persona o un gruppo a cui appartengo più persone.\\
+Uno spettacolo è rappresentato da un titolo, un artista, dal costo della SIAE e da un cachet. Uno spettacolo è una serie di eventi e di ogni evento vogliamo memorizzare il titolo, il luogo, la data di inizio e fine, oltre allo spettacolo al quale è associato.\\
+L'azienda può organizzare gli eventi in infrastrutture diverse (palazzetti, stadi, piazze, teatri, etc.) di conseguenza serve memorizzare un luogo di cui specificare un nome, un tipo (rappresentato da un nome), l'indirizzo, la città e un prezzo giornaliero per l'affitto.\\
+Un luogo potrebbe avere posti (a sedere o in piedi) più convenienti o confortevoli per vendere biglietti a prezzo più alto, quindi rappresentiamo un settore di un luogo con la sua capienza, un nome e collegandolo a un luogo.\\
+Un posto di un settore viene identificato da un codice (che è una coppia fila-numero).\\
+Il prezzo dei biglietti associati a un settore di un luogo può variare a seconda dell'evento. Ogni biglietto ha un nominativo ed è associato a un posto e a un evento.\\
+Infine, vogliamo tenere traccia di tutti i servizi erogati dalle aziende (maschere, facchini, biglietteria, sicurezza) e richiesti dagli artisti (tecnico delle luci e del suono). I fornitori offrono servizi che hanno un tipo e un prezzo.
 
 \subsection{Glossario dei termini}
 
@@ -81,15 +87,15 @@ Vogliamo realizzare un database per un'azienda di organizzazione di eventi e spe
 
 \subsubsection*{Frasi relative agli artisti}
 
-Un artista è rappresentato come un nome.
+Un artista può essere una persona o un gruppo a cui appartengo più persone.
 
 \subsubsection*{Frasi relative agli spettacoli e agli eventi}
 
-Uno spettacolo è una serie di eventi e di ogni evento vogliamo memorizzare il titolo, il luogo, la data di inizio e fine, oltre allo spettacolo al quale è associato.
+Uno spettacolo è rappresentato da un titolo, un artista, dal costo della SIAE e da un cachet. Uno spettacolo è una serie di eventi e di ogni evento vogliamo memorizzare il titolo, il luogo, la data di inizio e fine, oltre allo spettacolo al quale è associato.
 
 \subsubsection*{Frasi relative ai luoghi}
 
-L'azienda può organizzare gli eventi in infrastrutture diverse (palazzetti, stadi, fiere, parchi pubblici, etc...) di conseguenza serve memorizzare un luogo di cui specificare un nome, un tipo (rappresentato da un nome), le coordinate e un prezzo giornaliero per l'affitto.
+L'azienda può organizzare gli eventi in infrastrutture diverse (palazzetti, stadi, piazze, teatri, etc.) di conseguenza serve memorizzare un luogo di cui specificare un nome, un tipo (rappresentato da un nome), l'indirizzo, la città e un prezzo giornaliero per l'affitto.
 
 \subsubsection*{Frasi relative ai settori}
 
@@ -97,19 +103,15 @@ Un luogo potrebbe avere posti (a sedere o in piedi) più convenienti o confortev
 
 \subsubsection*{Frasi relative ai posti}
 
-Un posto di un settore viene identificato da una codice (che è una coppia riga e colonna).
+Un posto di un settore viene identificato da un codice (che è una coppia fila-numero).
 
 \subsubsection*{Frasi relative ai biglietti}
 
-Il prezzo dei biglietti associati a un settore di un luogo può variare a seconda dell'evento. Ogni biglietto è quindi rappresentato da un posto a sedere e un evento.
+Il prezzo dei biglietti associati a un settore di un luogo può variare a seconda dell'evento. Ogni biglietto ha un nominativo ed è associato a un posto e a un evento.
 
-\subsubsection*{Frasi relative ai servizi}
+\subsubsection*{Frasi relative ai servizi e ai fornitori}
 
-Infine, vogliamo tenere traccia di tutti i servizi erogati dall'azienda (maschere, facchini, biglietteria, sicurezza) e richiesti dagli artisti (tecnico delle luci e del suono). Il tipo di un servizio è rappresentato da un nome e da una descrizione.
-
-\subsubsection*{Frasi relative ai fornitori}
-
-Il fornitore di un servizio è rappresentato dal tipo e da un prezzo all'ora.
+Infine, vogliamo tenere traccia di tutti i servizi erogati dalle aziende (maschere, facchini, biglietteria, sicurezza) e richiesti dagli artisti (tecnico delle luci e del suono). I fornitori offrono servizi che hanno un tipo e un prezzo.
 
 \subsection{Specifica operazioni}
 
@@ -143,14 +145,14 @@ Il fornitore di un servizio è rappresentato dal tipo e da un prezzo all'ora.
 
 \subsection{Identificazione delle entità e relazioni}
 
-Abbiamo identificato le seguenti entità: evento, spettacolo, artista, luogo, tipologia di luogo, settore, posto, biglietto, servizio, fornitore.
+Abbiamo identificato le seguenti entità: evento, spettacolo, artista (persona e gruppo), luogo, settore, posto, biglietto, fornitore.
 
 Possiamo dividere le entità in quattro gruppi:
 
 \begin{itemize}
-    \item Spettacolo e artista.
-    \item Servizio e fornitore.
-    \item Luogo, tipologia di luogo, settore, posto.
+    \item Spettacolo e artista (persona e gruppo).
+    \item Fornitore.
+    \item Luogo, settore, posto.
     \item Biglietto.
 \end{itemize}
 
@@ -158,7 +160,7 @@ Possiamo dividere le entità in quattro gruppi:
 
 A un livello di astrazione più alto abbiamo un evento, parte di uno spettacolo di un artista, che si svolge in un luogo, di cui vengono venduti i biglietti e in cui ci sono dei fornitori che offrono dei servizi.
 
-%  \includegraphics[width=\textwidth]{ERScheletro.png} TODO deccommentare
+\includegraphics[width=\textwidth]{ERScheletro.png}
  
 \subsection{Sviluppo delle componenti dello scheletro}
 
@@ -166,40 +168,40 @@ A un livello di astrazione più alto abbiamo un evento, parte di uno spettacolo 
 
 Abbiamo poi sviluppato lo spettacolo come un'entità con un titolo, un cachet, un costo SIAE ed è composto da vari eventi, ognuno con un titolo, un inizio e una fine.\\
 Un evento è composto da un solo spettacolo.\\
-Ogni spettacolo è eseguito da un artista che ha un nome, un artista può eseguire più spettacoli.
+Ogni spettacolo è eseguito da un artista che ha un nome d'arte, un artista può eseguire più spettacoli.
+Un artista può essere una persona (con nome, cognome e data di nascita) o un gruppo (con una data di formazione) a cui appartengono una o più persone.
 
-%  \includegraphics[width=\textwidth]{ERSpettacoloArtista.png} TODO deccommentare
+\includegraphics[width=\textwidth]{ERSpettacoloArtista.png}
 
 \subsubsection*{Fornitore}
 
 Ogni fornitore può offrire servizi a più eventi e ogni evento può avere più fornitori di servizi, i servizi sono di diverse tipologie.\\
 Ogni fornitore può fornire vari tipi di servizi e ogni evento può aver necessità di diversi tipi di servizi.
 
-%  \includegraphics[width=\textwidth]{ERFornitore.png} TODO deccommentare
+\includegraphics[width=\textwidth]{ERFornitore.png}
 
 \subsubsection*{Luogo, tipologia di luogo, settore, posto}
 
-Ogni luogo ha un nome, delle coordinate geografiche e un costo di affitto.\\
-In ogni evento si svolge in un luogo e un luogo può ospitare più eventi.\\
-Ogni luogo ha una categoria.\\
+Ogni luogo ha un nome, un indirizzo, la città, un tipo e un costo di affitto.
+Ogni evento si svolge in un luogo e un luogo può ospitare più eventi.\\
 Ogni luogo è diviso in settori.
 Ogni settore ha un nome (che è univoco all'interno del luogo), una capienza massima e un prezzo dei biglietti per ogni evento.\\
-In ogni settore sono presenti dei posti segnati con una lettera e un numero (univoci all'interno del loro settore).
+In ogni settore sono presenti dei posti segnati con la lettera della fila e un numero (univoci all'interno del loro settore).
 
-%  \includegraphics[width=\textwidth]{ERLuogo.png} TODO deccommentare
+\includegraphics[width=\textwidth]{ERLuogo.png}
 
 \subsubsection*{Biglietto}
 
 Di ogni evento vendiamo diversi biglietti, ma ogni biglietto è valido per un solo evento.
-Ogni biglietto ha un ID e un nominativo.
+Ogni biglietto ha un codice univoco e un nominativo.
 
-%  \includegraphics[width=\textwidth]{ERBiglietto.png} TODO deccommentare
+\includegraphics[width=\textwidth]{ERBiglietto.png}
 
 \subsection{Unione delle componenti nello schema finale ridotto}
 
 Ogni biglietto è associato a un posto.
 
-%  \includegraphics[width=\textwidth]{ER.png} TODO deccommentare
+\includegraphics[width=\textwidth]{ER.png}
 
 \subsection{Dizionario dei dati}
 
@@ -209,13 +211,17 @@ Ogni biglietto è associato a un posto.
 \hline
 \textbf{Nome} & \textbf{Descrizione} & \textbf{Attributi} & \textbf{Identificatori}\\
 \hline
-Artista & Un artista che esegue degli spettacoli & & Nome (stringa)\\
+Persona & & Nome (stringa), cognome (stringa), data di nascita (timestamp) &\\
 \hline
-Spettacolo & Un serie di eventi di un artista & Title (stringa), Cachet (float), costo SIAE (float) & ID (numero)\\
+Gruppo & A cui appartengono delle persone & Data di formazione (timestamp) &\\
 \hline
-Luogo & Il luogo dove si svolge un evento & Prezzo (float) & Nome (stringa) e coordinate (point)\\
+Artista & Un artista (persona o gruppo) che esegue degli spettacoli & & Nome d'arte (stringa)\\
 \hline
-Evento & Una singola data di uno spettacolo & Titolo (stringa), Data e ora di inizio (timestamp) e fine (timestamp) & ID (numero)\\
+Spettacolo & Un serie di eventi di un artista & Cachet (float), prezzo SIAE (float) & Titolo (stringa)\\
+\hline
+Luogo & Il luogo dove si svolge un evento & Prezzo (float), tipo (enum) & Nome (stringa), indirizzo (stringa), città (stringa)\\
+\hline
+Evento & Una singola data di uno spettacolo & Data e ora di fine (timestamp) & Titolo (stringa), Data e ora di inizio (timestamp) e \textit{luogo} (riferimento)\\
 \hline
 Settore & Un settore di un luogo & Capacità (numero) & Nome (stringa) e \textit{luogo} (riferimento)\\
 \hline
@@ -223,7 +229,7 @@ Posto & Un posto in un settore & & Fila (carattere), numero (numero) e \textit{s
 \hline
 Fornitore & Un fornitore di servizi & Descrizione (stringa) & Nome (stringa)\\
 \hline
-Biglietto & Il biglietto di ingresso per un evento & Nominativo (stringa) & ID (numero)\\
+Biglietto & Il biglietto di ingresso per un evento & Nominativo (stringa) & Codice (numero)\\
 \hline
 \end{tabularx}
 
@@ -233,21 +239,23 @@ Biglietto & Il biglietto di ingresso per un evento & Nominativo (stringa) & ID (
 \hline
 \textbf{Nome} & \textbf{Descrizione} & \textbf{Attributi} & \textbf{Entità coinvolte}\\
 \hline
-Performa & Associa un artista a uno spettacolo & & Artista (0,N), Spettacolo (1,1)\\
+Esibizione & Associa un artista a uno spettacolo & & Artista (0,N), Spettacolo (1,1)\\
 \hline
-Composto da & Associa un evento con uno spettacolo & & Evento (1,1), Spettacolo (1,N)\\
+Data & Associa un evento con uno spettacolo & & Evento (1,1), Spettacolo (1,N)\\
 \hline
-Si tiene in & Associa un evento a un luogo & & Evento (1,1), Luogo (1,N)\\
+Posizione & Associa un evento a un luogo & & Evento (1,1), Luogo (1,N)\\
 \hline
-Diviso in & Associa un settore a un luogo & & Luogo (1,N), Settore (1,1)\\
+Divisione & Associa un settore a un luogo & & Luogo (1,N), Settore (1,1)\\
 \hline
-Composto da & Associa un posto a un settore & & Settore(1,N), Posto (1,1)\\
+Piantina & Associa un posto a un settore & & Settore(1,N), Posto (1,1)\\
 \hline
 Costo & Associa un settore a un evento & Prezzo & Evento (1,N), Settore (1,N)\\
 \hline
 Vendita & Associa un biglietto a un evento & & Evento (1,N), Biglietto (1,1)\\
 \hline
-Servizio & Associa un tipo di servizio a un fornitore e a un evento & Costo & Fornitore (1,N), Evento (1,N)\\
+Prenotazione & Associa un biglietto a un posto & & Biglietto (1,1), Posto (1,N)\\
+\hline
+Servizio & Associa un fornitore a un evento & Tipo, prezzo & Fornitore (0,N), Evento (1,N)\\
 \hline
 \end{tabularx}
 
@@ -256,11 +264,11 @@ Servizio & Associa un tipo di servizio a un fornitore e a un evento & Costo & Fo
 \textbf{Vincoli}
 
 \begin{itemize}
-  \item (RV1) Il cachet e il costo della SIAE devono essere maggiori o uguali a zero.
-  \item (RV2) Il costo di affitto del luogo deve essere maggiore o uguale a zero.
+  \item (RV1) Il cachet e il prezzo SIAE devono essere maggiori o uguali a 0.
+  \item (RV2) Il prezzo di affitto del luogo deve essere maggiore o uguale a 0.
   \item (RV3) La capacità di un settore deve essere maggiore di 0.
-  \item (RV4) Il prezzo di un settore deve essere maggiore di 0.
-  \item (RV5) Il costo di un servizio deve essere maggiore di 0.
+  \item (RV4) Il prezzo di un settore deve essere maggiore o uguale a 0.
+  \item (RV5) Il prezzo di un servizio deve essere maggiore di 0.
   \item (RV6) Il numero di posti in un settore è pari alla capacità.
 \end{itemize}
 
@@ -268,7 +276,7 @@ Servizio & Associa un tipo di servizio a un fornitore e a un evento & Costo & Fo
 
 \begin{itemize}
   \item (RD1) Il prezzo di un biglietto è il costo del settore in cui si trova il posto del biglietto.
-  \item (RD2) Il costo di un evento è la somma tra il cachet e il costo SIAE per l'affitto, il costo di affitto del luogo e i costi dei servizi.
+  \item (RD2) Il costo di un evento è la somma tra il cachet e il costo SIAE, il costo di affitto del luogo e i costi dei servizi.
   \item (RD3) Il guadagno di un evento è la somma dei prezzi dei biglietti venduti meno il costo dell'evento.
 \end{itemize}
 
@@ -278,9 +286,13 @@ Servizio & Associa un tipo di servizio a un fornitore e a un evento & Costo & Fo
 
 \subsubsection*{Tavole dei volumi}
 
-\begin{tabularx}{\textwidth}{|X|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}X|}
+\begin{tabularx}{\textwidth}{|X|X|>{\raggedright\arraybackslash}X|}
 \hline
 \textbf{Concetto} & \textbf{Tipo} & \textbf{Volume}\\
+\hline
+Persona & E & 100 \\
+\hline
+Gruppo & E & 100 \\
 \hline
 Artista & E & 200 \\
 \hline
@@ -288,19 +300,33 @@ Spettacolo & E & 600\\
 \hline
 Luogo & E & 100\\
 \hline
-Evento & E & 1000\\
+Evento & E & 1 000\\
 \hline
 Settore & E & 600\\
 \hline
-Posto & E & 3600\\
+Posto & E & 50 000\\
 \hline
 Fornitore & E & 100 \\
 \hline
-Biglietto & E & 40000\\
+Biglietto & E & 40 000\\
 \hline
-Servizio & R & 5000\\
+Esibizione & R & 600\\
 \hline
-Costo & R & 6000\\
+Data & R & 1 000 (= eventi)\\
+\hline
+Servizio & R & 5 000\\
+\hline
+Posizione & R & 1 000 (= eventi)\\
+\hline
+Divisione & R & 600 (= settori)\\
+\hline
+Piantina & R & 50 000 (= posti)\\
+\hline
+Costo & R & 600 000 (= eventi · settori)\\
+\hline
+Vendita & R & 30 000 000 ($\leq$ eventi · posti)\\
+\hline
+Prenotazione & R & 30 000 000 (= vendita)\\
 \hline
 \end{tabularx}
 
@@ -500,8 +526,7 @@ Si vogliono mostrare tutti i posti $(riga, colonna)$ \textbf{liberi} per un dato
 
 In alternativa, per avere un leggero miglioramento delle performance\footnote{
 Vedi dati empirici su \href{https://stackoverflow.com/a/66785790}{StackOverflow}.
-Sarebbe opportuno verificare quanto riportato sul proprio dataset.} si pu\`o
-ottenere lo stesso risultato tramite un \texttt{NOT EXISTS}:
+Sarebbe opportuno verificare quanto riportato sul proprio dataset.} si può ottenere lo stesso risultato tramite un \texttt{NOT EXISTS}:
 \lstinputlisting{queries/search-free-seats-by-event-ne.sql}
 
 \subsubsection{Visualizzare la percentuale di biglietti venduti per evento}
@@ -539,7 +564,7 @@ Si vuole mostrare il guadagno di un singolo show.
 \lstinputlisting{queries/search-earnings-by-show.sql}
 
 \subsubsection{Visualizzare lo show che ha guadagnato di più degli altri}
-Si vuole mostrare il guadagno pi\`u alto raggiunto da uno show e il suo titolo.
+Si vuole mostrare il guadagno più alto raggiunto da uno show e il suo titolo.
 \lstinputlisting{queries/show-max-earnings.sql}
 
 \section{Testing}
