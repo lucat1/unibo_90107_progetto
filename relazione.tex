@@ -131,7 +131,7 @@ Infine, vogliamo tenere traccia di tutti i servizi erogati dalle aziende (masche
     \item Rimborsare un biglietto (in media 20 volte al mese)
     \item Inserire un entità che offre un servizio (in media 20 volte all'anno)
     \item Trovare un biglietto dato il posto (in media 2 300 volte al mese)
-    \item \label{oploc3} Visualizzasgocciolire la capacità totale di un luogo (in media 6 volte al mese)
+    \item \label{oploc3} Visualizzare la capacità totale di un luogo (in media 6 volte al mese)
     \item \label{oploc4} Visualizzare i luoghi che soddisfano una capienza (in media 3 volte al mese)
     \item Visualizzare tutti gli eventi di un artista (in media 150 volte al giorno)
     \item Visualizzare tutti gli eventi di uno spettacolo (in media 1 000 volte al mese)
@@ -397,8 +397,8 @@ Prenotazione & R & 350 000 (= biglietto)\\
 
 \subsubsection*{Studio delle ridondanze}
 
-Dal diagramma ER traspare una evidente ridondanza nella relazione \emph{Posizione}, che lega un Evento ad un Luogo.
-Per trovare il luogo in cui si tiene un dato evento si può anche fruttare la relazione \emph{Costo} e la relazione \emph{Divisione}.
+Dal diagramma ER traspare una evidente ridondanza nella relazione \emph{Posizione}, che lega un Evento a un Luogo.
+Per trovare il luogo in cui si tiene un dato evento si può anche sfruttare la relazione \emph{Costo} e la relazione \emph{Divisione}.
 Poiché quando si visualizza un evento si vuole molto spesso conoscere anche il luogo in cui si svolge, l'utilizzo di questa operazione è molto alto.
 Per migliorare le prestazioni abbiamo preferito dunque lasciare una relazione ridondante, imponendo gli opportuni vincoli affinché non si verifichino inconsistenze (vedi \ref{rv7}, \ref{rv8}).
 
@@ -406,16 +406,16 @@ Per migliorare le prestazioni abbiamo preferito dunque lasciare una relazione ri
 % sono in realta' campi della tabella entita', non tabelle relazioni separate
 % quindi in sql non contano come un join in piu'.
 
-\subsubsection*{Tavole degli accessi manenendo la ridondanza}
+\subsubsection*{Tavole degli accessi mantenendo la ridondanza}
 \begin{tabularx}{\textwidth}{|X|X|X|X|}
 \hline
   \multicolumn{4}{|l|}{\textbf{Operazione \ref{oploc1}}} \\
 \hline
 \textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo}\\
 \hline
-Evento & Entit\`a & 1 & S \\
+Evento & Entità & 1 & S \\
 \hline
-Luogo & Entit\`a & 1 & S \\
+Luogo & Entità & 1 & S \\
 \hline
 \end{tabularx}
 \newline
@@ -427,9 +427,9 @@ Luogo & Entit\`a & 1 & S \\
 \hline
 \textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo}\\
 \hline
-Evento & Entit\`a & 1 & L \\
+Evento & Entità & 1 & L \\
 \hline
-Luogo & Entit\`a & 1 & L \\
+Luogo & Entità & 1 & L \\
 \hline
 \end{tabularx}
 \newline
@@ -441,9 +441,9 @@ Luogo & Entit\`a & 1 & L \\
 \hline
 \textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo}\\
 \hline
-Evento & Entit\`a & 1000 & L \\
+Evento & Entità & 1000 & L \\
 \hline
-Luogo & Entit\`a & 1000 & L \\
+Luogo & Entità & 1000 & L \\
 \hline
 \end{tabularx}
 
@@ -455,11 +455,11 @@ Luogo & Entit\`a & 1000 & L \\
 \hline
 \textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo}\\
 \hline
-Evento & Entit\`a & 1 & S \\
+Evento & Entità & 1 & S \\
 \hline
-Costo & Entit\`a & 1 & S \\
+Costo & Entità & 1 & S \\
 \hline
-Luogo & Entit\`a & 1 & S \\
+Luogo & Entità & 1 & S \\
 \hline
 \end{tabularx}
 \newline
@@ -471,9 +471,9 @@ Luogo & Entit\`a & 1 & S \\
 \hline
 \textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo}\\
 \hline
-Evento & Entit\`a & 1 & L \\
+Evento & Entità & 1 & L \\
 \hline
-Luogo & Entit\`a & 1 & L \\
+Luogo & Entità & 1 & L \\
 \hline
 \end{tabularx}
 \newline
@@ -485,9 +485,9 @@ Luogo & Entit\`a & 1 & L \\
 \hline
 \textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo}\\
 \hline
-Evento & Entit\`a & 1000 & L \\
+Evento & Entità & 1000 & L \\
 \hline
-Luogo & Entit\`a & 1000 & L \\
+Luogo & Entità & 1000 & L \\
 \hline
 \end{tabularx}
 
@@ -646,7 +646,7 @@ Si vuole mostrare la percentuale di biglietti venduti per un singolo evento.
 
 \subsubsection{Visualizza percentuale media di biglietti venduti per artista}
 Si vuole mostrare la percentuale media di tutti i biglietti venduti per ogni
-eventoper dato un singolo artista.
+evento per dato un singolo artista.
 \lstinputlisting{queries/mean-percentage-sold-tickets-by-artist.sql}
 
 \subsubsection{Visualizzare eventi hanno fatto sold out}
