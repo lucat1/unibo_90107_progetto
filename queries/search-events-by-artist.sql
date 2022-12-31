@@ -1,4 +1,5 @@
-SELECT
+-- tested
+SELECT DISTINCT
     e.titolo,
     l.nome
 FROM

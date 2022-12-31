@@ -1,21 +1,13 @@
+-- tested
 SELECT
   AVG(
-    (
-      SELECT
-        COUNT(*)
-      FROM
-        biglietto
-      WHERE
-        evento = e.id
-    ) * 100.0 / SUM(s.capienza)
+    pbe.percentuale
   )
 FROM
-  settore_evento_costo AS sec,
-  settore AS s,
-  spettacolo AS sp,
-  evento AS e
+  spettacolo AS s,
+  evento AS e,
+  percentuale_biglietti_evento AS pbe
 WHERE
-  s.id = sec.settore
-  AND sec.evento = e.id
-  AND sp.id = e.spettacolo
-  AND sp.artista = ...
+  s.id = e.spettacolo 
+  AND pbe.evento = e.id
+  AND s.artista = ...

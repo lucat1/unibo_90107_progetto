@@ -1,4 +1,6 @@
+-- tested
 SELECT
+    p.settore,
     p.fila,
     p.numero
 FROM

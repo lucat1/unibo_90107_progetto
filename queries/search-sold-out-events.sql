@@ -1,3 +1,4 @@
+-- tested
 SELECT
   e.titolo
 FROM
