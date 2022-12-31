@@ -1,5 +1,6 @@
+-- tested
 SELECT
-  SUM(sec.prezzo)
+  SUM(sec.prezzo) as "incasso totale"
 FROM
   posto AS p,
   settore_evento_costo AS sec,
@@ -7,5 +8,5 @@ FROM
 WHERE
   p.settore = sec.settore
   AND b.posto = p.id
-  AND sec.evento = ...
+  AND sec.evento = b.evento
   AND b.evento = ...

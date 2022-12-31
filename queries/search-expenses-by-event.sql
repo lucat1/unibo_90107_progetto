@@ -1,5 +1,6 @@
+-- tested
 SELECT
-    s.prezzo_siae + s.cachet + SUM(efs.prezzo) + l.prezzo
+    s.prezzo_siae + s.cachet + l.prezzo + SUM(efs.prezzo) AS "spesa"
 FROM
     spettacolo AS s,
     evento AS e,
@@ -10,3 +11,4 @@ WHERE
     AND efs.evento = e.id
     AND e.luogo = l.id
     AND e.id = ...
+GROUP BY s.prezzo_siae,s.cachet,l.prezzo
