@@ -37,6 +37,8 @@
 
 \tableofcontents
 
+\newpage
+
 \section{Analisi dei requisiti}
 
 \subsection{Requisiti espressi in linguaggio naturale}
@@ -80,8 +82,7 @@ Fornitore & Un fornitore di servizi & Azienda & Servizio\\
 
 Dall'analisi del termine artista abbiamo convenuto che può essere una persona o un gruppo a cui appartengo più persone.\\
 Le persone hanno un nome, un cognome e una data di nascita e possono appartenere a uno o più gruppi.\\
-I gruppi hanno una data di formazione.\\
-Inoltre, abbiamo voluto specificato il ``tipo'' di spettacolo che verrà eseguito.
+I gruppi hanno una data di formazione.
 
 \subsection{Strutturazione dei requisiti}
 
@@ -567,7 +568,15 @@ coefficiente moltiplicativo $2$ per le operazioni di scrittura):
 \end{center}
 
 Poich\`e il costo sale di un fattore $\approx6$ e stiamo parlando di cifre molto
-alte riteniamo sia opportuno mantenere la ridondanza per migliorare le prestazioni.
+alte, riteniamo sia opportuno mantenere la ridondanza per migliorare le prestazioni.
+
+\subsubsection*{Eliminazione delle gerarchie}
+Riguardo l'entità Persona e Gruppo riteniamo che non debbano essere accorpate e quindi
+rimpiazziamo la generalizzazione con una relazione. Abbiamo ritenuto inoltre di creare
+il seguente vincolo: un artista può essere una persona oppure un gruppo Di seguito, 
+viene mostrato lo schema concettuale ristrutturato.
+
+% \includegraphics[width=\textwidth]{ERristrutturato.png}
 
 \subsection{Normalizzazione}
 
