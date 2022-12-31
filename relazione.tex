@@ -125,20 +125,21 @@ Infine, vogliamo tenere traccia di tutti i servizi erogati dalle aziende (masche
     \item Inserire un fornitore di servizi (in media 5 volte all'anno)
     \item Inserire un luogo suddiviso in settori (in media 3 volte all'anno)
     \item \label{oploc1} Inserire un evento (in media 50 volte all'anno)
+    \item \label{opsec1} Assegnare un prezzo ad ogni settore per un evento (in media 300 volte all'anno)
+    \item Inserire un entità che offre un servizio (in media 20 volte all'anno)
     \item Prenotare un servizio (in media 200 volte all'anno)
     \item \label{oploc2} Visualizzare un evento con il luogo dove si svolger\`a (in media 25 000 volte all'anno)
     \item Vendere un biglietto (in media 17 500 volte all'anno)
     \item Rimborsare un biglietto (in media 20 volte al mese)
-    \item Inserire un entità che offre un servizio (in media 20 volte all'anno)
     \item Trovare un biglietto dato il posto (in media 2 300 volte al mese)
-    \item \label{oploc3} Visualizzare la capacità totale di un luogo (in media 6 volte al mese)
-    \item \label{oploc4} Visualizzare i luoghi che soddisfano una capienza (in media 3 volte al mese)
-    \item Visualizzare tutti gli eventi di un artista (in media 150 volte al giorno)
+    \item Visualizzare la capacità totale di un luogo (in media 6 volte al mese)
+    \item Visualizzare i luoghi che soddisfano una capienza (in media 3 volte al mese)
+    \item \label{oploc3} Visualizzare tutti gli eventi di un artista (in media 15 volte al giorno)
     \item Visualizzare tutti gli eventi di uno spettacolo (in media 1 000 volte al mese)
-    \item Visualizzare le spese di un evento (in media 8 volte al mese)
+    \item \label{oploc4} Visualizzare le spese di un evento (in media 8 volte al mese)
     \item Visualizzare gli incassi di un evento (in media 2 volte al mese)
-    \item Visualizzare i guadagni di un evento (in media 5 volte al mese)
-    \item Visualizzare il numero di posti liberi di un determinato evento (in media 100 volte al mese)
+    \item \label{oploc5} Visualizzare i guadagni di un evento (in media 5 volte al mese)
+    \item Visualizzare il numero di posti liberi di un determinato evento (in media 1 750 volte al mese)
     \item Visualizzare la percentuale media di biglietti venduti da un determinato artista (in media 100 volte all'anno)
     \item Visualizzare quali eventi hanno fatto sold out (in media 20 volte all'anno)
     \item Visualizzare gli eventi presenti in un arco temporale (in media 50 volte al giorno)
@@ -165,7 +166,7 @@ Possiamo dividere le entità in quattro gruppi:
 
 A un livello di astrazione più alto abbiamo un evento, parte di uno spettacolo di un artista, che si svolge in un luogo, di cui vengono venduti i biglietti e in cui ci sono dei fornitori che offrono dei servizi.
 
-\includegraphics[width=\textwidth]{ERScheletro.png}
+% \includegraphics[width=\textwidth]{ERScheletro.png}
  
 \subsection{Sviluppo delle componenti dello scheletro}
 
@@ -176,14 +177,14 @@ Un evento è composto da un solo spettacolo.\\
 Ogni spettacolo è eseguito da un artista che ha un nome d'arte, un artista può eseguire più spettacoli.
 Un artista può essere una persona (con nome, cognome e data di nascita) o un gruppo (con una data di formazione) a cui appartengono una o più persone.
 
-\includegraphics[width=\textwidth]{ERSpettacoloArtista.png}
+% \includegraphics[width=\textwidth]{ERSpettacoloArtista.png}
 
 \subsubsection*{Fornitore}
 
 Ogni fornitore può offrire servizi a più eventi e ogni evento può avere più fornitori di servizi, i servizi sono di diverse tipologie.\\
 Ogni fornitore può fornire vari tipi di servizi e ogni evento può aver necessità di diversi tipi di servizi.
 
-\includegraphics[width=\textwidth]{ERFornitore.png}
+% \includegraphics[width=\textwidth]{ERFornitore.png}
 
 \subsubsection*{Luogo, tipologia di luogo, settore, posto}
 
@@ -193,20 +194,20 @@ Ogni luogo è diviso in settori.
 Ogni settore ha un nome (che è univoco all'interno del luogo), una capienza massima e un prezzo dei biglietti per ogni evento.\\
 In ogni settore sono presenti dei posti segnati con la lettera della fila e un numero (univoci all'interno del loro settore).
 
-\includegraphics[width=\textwidth]{ERLuogo.png}
+% \includegraphics[width=\textwidth]{ERLuogo.png}
 
 \subsubsection*{Biglietto}
 
 Di ogni evento vendiamo diversi biglietti, ma ogni biglietto è valido per un solo evento.
 Ogni biglietto ha un codice univoco e un nominativo.
 
-\includegraphics[width=\textwidth]{ERBiglietto.png}
+% \includegraphics[width=\textwidth]{ERBiglietto.png}
 
 \subsection{Unione delle componenti nello schema finale ridotto}
 
 Ogni biglietto è associato a un posto.
 
-\includegraphics[width=\textwidth]{ER.png}
+% \includegraphics[width=\textwidth]{ER.png}
 
 \subsection{Dizionario dei dati}
 
@@ -353,43 +354,45 @@ Prenotazione & R & 350 000 (= biglietto)\\
   \hline
   5 & 50 volte all'anno \\
   \hline
-  6 & 200 volte all'anno \\
+  6 & 300 volte all'anno \\
   \hline
-  7 & 25 000 volte all'anno \\
+  11 & 20 volte all'anno \\
   \hline
-  8 & 17 500 volte all'anno\\
+  8 & 200 volte all'anno \\
   \hline
-  9 & 20 volte al mese \\
+  9 & 25 000 volte all'anno\\
   \hline
-  10 & 20 volte all'anno \\
+  9 & 17 500 volte all'anno\\
   \hline
-  11 & 2 300 volte al mese \\
+  10 & 20 volte al mese \\
   \hline
-  12 & 6 volte al mese \\
+  12 & 2 300 volte al mese \\
   \hline
-  13 & 3 volte al mese \\
+  13 & 6 volte al mese \\
   \hline
-  14 & 150 volte al giorno \\
+  14 & 3 volte al mese \\
   \hline
-  15 & 1 000 volte al mese \\
+  15 & 15 volte al giorno \\
   \hline
-  16 & 8 volte al mese \\
+  16 & 1 000 volte al mese \\
   \hline
-  17 & 2 volte al mese \\
+  17 & 8 volte al mese \\
   \hline
-  18 & 5 volte al mese \\
+  18 & 2 volte al mese \\
   \hline
-  19 & 100 volte al mese \\
+  19 & 5 volte al mese \\
   \hline
-  20 & 100 volte all'anno \\
+  20 & 1 750 volte al mese \\
   \hline
-  21 & 20 volte all'anno \\
+  21 & 100 volte all'anno \\
   \hline
-  22 & 50 volte al giorno \\
+  22 & 20 volte all'anno \\
   \hline
-  23 & 10 volte al giorno \\
+  23 & 50 volte al giorno \\
   \hline
-  24 & 20 volte all'anno \\
+  24 & 10 volte al giorno \\
+  \hline
+  25 & 20 volte all'anno \\
   \hline
 \end{tabularx}
 
@@ -402,20 +405,37 @@ Per trovare il luogo in cui si tiene un dato evento si può anche sfruttare la r
 Poiché quando si visualizza un evento si vuole molto spesso conoscere anche il luogo in cui si svolge, l'utilizzo di questa operazione è molto alto.
 Per migliorare le prestazioni abbiamo preferito dunque lasciare una relazione ridondante, imponendo gli opportuni vincoli affinché non si verifichino inconsistenze (vedi \ref{rv7}, \ref{rv8}).
 
-% TODO: capire se in queste tabelle devo contare anche le relazioni perche'
-% sono in realta' campi della tabella entita', non tabelle relazioni separate
-% quindi in sql non contano come un join in piu'.
-
 \subsubsection*{Tavole degli accessi mantenendo la ridondanza}
+\begin{quote}
+  Nota: rimuovendo la relazione ridondante \emph{Posizione} \`e necessario
+  specificare i costi dei settori per un evento nella operazione \ref{oploc1},
+  affinch\`e si possa Sfruttrare poi la relazione \emph{Costo} per derivare il
+  luogo dal settore. Dunque, si dovr\`a sempre fare l'operazione \ref{oploc1}
+  seguita dalla \ref{opsec1}.\\
+  Questa non sarebbe una forte restrizione poich\`e nella pratica si
+  inserisce sempre l'evento con i relativi prezzi dei i biglietti nello stesso momento.
+\end{quote}
+% \begin{tabularx}{\textwidth}{|X|X|X|X|}
+% \hline
+%   \multicolumn{4}{|l|}{\textbf{Operazione \ref{oploc1}}} \\
+% \hline
+% \textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo}\\
+% \hline
+% Evento & Entità & 1 & S \\
+% \hline
+% \end{tabularx}
+% \newline
+% \vspace*{1em}
+% \newline
 \begin{tabularx}{\textwidth}{|X|X|X|X|}
 \hline
-  \multicolumn{4}{|l|}{\textbf{Operazione \ref{oploc1}}} \\
+  \multicolumn{4}{|l|}{\textbf{Operazione \ref{oploc1} + \ref{opsec1} (obbligatorio senza ridondanza)}} \\
 \hline
 \textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo}\\
 \hline
 Evento & Entità & 1 & S \\
 \hline
-Luogo & Entità & 1 & S \\
+Costo & Relazione & 6 & S \\
 \hline
 \end{tabularx}
 \newline
@@ -423,7 +443,7 @@ Luogo & Entità & 1 & S \\
 \newline
 \begin{tabularx}{\textwidth}{|X|X|X|X|}
 \hline
-  \multicolumn{4}{|l|}{\textbf{Operazione \ref{oploc2} e \ref{oploc3}}} \\
+  \multicolumn{4}{|l|}{\textbf{Operazioni \ref{oploc2}, \ref{oploc4} e \ref{oploc5}}} \\
 \hline
 \textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo}\\
 \hline
@@ -437,13 +457,13 @@ Luogo & Entità & 1 & L \\
 \newline
 \begin{tabularx}{\textwidth}{|X|X|X|X|}
 \hline
-  \multicolumn{4}{|l|}{\textbf{Operazione \ref{oploc4}}} \\
+  \multicolumn{4}{|l|}{\textbf{Operazione \ref{oploc3}}} \\
 \hline
 \textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo}\\
 \hline
-Evento & Entità & 1000 & L \\
+Evento & Entità & 1 000 & L \\
 \hline
-Luogo & Entità & 1000 & L \\
+Luogo & Entità & 1 000 & L \\
 \hline
 \end{tabularx}
 
@@ -451,15 +471,13 @@ Luogo & Entità & 1000 & L \\
 
 \begin{tabularx}{\textwidth}{|X|X|X|X|}
 \hline
-  \multicolumn{4}{|l|}{\textbf{Operazione \ref{oploc1}}} \\
+  \multicolumn{4}{|l|}{\textbf{Operazione \ref{oploc1} + \ref{opsec1} (obbligatorio senza ridondanza)}} \\
 \hline
 \textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo}\\
 \hline
 Evento & Entità & 1 & S \\
 \hline
-Costo & Entità & 1 & S \\
-\hline
-Luogo & Entità & 1 & S \\
+Costo & Relazione & 6 & S \\
 \hline
 \end{tabularx}
 \newline
@@ -467,11 +485,15 @@ Luogo & Entità & 1 & S \\
 \newline
 \begin{tabularx}{\textwidth}{|X|X|X|X|}
 \hline
-  \multicolumn{4}{|l|}{\textbf{Operazione \ref{oploc2} e \ref{oploc3}}} \\
+  \multicolumn{4}{|l|}{\textbf{Operazioni \ref{oploc2}, \ref{oploc4} e \ref{oploc5}}} \\
 \hline
 \textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo}\\
 \hline
 Evento & Entità & 1 & L \\
+\hline
+Costo & Relazione & 6 & L \\
+\hline
+Settore & Entità & 6 & L \\
 \hline
 Luogo & Entità & 1 & L \\
 \hline
@@ -481,17 +503,71 @@ Luogo & Entità & 1 & L \\
 \newline
 \begin{tabularx}{\textwidth}{|X|X|X|X|}
 \hline
-  \multicolumn{4}{|l|}{\textbf{Operazione \ref{oploc4}}} \\
+  \multicolumn{4}{|l|}{\textbf{Operazione \ref{oploc3}}} \\
 \hline
 \textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo}\\
 \hline
-Evento & Entità & 1000 & L \\
+Evento & Entità & 1 000 & L \\
 \hline
-Luogo & Entità & 1000 & L \\
+Costo & Relazione & 6 000 & L \\
+\hline
+Settore & Entità & 6 000 & L \\
+\hline
+Luogo & Entità & 1 000 & L \\
 \hline
 \end{tabularx}
+\newline
+\vspace*{1em}
+\newline
+Dunque, il costo \textbf{mensile} delle operazioni ammonta a (assumendo un
+coefficiente moltiplicativo $2$ per le operazioni di scrittura):
+\begin{center}
+\begin{tabular}{ |c | r| }
+  \hline
+  \multicolumn{2}{|c|}{\textbf{Costo con ridondanza}} \\
+  \hline
+  \textbf{Operazione} & \multicolumn{1}{c|}{\textbf{Costo}} \\
+  \hline
+  Operazione \ref{oploc1} + \ref{opsec1} & $2 \cdot 7 \cdot 4 = 56$ \\
+  \hline
+  Operazione \ref{oploc2} & $2 \cdot 2100 = 4200$ \\
+  \hline
+  % TODO: NON QUADRA 2000
+  Operazione \ref{oploc3} & $2000 \cdot 15\cdot31 = 930000$ \\
+  \hline
+  Operazione \ref{oploc4} & $2 \cdot 8\cdot = 16$ \\
+  \hline
+  Operazione \ref{oploc5} & $2 \cdot 5\cdot = 10$ \\
+  \hline
+  \textbf{Totale} & $934282$ \\
+  \hline
+\end{tabular}
+\end{center}
+\begin{center}
+\begin{tabular}{ |c | r| }
+  \hline
+  \multicolumn{2}{|c|}{\textbf{Costo senza ridondanza}} \\
+  \hline
+  \textbf{Operazione} & \multicolumn{1}{c|}{\textbf{Costo}} \\
+  \hline
+  Operazione \ref{oploc1} + \ref{opsec1} & $2 \cdot 7 \cdot 4 = 56$ \\
+  \hline
+  Operazione \ref{oploc2} & $14 \cdot 2100 = 29400$ \\
+  \hline
+  % TODO: NON QUADRA 14000
+  Operazione \ref{oploc3} & $14000 \cdot 15\cdot31 = 6510000$ \\
+  \hline
+  Operazione \ref{oploc4} & $14 \cdot 8 = 112$ \\
+  \hline
+  Operazione \ref{oploc5} & $14 \cdot 5 = 70$ \\
+  \hline
+  \textbf{Totale} & $6539638$ \\
+  \hline
+\end{tabular}
+\end{center}
 
-% TODO
+Poich\`e il costo sale di un fattore $\approx6$ e stiamo parlando di cifre molto
+alte riteniamo sia opportuno mantenere la ridondanza per migliorare le prestazioni.
 
 \subsection{Normalizzazione}
 
@@ -499,8 +575,7 @@ Osservando la ristrutturazione dello schema concettuale si nota che tutte le rel
 Non esistono dipendenze non banali tra gli attributi delle entità.
 
 \subsection{Traduzione verso il modello relazionale}
-
-\begin{tabularx}{\textwidth}{|X|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}X|}
+\begin{tabularx}{\textwidth}{|X|X|}
 \hline
   \textbf{Entità - Relazione} & \textbf{Traduzione}\\
 \hline
@@ -606,7 +681,7 @@ cachet dell'artista, il costo dell'affitto del luogo e tutti i costi relativi ai
 servizi necessari.
 \lstinputlisting{queries/search-expenses-by-event.sql}
 
-\subsubsection{Visualizzare gli incassi totali di un evento}
+\subsubsection{Visualizzare gli incassi di un evento}
 \lstinputlisting{queries/search-incoming-by-event.sql}
 
 \subsubsection{Visualizzare i guadagni di un evento}
