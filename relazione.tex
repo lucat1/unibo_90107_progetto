@@ -619,8 +619,8 @@ Non esistono dipendenze non banali tra gli attributi delle entità.
 
 \section{Codice SQL}
 
-\subsection{Definizione dello schema}
-\lstinputlisting{schema.sql}
+\subsection{Definizione delle viste}
+\lstinputlisting{views.sql}
 
 \subsection{Codifica delle operazioni}
 Alcune interrogazioni sono state inserite, anche se non sono presenti 
@@ -674,10 +674,10 @@ Poiché teniamo in memoria solo i biglietti acquistati, ``rimborsare'' un biglie
 \lstinputlisting{queries/search-ticket-by-seat.sql}
 
 \subsubsection{Visualizzare la capienza totale di un luogo}
-\lstinputlisting{queries/view-venue-capacity.sql}
+\lstinputlisting{queries/search-venue-capacity.sql}
 
 \subsubsection{Visualizzare i luoghi che soddisfano una capienza}
-\lstinputlisting{queries/view-venue-capacity-limit.sql}
+\lstinputlisting{queries/search-venue-capacity-limit.sql}
 
 \subsubsection{Visualizzare tutti gli eventi di un artista}
 Si vogliono selezionare i titoli e il nome del luogo di tutti gli eventi a cui

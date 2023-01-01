@@ -122,8 +122,8 @@ type PersonaGruppoAppartenenza struct {
 type Artista struct {
 	ID       int
 	NomeArte string `faker:"username"`
-	Persona  *int   `faker:"-"`
-	Gruppo   *int   `faker:"-"`
+	Persona  *int
+	Gruppo   *int
 }
 
 func ArtistaFields() []string {
@@ -358,14 +358,22 @@ func main() {
 	if err != nil {
 		log.Fatalf("Could not read schema.sql: %v", err)
 	}
+	views, err := ioutil.ReadFile("views.sql")
+	if err != nil {
+		log.Fatalf("Could not read views.sql: %v", err)
+	}
 
-	if _, err = db.Exec("DROP SCHEMA public CASCADE;" + "CREATE SCHEMA public;"); err != nil {
+	if _, err = db.Exec("DROP SCHEMA public CASCADE; CREATE SCHEMA public;"); err != nil {
 		log.Fatalf("Could not purge all data: %v", err)
 	}
 	if _, err = db.Exec(string(schema)); err != nil {
 		log.Fatalf("Could not apply schema.sql: %v", err)
 	}
 	log.Println("Created schema")
+	if _, err = db.Exec(string(views)); err != nil {
+		log.Fatalf("Could not apply views.sql: %v", err)
+	}
+	log.Println("Applied views")
 
 	persone := []Persona{}
 	if err = faker.FakeData(
@@ -406,13 +414,13 @@ func main() {
 	for i := range artisti {
 		artisti[i].ID = i + 1
 		if i%2 == 0 {
-			id, _ := onlyIDs(persone)()
-			rr := id.(int)
-			artisti[i].Persona = &rr
+			id := persone[rand.Intn(len(persone))].GetID()
+			artisti[i].Persona = &id
+			artisti[i].Gruppo = nil
 		} else {
-			id, _ := onlyIDs(gruppi)()
-			rr := id.(int)
-			artisti[i].Gruppo = &rr
+			id := gruppi[rand.Intn(len(gruppi))].GetID()
+			artisti[i].Gruppo = &id
+			artisti[i].Persona = nil
 		}
 	}
 	bulkInsert("artista", ArtistaFields(), artisti)
