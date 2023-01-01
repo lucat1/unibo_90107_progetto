@@ -140,19 +140,18 @@ Infine, vogliamo tenere traccia di tutti i servizi erogati dalle aziende (masche
     \item \label{oploc4} Visualizzare le spese di un evento (in media 8 volte al mese)
     \item Visualizzare gli incassi di un evento (in media 2 volte al mese)
     \item \label{oploc5} Visualizzare i guadagni di un evento (in media 5 volte al mese)
-    \item Visualizzare il numero di posti liberi di un determinato evento (in media 1 750 volte al mese)
+    \item Visualizzare informazioni sui posti di un determinato evento (in media 1 750 volte al mese)
     \item Visualizzare la percentuale media di biglietti venduti da un determinato artista (in media 100 volte all'anno)
     \item Visualizzare quali eventi hanno fatto sold out (in media 20 volte all'anno)
     \item Visualizzare gli eventi presenti in un arco temporale (in media 50 volte al giorno)
     \item Visualizzare tutti gli eventi che si svolgeranno in un determinato luogo (in media 10 volte al giorno)
+    \item Visualizzare i guadagni dato uno spettacolo (in media 50 volte all'anno)
     \item Visualizzare lo spettacolo che ha guadagnato di più (in media 20 volte all'anno)
 \end{enumerate}
 
 \section{Progettazione concettuale}
 
-% TODO Aggiungere top-down/bottom-up?
-
-\subsection{Identificazione delle entità e relazioni}
+\subsection{Identificazione delle entità e relazioni (bottom-up)}
 
 Abbiamo identificato le seguenti entità: evento, spettacolo, artista (persona e gruppo), fornitore, luogo, settore, posto e biglietto.
 
@@ -165,7 +164,7 @@ Possiamo dividere le entità in quattro gruppi:
     \item Biglietto.
 \end{itemize}
 
-\subsection{Un primo scheletro dello schema}
+\subsection{Un primo scheletro dello schema (top-down)}
 
 A un livello di astrazione più alto abbiamo un evento, parte di uno spettacolo di un artista, che si svolge in un luogo, di cui vengono venduti i biglietti e in cui ci sono dei fornitori che offrono dei servizi.
 
@@ -395,7 +394,9 @@ Prenotazione & R & 350 000 (= biglietto)\\
   \hline
   23 & 10 volte al giorno\\
   \hline
-  24 & 20 volte all'anno\\
+  24 & 50 volte all'anno\\
+  \hline
+  25 & 20 volte all'anno\\
   \hline
 \end{tabularx}
 
@@ -642,7 +643,6 @@ compongono le interrogazioni successive.
 \subsubsection{Inserire un luogo suddiviso in settori}
 
 Per prima cosa inseriamo un luogo:
-
 \lstinputlisting{queries/insert-venue.sql}
 Successivamente i settori presenti:
 \lstinputlisting{queries/insert-sector.sql}
@@ -684,11 +684,6 @@ Si vogliono selezionare i titoli e il nome del luogo di tutti gli eventi a cui
 partecipa un dato artista.
 \lstinputlisting{queries/search-events-by-artist.sql}
 
-\subsubsection*{Visualizzare tutti gli spettacoli di un artista}
-%TODO Non presente nella specifica delle operazioni
-Si vogliono selezionare i nomi di tutti gli show tenuti da un dato artista.
-\lstinputlisting{queries/search-shows-by-artist.sql}
-
 \subsubsection{Visualizzare tutti gli eventi di uno spettacolo}
 \lstinputlisting{queries/search-events-by-show.sql}
 
@@ -705,21 +700,15 @@ servizi necessari.
 Questa interrogazione non è altro che la differenza tra le spese e gli incassi di un evento.
 \lstinputlisting{queries/search-earnings-by-event.sql}
 
-\subsubsection{Visualizzare il numero di posti liberi di un determinato evento}
-%TODO Query non presente
+\subsubsection{Visualizzare informazioni sui posti di un determinato evento}
 
-\subsubsection*{Visualizzare tutti i posti per un evento}
-%TODO Non presente nella specifica delle operazioni
+\textbf{Visualizzare tutti i posti per un evento}\\
 Si vogliono mostrare tutti i posti $(riga, colonna)$ per un dato evento.
 \lstinputlisting{queries/search-seats-by-event.sql}
-
-\subsubsection*{Visualizzare tutti i posti prenotati per un evento}
-%TODO Non presente nella specifica delle operazioni
+\textbf{Visualizzare tutti i posti prenotati per un evento}\\
 Si vogliono mostrare tutti i posti $(riga, colonna)$ \textbf{prenotati} per un dato evento.
 \lstinputlisting{queries/search-booked-seats-by-event.sql}
-
-\subsubsection*{Visualizzare tutti i posti liberi per un evento}
-%TODO Non presente nella specifica delle operazioni
+\textbf{Visualizzare tutti i posti liberi per un evento}\\
 Si vogliono mostrare tutti i posti $(riga, colonna)$ \textbf{liberi} per un dato evento.
 \lstinputlisting{queries/search-free-seats-by-event.sql}
 
@@ -733,14 +722,9 @@ Vedi dati empirici su \href{https://stackoverflow.com/a/66785790}{StackOverflow}
 Sarebbe opportuno verificare quanto riportato sul proprio dataset.} si può ottenere lo stesso risultato tramite un \texttt{NOT EXISTS}:
 \lstinputlisting{queries/search-free-seats-by-event-ne.sql}
 
-\subsubsection*{Visualizzare la percentuale di biglietti venduti per evento}
+\textbf{Visualizzare la percentuale di biglietti venduti per evento}\\
 Si vuole mostrare la percentuale di biglietti venduti per un singolo evento.
 \lstinputlisting{queries/percentage-sold-tickets-by-event.sql}
-
-\begin{quote}
-  Nota: entrambi i \texttt{...} si riferiscono allo \emph{stesso} \texttt{id}
-  dell'evento in questione.
-\end{quote}
 
 \subsubsection{Visualizzare la percentuale media di biglietti venduti da un determinato artista}
 Si vuole mostrare la percentuale media di tutti i biglietti venduti per ogni
@@ -763,16 +747,13 @@ Si vuole mostrare l'elenco di tutti gli eventi che si svolgono un range di date.
 Si vuole mostrare l'elenco di tutti gli eventi che si svolgono in un determinato luogo.
 \lstinputlisting{queries/search-events-by-venue.sql}
 
-\subsubsection*{Visualizzare i guadagni dato uno show}
-%TODO Non presente nella specifica delle operazioni
-Si vuole mostrare il guadagno di un singolo show.
+\subsubsection{Visualizzare i guadagni dato uno spettacolo}
+Si vuole mostrare il guadagno di un singolo spettacolo.
 \lstinputlisting{queries/search-earnings-by-show.sql}
 
 \subsubsection{Visualizzare lo show che ha guadagnato di più}
 Si vuole mostrare il guadagno più alto raggiunto da uno show e il suo titolo.
 \lstinputlisting{queries/show-max-earnings.sql}
-
-% TODO aggiornare la query di oploc2
 
 \section{Testing}
 
