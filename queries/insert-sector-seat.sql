@@ -1,4 +1,4 @@
 INSERT INTO
-    posto (settore, fila, numero)
+    posto (id, settore, fila, numero)
 VALUES
     (...)
