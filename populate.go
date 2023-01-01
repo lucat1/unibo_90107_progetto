@@ -22,24 +22,26 @@ const (
 	USER   = "postgres"
 	PASSWD = "postgres"
 
-	PERSONE_MIN    = 500
-	PERSONE_MAX    = 1000
-	GRUPPI_MIN     = 500
-	GRUPPI_MAX     = 1000
-	ARTISTI_MIN    = 500
-	ARTISTI_MAX    = 1000
-	SPETTACOLI_MIN = 5000
-	SPETTACOLI_MAX = 10000
-	EVENTI_MIN     = 100
-	EVENTI_MAX     = 500
-	LUOGHI_MIN     = 500
-	LUOGHI_MAX     = 1000
-	FORNITORI_MIN  = 100
-	FORNITORI_MAX  = 100
-	SETTORI_MIN    = LUOGHI_MIN * 4
-	SETTORI_MAX    = LUOGHI_MAX * 6
-	POSTI_MIN      = SETTORI_MIN * 30
-	POSTI_MAX      = SETTORI_MAX * 50
+	PERSONE_MIN                     = 500
+	PERSONE_MAX                     = 1000
+	GRUPPI_MIN                      = 500
+	GRUPPI_MAX                      = 1000
+	ARTISTI_MIN                     = 500
+	ARTISTI_MAX                     = 1000
+	SPETTACOLI_MIN                  = 5000
+	SPETTACOLI_MAX                  = 10000
+	EVENTI_MIN                      = 100
+	EVENTI_MAX                      = 500
+	LUOGHI_MIN                      = 500
+	LUOGHI_MAX                      = 1000
+	FORNITORI_MIN                   = 100
+	FORNITORI_MAX                   = 100
+	PERSONA_GRUPPO_APPARTENENZA_MIN = 10
+	PERSONA_GRUPPO_APPARTENENZA_MAX = 100
+	SETTORI_MIN                     = LUOGHI_MIN * 4
+	SETTORI_MAX                     = LUOGHI_MAX * 6
+	POSTI_MIN                       = SETTORI_MIN * 30
+	POSTI_MAX                       = SETTORI_MAX * 50
 )
 
 type Populate interface {
@@ -117,6 +119,15 @@ func (a Gruppo) GetID() int {
 type PersonaGruppoAppartenenza struct {
 	Persona int
 	Gruppo  int
+}
+
+func PersonaGruppoAppartenenzaFields() []string {
+	return []string{"persona", "gruppo"}
+}
+
+func (a PersonaGruppoAppartenenza) Populate(stmt *sql.Stmt) (err error) {
+	_, err = stmt.Exec(a.Persona, a.Gruppo)
+	return
 }
 
 type Artista struct {
@@ -375,6 +386,20 @@ func main() {
 	}
 	log.Println("Applied views")
 
+	gruppi := []Gruppo{}
+	if err = faker.FakeData(
+		&gruppi,
+		options.WithRandomMapAndSliceMinSize(GRUPPI_MIN),
+		options.WithRandomMapAndSliceMaxSize(GRUPPI_MAX),
+	); err != nil {
+		log.Fatalf("Could not fill artists data: %v", err)
+	}
+	for i := range gruppi {
+		gruppi[i].ID = i + 1
+	}
+	bulkInsert("gruppo", GruppoFields(), gruppi)
+	log.Printf("Popolato %d gruppi", len(gruppi))
+
 	persone := []Persona{}
 	if err = faker.FakeData(
 		&persone,
@@ -389,19 +414,23 @@ func main() {
 	bulkInsert("persona", PersonaFields(), persone)
 	log.Printf("Popolato %d persone", len(persone))
 
-	gruppi := []Gruppo{}
+	persona_gruppo_appartenenze := []PersonaGruppoAppartenenza{}
 	if err = faker.FakeData(
-		&gruppi,
-		options.WithRandomMapAndSliceMinSize(GRUPPI_MIN),
-		options.WithRandomMapAndSliceMaxSize(GRUPPI_MAX),
+		&persona_gruppo_appartenenze,
+		options.WithRandomMapAndSliceMinSize(PERSONA_GRUPPO_APPARTENENZA_MIN),
+		options.WithRandomMapAndSliceMaxSize(PERSONA_GRUPPO_APPARTENENZA_MAX),
 	); err != nil {
 		log.Fatalf("Could not fill artists data: %v", err)
 	}
-	for i := range gruppi {
-		gruppi[i].ID = i + 1
+	for i := range persona_gruppo_appartenenze {
+		persone[i].ID = i + 1
+		pID, _ := onlyIDs(persone)()
+		persona_gruppo_appartenenze[i].Persona = pID.(int)
+		gID, _ := onlyIDs(gruppi)()
+		persona_gruppo_appartenenze[i].Gruppo = gID.(int)
 	}
-	bulkInsert("gruppo", GruppoFields(), gruppi)
-	log.Printf("Popolato %d gruppi", len(gruppi))
+	bulkInsert("persona_gruppo_appartenenza", PersonaGruppoAppartenenzaFields(), persona_gruppo_appartenenze)
+	log.Printf("Popolato %d persona gruppo appartenenza", len(persona_gruppo_appartenenze))
 
 	artisti := []Artista{}
 	if err = faker.FakeData(
