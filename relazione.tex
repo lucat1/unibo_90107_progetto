@@ -712,7 +712,7 @@ Si vogliono mostrare tutti i posti $(riga, colonna)$ \textbf{prenotati} per un d
 Si vogliono mostrare tutti i posti $(riga, colonna)$ \textbf{liberi} per un dato evento.
 \lstinputlisting{queries/search-free-seats-by-event.sql}
 
-In alternativa, per avere un leggero miglioramento delle performance\footnote{
+In alternativa, per avere un miglioramento delle performance\footnote{
 Vedi dati empirici su \href{https://stackoverflow.com/a/66785790}{StackOverflow}.
 Nel nostro caso, abbiamo osservato che la query con il \texttt{NOT EXISTS}
 impiega in media \texttt{5ms}, rispetto alla versione con il \texttt{NOT IN}
@@ -752,6 +752,9 @@ Si vuole mostrare il guadagno di un singolo spettacolo.
 Si vuole mostrare il guadagno più alto raggiunto da uno show e il suo titolo.
 \lstinputlisting{queries/show-max-earnings.sql}
 
-\section{Testing}
+\section{Risultati delle interrogazioni}
+Abbiamo creato un'istanza di \emph{PostgreSQL} tramite \emph{Docker} e l'abbiamo popolato in automatico attraverso un programma scritto in \emph{Go} usando la libreria \emph{Faker} per creare dati casuali.
+In questo modo possiamo provare le nostre interrogazioni su grandi moli di dati.
+Di seguito, mostriamo alcune delle tabelle risultanti dalle interrogazioni.
 
 \end{document}
