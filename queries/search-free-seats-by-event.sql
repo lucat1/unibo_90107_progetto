@@ -1,4 +1,6 @@
+-- tested
 SELECT
+  p.settore,
   p.fila,
   p.numero
 FROM
@@ -12,6 +14,6 @@ WHERE
     FROM
       biglietto
     WHERE
-      evento = ...
+      evento = sec.evento
   )
   AND sec.evento = ...

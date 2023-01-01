@@ -28,7 +28,7 @@
 }
 
 \title{Progetto Database: organizzatore eventi}
-\author{Luca Bassi, Gabriele Genovese, Gianmaria Rovelli, Luca Tagliavini}
+\author{Luca Bassi (\#916386), Gabriele Genovese (\#970718), Gianmaria Rovelli (\#970936), Luca Tagliavini (\#971133)}
 \date{Dicembre 2022}
 
 \begin{document}
@@ -712,14 +712,11 @@ Si vogliono mostrare tutti i posti $(riga, colonna)$ \textbf{prenotati} per un d
 Si vogliono mostrare tutti i posti $(riga, colonna)$ \textbf{liberi} per un dato evento.
 \lstinputlisting{queries/search-free-seats-by-event.sql}
 
-\begin{quote}
-  Nota: entrambi i \texttt{...} si riferiscono allo \emph{stesso} \texttt{id}
-  dell'evento in questione.
-\end{quote}
-
 In alternativa, per avere un leggero miglioramento delle performance\footnote{
 Vedi dati empirici su \href{https://stackoverflow.com/a/66785790}{StackOverflow}.
-Sarebbe opportuno verificare quanto riportato sul proprio dataset.} si può ottenere lo stesso risultato tramite un \texttt{NOT EXISTS}:
+Nel nostro caso, abbiamo osservato che la query con il \texttt{NOT EXISTS}
+impiega in media \texttt{5ms}, rispetto alla versione con il \texttt{NOT IN}
+che pu\`o impiegare fino a \texttt{380ms}.}
 \lstinputlisting{queries/search-free-seats-by-event-ne.sql}
 
 \textbf{Visualizzare la percentuale di biglietti venduti per evento}\\
