@@ -1,8 +1,9 @@
 -- tested
-SELECT 
-  gs.spettacolo spettacolo, gs.guadagno guadagno
+SELECT
+  gs.spettacolo spettacolo,
+  gs.guadagno guadagno
 FROM
-  guadagno_spettacolo as gs 
+  guadagno_spettacolo as gs
 ORDER BY
   guadagno DESC
 LIMIT

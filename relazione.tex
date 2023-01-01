@@ -168,7 +168,7 @@ Possiamo dividere le entità in quattro gruppi:
 
 A un livello di astrazione più alto abbiamo un evento, parte di uno spettacolo di un artista, che si svolge in un luogo, di cui vengono venduti i biglietti e in cui ci sono dei fornitori che offrono dei servizi.
 
-\includegraphics[width=\textwidth]{ERScheletro.png}
+% \includegraphics[width=\textwidth]{ERScheletro.png}
  
 \subsection{Sviluppo delle componenti dello scheletro}
 
@@ -179,14 +179,14 @@ Un evento è composto da un solo spettacolo.\\
 Ogni spettacolo è eseguito da un artista che ha un nome d'arte, un artista può eseguire più spettacoli.
 Un artista può essere una persona (con nome, cognome e data di nascita) o un gruppo (con una data di formazione) a cui appartengono una o più persone.
 
-\includegraphics[width=\textwidth]{ERSpettacoloArtista.png}
+% \includegraphics[width=\textwidth]{ERSpettacoloArtista.png}
 
 \subsubsection*{Fornitore}
 
 Ogni fornitore può offrire servizi a più eventi e ogni evento può avere più fornitori di servizi, i servizi sono di diverse tipologie.\\
 Ogni fornitore può fornire vari tipi di servizi e ogni evento può aver necessità di diversi tipi di servizi.
 
-\includegraphics[width=\textwidth]{ERFornitore.png}
+% \includegraphics[width=\textwidth]{ERFornitore.png}
 
 \subsubsection*{Luogo, settore, posto}
 
@@ -196,20 +196,20 @@ Ogni luogo è diviso in settori.
 Ogni settore ha un nome (che è univoco all'interno del luogo), una capienza massima e un prezzo dei biglietti per ogni evento.\\
 In ogni settore sono presenti dei posti segnati con la lettera della fila e un numero (univoci all'interno del loro settore).
 
-\includegraphics[width=\textwidth]{ERLuogo.png}
+% \includegraphics[width=\textwidth]{ERLuogo.png}
 
 \subsubsection*{Biglietto}
 
 Di ogni evento vendiamo diversi biglietti, ma ogni biglietto è valido per un solo evento.
 Ogni biglietto ha un codice univoco e un nominativo.
 
-\includegraphics[width=\textwidth]{ERBiglietto.png}
+% \includegraphics[width=\textwidth]{ERBiglietto.png}
 
 \subsection{Unione delle componenti nello schema finale}
 
 Ogni biglietto è associato a un posto.
 
-\includegraphics[width=\textwidth]{ER.png}
+% \includegraphics[width=\textwidth]{ER.png}
 
 \subsection{Dizionario dei dati}
 
@@ -464,9 +464,11 @@ Luogo & Entità & 1 & L \\
 \hline
 \textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo}\\
 \hline
-Evento & Entità & 1 000 & L \\
+Evento & Entità & 5 & L \\
 \hline
-Luogo & Entità & 1 000 & L \\
+Luogo & Entità & 2 & L \\
+\hline
+Spettacolo & Entità & 3 & L \\
 \hline
 \end{tabularx}
 
@@ -510,13 +512,13 @@ Luogo & Entità & 1 & L \\
 \hline
 \textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo}\\
 \hline
-Evento & Entità & 1 000 & L \\
+Evento & Entità & 5 & L \\
 \hline
-Costo & Relazione & 6 000 & L \\
+Costo & Relazione & 30 & L \\
 \hline
-Settore & Entità & 6 000 & L \\
+Settore & Entità & 3 & L \\
 \hline
-Luogo & Entità & 1 000 & L \\
+Luogo & Entità & 2 & L \\
 \hline
 \end{tabularx}
 \newline
@@ -535,14 +537,13 @@ coefficiente moltiplicativo $2$ per le operazioni di scrittura):
   \hline
   Operazione \ref{oploc2} & $2 \cdot 2100 = 4200$ \\
   \hline
-  % TODO: NON QUADRA 2000
-  Operazione \ref{oploc3} & $2000 \cdot 15 \cdot 31 = 930000$ \\
+  Operazione \ref{oploc3} & $10 \cdot 15 \cdot 31 = 4650$ \\
   \hline
-  Operazione \ref{oploc4} & $2 \cdot 8 \cdot = 16$ \\
+  Operazione \ref{oploc4} & $2 \cdot 8 = 16$ \\
   \hline
-  Operazione \ref{oploc5} & $2 \cdot 5 \cdot = 10$ \\
+  Operazione \ref{oploc5} & $2 \cdot 5 = 10$ \\
   \hline
-  \textbf{Totale} & $934282$ \\
+  \textbf{Totale} & $8932$ \\
   \hline
 \end{tabular}
 \end{center}
@@ -557,19 +558,18 @@ coefficiente moltiplicativo $2$ per le operazioni di scrittura):
   \hline
   Operazione \ref{oploc2} & $14 \cdot 2100 = 29400$ \\
   \hline
-  % TODO: NON QUADRA 14000
-  Operazione \ref{oploc3} & $14000 \cdot 15\cdot31 = 6510000$ \\
+  Operazione \ref{oploc3} & $40 \cdot 15 \cdot 31 = 18600$ \\
   \hline
   Operazione \ref{oploc4} & $14 \cdot 8 = 112$ \\
   \hline
   Operazione \ref{oploc5} & $14 \cdot 5 = 70$ \\
   \hline
-  \textbf{Totale} & $6539638$ \\
+  \textbf{Totale} & $48238$ \\
   \hline
 \end{tabular}
 \end{center}
 
-Poiché il costo sale di un fattore $\approx6$ e stiamo parlando di cifre molto alte, riteniamo sia opportuno mantenere la ridondanza per migliorare le prestazioni.
+Poiché il costo sale di un fattore $\approx5.4$ e stiamo parlando di cifre molto alte, riteniamo sia opportuno mantenere la ridondanza per migliorare le prestazioni.
 
 \subsubsection*{Eliminazione delle gerarchie}
 
@@ -577,7 +577,7 @@ Riguardo l'entità Persona e Gruppo riteniamo che non debbano essere accorpate e
 Abbiamo ritenuto inoltre di creare il seguente vincolo: un artista può essere una persona oppure un gruppo.
 Di seguito, viene mostrato lo schema concettuale ristrutturato.
 
-\includegraphics[width=\textwidth]{ERRistrutturato.png}
+% \includegraphics[width=\textwidth]{ERRistrutturato.png}
 
 \subsection{Normalizzazione}
 
