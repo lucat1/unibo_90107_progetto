@@ -1,5 +1,5 @@
 -- tested
-CREATE view incasso_evento AS
+CREATE VIEW incasso_evento AS
   SELECT
     b.evento, SUM(sec.prezzo) as "incasso"
   FROM

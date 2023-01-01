@@ -1,5 +1,5 @@
 -- tested
-CREATE view guadagno_evento AS
+CREATE VIEW guadagno_evento AS
 SELECT
   ie.evento evento, (ie.incasso - se.spesa) guadagno
 FROM
