@@ -1,4 +1,4 @@
 INSERT INTO
-    artista (id, nome_arte, persona, gruppo)
+    artista (nome_arte, persona, gruppo)
 VALUES
     (...)

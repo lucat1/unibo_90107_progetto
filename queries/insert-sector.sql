@@ -1,4 +1,4 @@
 INSERT INTO
-    settore (id, luogo, nome, capienza)
+    settore (luogo, nome, capienza)
 VALUES
     (...)
