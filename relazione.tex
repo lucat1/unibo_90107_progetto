@@ -687,14 +687,23 @@ partecipa un dato artista.
 \subsubsection{Visualizzare tutti gli eventi di uno spettacolo}
 \lstinputlisting{queries/search-events-by-show.sql}
 
+\subsubsection{Visualizzare le spese di ogni evento}
+\lstinputlisting{queries/view-expenses-by-event.sql}
+
 \subsubsection{Visualizzare le spese di un evento}
 Si vogliono mostrare tutte le spese dato un evento: i costi dei diritti SIAE e del
 cachet dell'artista, il prezzo dell'affitto del luogo e tutti i costi relativi ai
 servizi necessari.
 \lstinputlisting{queries/search-expenses-by-event.sql}
 
+\subsubsection{Visualizzare gli incassi di ogni evento}
+\lstinputlisting{queries/view-incoming-by-event.sql}
+
 \subsubsection{Visualizzare gli incassi di un evento}
 \lstinputlisting{queries/search-incoming-by-event.sql}
+
+\subsubsection{Visualizzare i guadagni per ogni evento}
+\lstinputlisting{queries/view-earnings-by-event.sql}
 
 \subsubsection{Visualizzare i guadagni di un evento}
 Questa interrogazione non è altro che la differenza tra le spese e gli incassi di un evento.
@@ -718,6 +727,9 @@ Nel nostro caso, abbiamo osservato che la query con il \texttt{NOT EXISTS}
 impiega in media \texttt{5ms}, rispetto alla versione con il \texttt{NOT IN}
 che pu\`o impiegare fino a \texttt{380ms}.}
 \lstinputlisting{queries/search-free-seats-by-event-ne.sql}
+
+\textbf{Visualizzare la percentuale di biglietti venduti per ogni evento}\\
+\lstinputlisting{queries/view-percentage-sold-tickets-by-event.sql}
 
 \textbf{Visualizzare la percentuale di biglietti venduti per evento}\\
 Si vuole mostrare la percentuale di biglietti venduti per un singolo evento.
@@ -743,6 +755,9 @@ Si vuole mostrare l'elenco di tutti gli eventi che si svolgono un range di date.
 \subsubsection{Visualizzare tutti gli eventi che si svolgeranno in un determinato luogo}
 Si vuole mostrare l'elenco di tutti gli eventi che si svolgono in un determinato luogo.
 \lstinputlisting{queries/search-events-by-venue.sql}
+
+\subsubsection{Visualizzare i guadagni di ogni spettacolo}
+\lstinputlisting{queries/view-earnings-by-show.sql}
 
 \subsubsection{Visualizzare i guadagni dato uno spettacolo}
 Si vuole mostrare il guadagno di un singolo spettacolo.
