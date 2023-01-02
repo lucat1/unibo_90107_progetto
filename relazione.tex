@@ -1,6 +1,7 @@
 \documentclass[a4paper,11pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[italian]{babel}
+\setcounter{tocdepth}{2}
 \usepackage{tabularx}
 \usepackage[hidelinks,colorlinks=true,linkcolor=black,urlcolor=blue]{hyperref}
 \usepackage{graphicx}
@@ -634,18 +635,18 @@ Non esistono dipendenze non banali tra gli attributi delle entità.
 
 \subsection{Codifica delle operazioni}
 Nelle seguenti interrogazioni, i \texttt{...} si riferiscono a un input dato da un utente o da un'applicazione.
-Due \texttt{...} diversi si riferiscono per due input diversi.
+Due \texttt{...} diversi si riferiscono a due input diversi.
 
-\subsubsection*{Inserire un artista}
+\subsubsection{Inserire un artista}
 \lstinputlisting{queries/insert-artist.sql}
 
-\subsubsection*{Inserire uno spettacolo}
+\subsubsection{Inserire uno spettacolo}
 \lstinputlisting{queries/insert-show.sql}
 
-\subsubsection*{Inserire un fornitore di servizi}
+\subsubsection{Inserire un fornitore di servizi}
 \lstinputlisting{queries/insert-service-provider.sql}
 
-\subsubsection*{Inserire un luogo suddiviso in settori}
+\subsubsection{Inserire un luogo suddiviso in settori}
 
 Per prima cosa inseriamo un luogo:
 \lstinputlisting{queries/insert-venue.sql}
@@ -654,58 +655,58 @@ Successivamente i settori presenti:
 Infine i posti all'interno di ogni settore:
 \lstinputlisting{queries/insert-sector-seat.sql}
 
-\subsubsection*{Inserire un evento}
+\subsubsection{Inserire un evento}
 \lstinputlisting{queries/insert-event.sql}
 
-\subsubsection*{Assegnare un prezzo a ogni settore per un evento}
+\subsubsection{Assegnare un prezzo a ogni settore per un evento}
 \lstinputlisting{queries/insert-sector-event-price.sql}
 
-\subsubsection*{Prenotare un servizio per un evento}
+\subsubsection{Prenotare un servizio per un evento}
 \lstinputlisting{queries/insert-service-provider-event.sql}
 
-\subsubsection*{Visualizzare un evento con il luogo dove si svolgerà}
+\subsubsection{Visualizzare un evento con il luogo dove si svolgerà}
 \lstinputlisting{queries/search-event.sql}
 
-\subsubsection*{Vendere un biglietto}
+\subsubsection{Vendere un biglietto}
 \lstinputlisting{queries/insert-ticket.sql}
 
-\subsubsection*{Rimborsare un biglietto}
+\subsubsection{Rimborsare un biglietto}
 
 Poiché teniamo in memoria solo i biglietti acquistati, ``rimborsare'' un biglietto corrisponde a eliminare il biglietto dalla tabella \texttt{biglietto}.
 
 \lstinputlisting{queries/delete-ticket.sql}
 
-\subsubsection*{Trovare un biglietto dato il posto e l'evento}
+\subsubsection{Trovare un biglietto dato il posto e l'evento}
 \lstinputlisting{queries/search-ticket-by-seat.sql}
 
-\subsubsection*{Visualizzare la capienza totale di un luogo}
+\subsubsection{Visualizzare la capienza totale di un luogo}
 \lstinputlisting{queries/search-venue-capacity.sql}
 
-\subsubsection*{Visualizzare i luoghi che soddisfano una capienza}
+\subsubsection{Visualizzare i luoghi che soddisfano una capienza}
 \lstinputlisting{queries/search-venue-capacity-limit.sql}
 
-\subsubsection*{Visualizzare tutti gli eventi di un artista}
+\subsubsection{Visualizzare tutti gli eventi di un artista}
 Si vogliono selezionare i titoli e il nome del luogo di tutti gli eventi a cui
 partecipa un dato artista.
 \lstinputlisting{queries/search-events-by-artist.sql}
 
-\subsubsection*{Visualizzare tutti gli eventi di uno spettacolo}
+\subsubsection{Visualizzare tutti gli eventi di uno spettacolo}
 \lstinputlisting{queries/search-events-by-show.sql}
 
-\subsubsection*{Visualizzare le spese di un evento}
+\subsubsection{Visualizzare le spese di un evento}
 Si vogliono mostrare tutte le spese dato un evento: i costi dei diritti SIAE e del
 cachet dell'artista, il prezzo dell'affitto del luogo e tutti i costi relativi ai
 servizi necessari.
 \lstinputlisting{queries/search-expenses-by-event.sql}
 
-\subsubsection*{Visualizzare gli incassi di un evento}
+\subsubsection{Visualizzare gli incassi di un evento}
 \lstinputlisting{queries/search-incoming-by-event.sql}
 
-\subsubsection*{Visualizzare i guadagni di un evento}
+\subsubsection{Visualizzare i guadagni di un evento}
 Questa interrogazione non è altro che la differenza tra le spese e gli incassi di un evento.
 \lstinputlisting{queries/search-earnings-by-event.sql}
 
-\subsubsection*{Visualizzare informazioni sui posti di un determinato evento}
+\subsubsection{Visualizzare informazioni sui posti di un determinato evento}
 
 \textbf{Visualizzare tutti i posti per un evento}\\
 Si vogliono mostrare tutti i posti $(riga, colonna)$ per un dato evento.
@@ -728,28 +729,28 @@ che può impiegare fino a \texttt{380ms}.}:
 Si vuole mostrare la percentuale di biglietti venduti per un singolo evento.
 \lstinputlisting{queries/percentage-sold-tickets-by-event.sql}
 
-\subsubsection*{Visualizzare la percentuale media di biglietti venduti da un determinato artista}
+\subsubsection{Visualizzare la percentuale media di biglietti venduti da un determinato artista}
 Si vuole mostrare la percentuale media di tutti i biglietti venduti per ogni
 evento per un dato artista.
 \lstinputlisting{queries/mean-percentage-sold-tickets-by-artist.sql}
 
-\subsubsection*{Visualizzare quali eventi hanno fatto sold out}
+\subsubsection{Visualizzare quali eventi hanno fatto sold out}
 Si vogliono mostrare il titolo degli eventi che hanno fatto sold out.
 \lstinputlisting{queries/search-sold-out-events.sql}
  
-\subsubsection*{Visualizzare gli eventi presenti in un arco temporale}
+\subsubsection{Visualizzare gli eventi presenti in un arco temporale}
 Si vuole mostrare l'elenco di tutti gli eventi che si svolgono un range di date.
 \lstinputlisting{queries/search-events-by-date.sql}
 
-\subsubsection*{Visualizzare tutti gli eventi che si svolgeranno in un determinato luogo}
+\subsubsection{Visualizzare tutti gli eventi che si svolgeranno in un determinato luogo}
 Si vuole mostrare l'elenco di tutti gli eventi che si svolgono in un determinato luogo.
 \lstinputlisting{queries/search-events-by-venue.sql}
 
-\subsubsection*{Visualizzare i guadagni dato uno spettacolo}
+\subsubsection{Visualizzare i guadagni dato uno spettacolo}
 Si vuole mostrare il guadagno di un singolo spettacolo.
 \lstinputlisting{queries/search-earnings-by-show.sql}
 
-\subsubsection*{Visualizzare lo show che ha guadagnato di più}
+\subsubsection{Visualizzare lo show che ha guadagnato di più}
 Si vuole mostrare il guadagno più alto raggiunto da uno show e il suo titolo.
 \lstinputlisting{queries/show-max-earnings.sql}
 
