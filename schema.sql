@@ -88,7 +88,8 @@ CREATE TABLE evento (
   PRIMARY KEY (id),
   FOREIGN KEY (spettacolo) REFERENCES spettacolo,
   FOREIGN KEY (luogo) REFERENCES luogo,
-  UNIQUE (titolo, inizio, luogo)
+  UNIQUE (titolo, inizio, luogo),
+  CHECK(fine > inizio)
 );
 
 CREATE TABLE settore (
