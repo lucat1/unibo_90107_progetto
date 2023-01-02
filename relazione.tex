@@ -141,20 +141,20 @@ Infine, vogliamo tenere traccia di tutti i servizi erogati dalle aziende (masche
     \item \label{oploc2} Visualizzare un evento con il luogo dove si svolgerà (in media 25 000 volte all'anno)
     \item Vendere un biglietto (in media 17 500 volte all'anno)
     \item Rimborsare un biglietto (in media 20 volte al mese)
-    \item Trovare un biglietto dato il posto e l'evento (in media 2 300 volte al mese)
-    \item Visualizzare la capienza totale di un luogo (in media 6 volte al mese)
+    \item \label{search-ticket-by-seat} Trovare un biglietto dato il posto e l'evento (in media 2 300 volte al mese)
+    \item \label{search-venue-capacity} Visualizzare la capienza totale di un luogo (in media 6 volte al mese)
     \item \label{search-venue-capacity-limit} Visualizzare i luoghi che soddisfano una capienza (in media 3 volte al mese)
     \item \label{oploc3} Visualizzare tutti gli eventi di un artista (in media 15 volte al giorno)
-    \item Visualizzare tutti gli eventi di uno spettacolo (in media 1 000 volte al mese)
+    \item \label{search-events-by-show} Visualizzare tutti gli eventi di uno spettacolo (in media 1 000 volte al mese)
     \item \label{oploc4} Visualizzare le spese di un evento (in media 8 volte al mese)
     \item \label{search-incoming-by-events} Visualizzare gli incassi di un evento (in media 2 volte al mese)
     \item \label{oploc5} Visualizzare i guadagni di un evento (in media 5 volte al mese)
     \item \label{search-info-by-event} Visualizzare informazioni sui posti di un determinato evento (in media 1 750 volte al mese)
-    \item Visualizzare la percentuale media di biglietti venduti da un determinato artista (in media 100 volte all'anno)
+    \item \label{mean-percentage-sold-tickets-by-artist} Visualizzare la media percentuale di biglietti venduti da un determinato artista (in media 100 volte all'anno)
     \item \label{search-sold-out-events} Visualizzare quali eventi hanno fatto sold out (in media 20 volte all'anno)
     \item \label{search-events-by-date} Visualizzare gli eventi presenti in un arco temporale (in media 50 volte al giorno)
-    \item Visualizzare tutti gli eventi che si svolgeranno in un determinato luogo (in media 10 volte al giorno)
-    \item Visualizzare i guadagni dato uno spettacolo (in media 50 volte all'anno)
+    \item \label{search-events-by-venue} Visualizzare tutti gli eventi che si svolgeranno in un determinato luogo (in media 10 volte al giorno)
+    \item \label{search-earnings-by-show} Visualizzare i guadagni dato uno spettacolo (in media 50 volte all'anno)
     \item \label{show-max-earnings} Visualizzare lo spettacolo che ha guadagnato di più (in media 20 volte all'anno)
 \end{enumerate}
 
@@ -725,11 +725,12 @@ che può impiegare fino a \texttt{380ms}.}:
 \lstinputlisting{queries/search-free-seats-by-event-ne.sql}
 
 \textbf{Visualizzare la percentuale di biglietti venduti per evento}\\
+\label{percentage-sold-tickets-by-event}
 Si vuole mostrare la percentuale di biglietti venduti per un singolo evento.
 \lstinputlisting{queries/percentage-sold-tickets-by-event.sql}
 
-\subsubsection{Visualizzare la percentuale media di biglietti venduti da un determinato artista}
-Si vuole mostrare la percentuale media di tutti i biglietti venduti per ogni
+\subsubsection{Visualizzare la media percentuale di biglietti venduti da un determinato artista}
+Si vuole mostrare la media percentuale di tutti i biglietti venduti per ogni
 evento per un dato artista.
 \lstinputlisting{queries/mean-percentage-sold-tickets-by-artist.sql}
 
@@ -749,8 +750,8 @@ Si vuole mostrare l'elenco di tutti gli eventi che si svolgono in un determinato
 Si vuole mostrare il guadagno di un singolo spettacolo.
 \lstinputlisting{queries/search-earnings-by-show.sql}
 
-\subsubsection{Visualizzare lo show che ha guadagnato di più}
-Si vuole mostrare il guadagno più alto raggiunto da uno show e il suo titolo.
+\subsubsection{Visualizzare lo spettacolo che ha guadagnato di più}
+Si vuole mostrare il guadagno più alto raggiunto da uno spettacolo e il suo titolo.
 \lstinputlisting{queries/show-max-earnings.sql}
 
 \section{Risultati delle interrogazioni}
@@ -759,68 +760,326 @@ In questo modo possiamo provare le nostre interrogazioni su grandi moli di dati.
 Di seguito, mostriamo alcuni risultati dalle interrogazioni più significative.
 
 % BEGIN
+\subsubsection*{Visualizzare un evento con il luogo dove si svolgerà}
+
+Risultato d'esempio per l'esecuzione dell'operazione \ref{oploc2} sull'evento
+con identificativo $1$.
+
+\begin{center}
+\begin{tabular}{|l|l|l|l|}
+\hline
+\bfseries Titolo & \bfseries Inizio & \bfseries Fine & \bfseries Nome del luogo 
+\csvreader[head to column names]{csv/search-event.csv}{}
+{\\\hline\titolo & \inizio & \fine & \nome} \\
+\hline
+\end{tabular}
+\end{center}
+% END
+
+% BEGIN
+\subsubsection*{Trovare un biglietto dato il posto e l'evento}
+
+Risultato d'esempio per l'esecuzione dell'operazione \ref{search-ticket-by-seat}
+sull'evento con identificativo $1$ e sul posto numero $338$.
+
+\begin{center}
+\begin{tabular}{|l|l|l|l|}
+\hline
+\bfseries Codice & \bfseries Nominativo & \bfseries Posto & \bfseries Evento
+\csvreader[head to column names]{csv/search-ticket-by-seat.csv}{}
+{\\\hline\codice & \nominativo & \posto & \evento} \\
+\hline
+\end{tabular}
+\end{center}
+% END
+
+% BEGIN
+\subsubsection*{Visualizzare la capienza totale di un luogo}
+
+Risultato d'esempio per l'esecuzione dell'operazione \ref{search-venue-capacity}
+sul luogo con identificativo $2$.
+
+\begin{center}
+\begin{tabular}{|l|}
+\hline
+\bfseries Capeinza 
+\csvreader[head to column names]{csv/search-venue-capacity.csv}{}
+{\\\hline\capienza} \\
+\hline
+\end{tabular}
+\end{center}
+% END
+
+% BEGIN
 \subsubsection*{Visualizzare i luoghi che soddisfano una capienza}
 
-Risultato d'esempio per l'esecuzione dell'operazione \ref{search-venue-capacity-limit}.
+Risultato d'esempio per l'esecuzione dell'operazione \ref{search-venue-capacity-limit}
+con capienza maggiore o uguale a $20$.
 
 \begin{center}
 \begin{tabular}{|l|l|l|}
 \hline
 \bfseries ID & \bfseries Nome & \bfseries Capienza 
 \csvreader[head to column names]{csv/search-venue-capacity-limit.csv}{}
-{\\\hline\id\ & \nome & \capienza} \\
+{\\\hline\id & \nome & \capienza} \\
+\hline
+\multicolumn{3}{|c|}{$\ldots$}  \\
+\hline
+\end{tabular}
+\end{center}
+% END
+
+% BEGIN
+\subsubsection*{Visualizzare tutti gli eventi di un artista}
+
+Risultato d'esempio per l'esecuzione dell'operazione \ref{oploc3} sull'artista
+con identificativo $2$.
+
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+\bfseries Titolo & \bfseries Luogo
+\csvreader[head to column names]{csv/search-events-by-artist.csv}{}
+{\\\hline\titolo & \luogo} \\
+\hline
+\multicolumn{2}{|c|}{$\ldots$}  \\
+\hline
+\end{tabular}
+\end{center}
+% END
+
+% BEGIN
+\subsubsection*{Visualizzare tutti gli eventi di uno spettacolo}
+
+Risultato d'esempio per l'esecuzione dell'operazione \ref{search-events-by-show}
+sullo spettacolo con identificativo $1$.
+
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+  \bfseries ID & \bfseries Spett. & \bfseries Luogo & \bfseries Titolo & \bfseries Inizio & \bfseries Fine
+\csvreader[head to column names]{csv/search-events-by-show.csv}{}
+  {\\\hline\id & \spettacolo & \luogo & \titolo & \inizio & \fine} \\
+\hline
+\end{tabular}
+\end{center}
+% END
+
+% BEGIN
+\subsubsection*{Visualizzare le spese di un evento}
+
+Risultato d'esempio per l'esecuzione dell'operazione \ref{oploc4} sull'evento
+con identificativo $1$.
+
+\begin{center}
+\begin{tabular}{|l|}
+\hline
+\bfseries Spesa 
+\csvreader[head to column names]{csv/search-expenses-by-event.csv}{}
+{\\\hline\spesa} \\
+\hline
+\end{tabular}
+\end{center}
+% END
+
+% BEGIN
+\subsubsection*{Visualizzare gli incassi di un evento}
+
+Risultato d'esempio per l'esecuzione dell'operazione \ref{search-incoming-by-events}
+sull'evento con identificativo $1$.
+
+\begin{center}
+\begin{tabular}{|l|}
+\hline
+  \bfseries Incassso
+\csvreader[head to column names]{csv/search-incoming-by-event.csv}{}
+{\\\hline\incasso} \\
+\hline
+\end{tabular}
+\end{center}
+% END
+
+% BEGIN
+\subsubsection*{Visualizzare i guadagni di un evento}
+
+Risultato d'esempio per l'esecuzione dell'operazione \ref{oploc5}
+sull'evento con identificativo $1$.
+
+\begin{center}
+\begin{tabular}{|l|}
+\hline
+  \bfseries Guadagno
+\csvreader[head to column names]{csv/search-earnings-by-event.csv}{}
+{\\\hline\guadagno} \\
+\hline
+\end{tabular}
+\end{center}
+% END
+
+% BEGIN
+\subsubsection*{Visualizzare informazioni sui posti di un determinato evento}
+
+Risultato d'esempio per l'esecuzione dell'operazione \ref{search-info-by-event}
+sull'evento con identificativo $1$.
+
+\textbf{Visualizzare tutti i posti per un evento}\\
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+  \bfseries Settore & \bfseries Fila & \bfseries Numero
+\csvreader[head to column names]{csv/search-seats-by-event.csv}{}
+  {\\\hline\settore & \fila & \numero} \\
 \hline
 \multicolumn{3}{|c|}{$\ldots$}  \\
 \hline
 \end{tabular}
 \end{center}
 
-\subsubsection*{Visualizzare la percentuale media di biglietti venduti da un artista}
+\textbf{Visualizzare tutti i posti per un evento}\\
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+  \bfseries Settore & \bfseries Fila & \bfseries Numero
+\csvreader[head to column names]{csv/search-booked-seats-by-event.csv}{}
+  {\\\hline\settore & \fila & \numero} \\
+\hline
+\multicolumn{3}{|c|}{$\ldots$}  \\
+\hline
+\end{tabular}
+\end{center}
 
-Risultato d'esempio per l'esecuzione dell'operazione \ref{mean-percentage-sold-tickets-by-artist}.
+\textbf{Visualizzare tutti i posti per un evento}\\
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+  \bfseries Settore & \bfseries Fila & \bfseries Numero
+\csvreader[head to column names]{csv/search-free-seats-by-event.csv}{}
+  {\\\hline\settore & \fila & \numero} \\
+\hline
+\multicolumn{3}{|c|}{$\ldots$}  \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Visualizzare la percentuale di biglietti venduti per evento}\\
+Si vuole visualizzare la percentuale di biglietti venduti per l'evento con
+identificativo $1$.
+\begin{center}
+\begin{tabular}{|l|}
+\hline
+\bfseries Percentuale 
+\csvreader[head to column names]{csv/percentage-sold-tickets-by-event.csv}{}
+{\\\hline\percentage} \\
+\hline
+\end{tabular}
+\end{center}
+% END
+
+% BEGIN
+\subsubsection*{Visualizzare la media percentuale di biglietti venduti da un artista}
+
+Risultato d'esempio per l'esecuzione dell'operazione \ref{mean-percentage-sold-tickets-by-artist}
+sull'artista con identificativo $2$.
 
 \begin{center}
 \begin{tabular}{|l|}
 \hline
 \bfseries Media 
 \csvreader[head to column names]{csv/mean-percentage-sold-tickets-by-artist.csv}{}
-{\\\hline\media} \\
-\hline
-\multicolumn{1}{|c|}{$\ldots$}  \\
+{\\\hline\avg} \\
 \hline
 \end{tabular}
 \end{center}
+% END
 
-\subsubsection*{Visualizzare la percentuale di biglietti venduti per evento}
+% BEGIN
+\subsubsection*{Visualizzare quali eventi hanno fatto sold out}
 
-Risultato d'esempio per l'esecuzione dell'operazione \ref{percentage-sold-tickets-by-event}.
+Risultato d'esempio per l'esecuzione dell'operazione \ref{search-sold-out-events}
+sull'artista con identificativo $2$.
 
 \begin{center}
 \begin{tabular}{|l|}
 \hline
-\bfseries Media 
-\csvreader[head to column names]{csv/percentage-sold-tickets-by-event.csv}{}
-{\\\hline\media} \\
+\bfseries Titolo 
+\csvreader[head to column names]{csv/search-sold-out-events.csv}{}
+{\\\hline\titolo} \\
 \hline
 \multicolumn{1}{|c|}{$\ldots$}  \\
 \hline
 \end{tabular}
 \end{center}
+% END
 
-\subsubsection*{Visualizzare i posti prenotati da un evento}
+% BEGIN
+\subsubsection*{Visualizzare gli eventi presenti in un arco temporale}
 
-Risultato d'esempio per l'esecuzione dell'operazione \ref{search-venue-capacity-limit}.
+Risultato d'esempio per l'esecuzione dell'operazione \ref{search-events-by-date}
+nella fascia temporale che va dal \texttt{1977-10-01 07:53:53} al \texttt{1978-10-05 07:53:53}.
 
 \begin{center}
-\begin{tabular}{|l|l|l|}
+\begin{tabular}{|l|l|l|l|l|l|}
 \hline
-\bfseries ID & \bfseries Nome & \bfseries Capienza 
-\csvreader[head to column names]{csv/search-venue-capacity-limit.csv}{}
-{\\\hline\id\ & \nome & \capienza} \\
+  \bfseries ID & \bfseries Spett. & \bfseries Luogo & \bfseries Titolo & \bfseries Inizio & \bfseries Fine
+\csvreader[head to column names]{csv/search-events-by-date.csv}{}
+  {\\\hline\id & \spettacolo & \luogo & \titolo & \inizio & \fine} \\
 \hline
-\multicolumn{3}{|c|}{$\ldots$}  \\
+\multicolumn{6}{|c|}{$\ldots$}  \\
 \hline
 \end{tabular}
 \end{center}
+% END
+
+% BEGIN
+\subsubsection*{Visualizzare tutti gli eventi che si svolgeranno in un determinato luogo}
+
+Risultato d'esempio per l'esecuzione dell'operazione \ref{search-events-by-venue}
+sul luogo con identificativo $1$.
+
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+  \bfseries ID & \bfseries Spett. & \bfseries Luogo & \bfseries Titolo & \bfseries Inizio & \bfseries Fine
+\csvreader[head to column names]{csv/search-events-by-venue.csv}{}
+  {\\\hline\id & \spettacolo & \luogo & \titolo & \inizio & \fine} \\
+\hline
+\multicolumn{6}{|c|}{$\ldots$}  \\
+\hline
+\end{tabular}
+\end{center}
+% END
+
+% BEGIN
+\subsubsection*{Visualizzare i guadagni dato uno spettacolo}
+
+Risultato d'esempio per l'esecuzione dell'operazione \ref{search-earnings-by-show}
+sullo spettacolo con identificativo $1$.
+
+\begin{center}
+\begin{tabular}{|l|}
+\hline
+\bfseries Guadagno 
+\csvreader[head to column names]{csv/search-earnings-by-show.csv}{}
+{\\\hline\guadagno} \\
+\hline
+\end{tabular}
+\end{center}
+% END
+
+% BEGIN
+\subsubsection*{Visualizzare lo spettacolo che ha guadagnato di più}
+
+Risultato d'esempio per l'esecuzione dell'operazione \ref{show-max-earnings}.
+
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+\bfseries Spettacolo & \bfseries Guadagno
+\csvreader[head to column names]{csv/show-max-earnings.csv}{}
+{\\\hline\spettacolo & \guadagno} \\
+\hline
+\end{tabular}
+\end{center}
+% END
 
 \end{document}
