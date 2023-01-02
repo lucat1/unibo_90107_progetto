@@ -1,24 +1,24 @@
 SELECT
-  e.titolo
+    e.titolo
 FROM
-  evento AS e
+    evento AS e
 WHERE
-  (
-    SELECT
-      COUNT(p.id)
-    FROM
-      posto AS p,
-      settore_evento_costo AS sec
-    WHERE
-      p.settore = sec.settore
-      AND sec.evento = e.id
-      AND NOT EXISTS (
+    (
         SELECT
-          posto
+            COUNT(p.id)
         FROM
-          biglietto
+            posto AS p,
+            settore_evento_costo AS sec
         WHERE
-          evento = e.id
-          AND posto = p.id
-      )
-  ) = 0
+            p.settore = sec.settore
+            AND sec.evento = e.id
+            AND NOT EXISTS (
+                SELECT
+                    posto
+                FROM
+                    biglietto
+                WHERE
+                    evento = e.id
+                    AND posto = p.id
+            )
+    ) = 0

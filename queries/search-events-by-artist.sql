@@ -1,5 +1,5 @@
 SELECT
-    DISTINCT e.titolo ,
+    DISTINCT e.titolo,
     l.nome luogo
 FROM
     evento AS e,

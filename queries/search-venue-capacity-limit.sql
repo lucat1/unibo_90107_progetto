@@ -12,4 +12,4 @@ GROUP BY
 HAVING
     SUM(s.capienza) >= ...
 ORDER BY
-  capienza_totale DESC
+    capienza_totale DESC
