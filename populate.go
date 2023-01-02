@@ -154,8 +154,8 @@ type Spettacolo struct {
 	ID         int
 	Titolo     string `faker:"username"`
 	Artista    int
-	PrezzoSIAE float32 `faker:"amount"`
-	Cachet     float32 `faker:"amount"`
+	PrezzoSIAE float64 `faker:"amount"`
+	Cachet     float64 `faker:"amount"`
 }
 
 func SpettacoloFields() []string {
@@ -177,7 +177,7 @@ type Luogo struct {
 	Nome      string  `faker:"username,unique"`
 	Indirizzo string  `faker:"oneof: roma 23,napoli 11"`
 	Citta     string  `faker:"oneof: Bologna,Milano,Roma"`
-	Prezzo    float32 `faker:"amount"`
+	Prezzo    float64 `faker:"amount"`
 }
 
 func LuogoFields() []string {
@@ -332,9 +332,9 @@ func onlyIDs[T WithID](vec []T) interfaces.CustomProviderFunction {
 	}
 }
 
-func price(min, max float32) interfaces.CustomProviderFunction {
+func price(min, max float64) interfaces.CustomProviderFunction {
 	return func() (interface{}, error) {
-		return min + rand.Float32()*(max-min), nil
+		return min + rand.Float64()*(max-min), nil
 	}
 }
 
