@@ -10,7 +10,7 @@ WHERE
     e.spettacolo = s.id
     AND efs.evento = e.id
     AND e.luogo = l.id
-    AND e.id =...
+    AND e.id = ...
 GROUP BY
     s.prezzo_siae,
     s.cachet,
