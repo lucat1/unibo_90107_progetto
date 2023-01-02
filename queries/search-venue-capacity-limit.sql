@@ -6,4 +6,4 @@ FROM
 GROUP BY
     luogo
 WHERE
-    capienza_totale >=...;
+    capienza_totale >= ...;
