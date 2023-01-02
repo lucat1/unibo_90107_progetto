@@ -17,10 +17,10 @@ import (
 var db *sql.DB
 
 const (
-	HOST   = "db"
-	DB     = "tommaso"
-	USER   = "postgres"
-	PASSWD = "postgres"
+	HOST   = "130.136.3.15"
+	DB     = "eventi"
+	USER   = "luca"
+	PASSWD = "o2AsKaW75TejsvGyPDHWvkwJOMHfVPoeq5T5ZaknFp7IQfXhTiNPmiq491hihXSM"
 
 	PERSONE_MIN                     = 500
 	PERSONE_MAX                     = 1000
@@ -374,9 +374,9 @@ func main() {
 		log.Fatalf("Could not read views.sql: %v", err)
 	}
 
-	if _, err = db.Exec("DROP SCHEMA public CASCADE; CREATE SCHEMA public;"); err != nil {
-		log.Fatalf("Could not purge all data: %v", err)
-	}
+	// if _, err = db.Exec("\\set autocommit on; DROP DATABASE eventi; CREATE DATABASE eventi;"); err != nil {
+	// 	log.Fatalf("Could not purge all data: %v", err)
+	// }
 	if _, err = db.Exec(string(schema)); err != nil {
 		log.Fatalf("Could not apply schema.sql: %v", err)
 	}
@@ -575,6 +575,9 @@ func main() {
 		options.WithCustomFieldProvider("Evento", onlyIDs(eventi)),
 	); err != nil {
 		log.Fatalf("Could not fill shows data: %v", err)
+	}
+	for _, efs := range eventoFornitoreServizi {
+		efs.Prezzo += 1.0
 	}
 	bulkInsert("evento_fornitore_servizio", EventoFornitoreServizioFields(), eventoFornitoreServizi)
 	log.Printf("Popolato %d evento fornitore servizio", len(eventoFornitoreServizi))
