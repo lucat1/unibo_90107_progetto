@@ -629,6 +629,8 @@ Non esistono dipendenze non banali tra gli attributi delle entità.
 \hline
 \end{tabularx}
 
+\includegraphics[width=\textwidth]{schema.png}
+
 \section{Codice SQL}
 
 \subsection{Definizione delle viste}
@@ -728,7 +730,7 @@ In alternativa, per avere un miglioramento delle performance\footnote{
 Vedi dati empirici su \href{https://stackoverflow.com/a/66785790}{StackOverflow}.
 Nel nostro caso, abbiamo osservato che la query con il \texttt{NOT EXISTS}
 impiega in media \texttt{5ms}, rispetto alla versione con il \texttt{NOT IN}
-che pu\`o impiegare fino a \texttt{380ms}.}
+che può impiegare fino a \texttt{380ms}.}
 \lstinputlisting{queries/search-free-seats-by-event-ne.sql}
 
 \textbf{Visualizzare la percentuale di biglietti venduti per evento}\\
