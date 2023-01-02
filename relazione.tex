@@ -1,5 +1,4 @@
 \documentclass[a4paper,11pt]{article}
-\usepackage[utf8]{inputenc}
 \usepackage{fontspec}
 \usepackage[english,italian]{babel}
 \setcounter{tocdepth}{2}
@@ -10,7 +9,7 @@
 \usepackage{csvsimple}
 
 \usepackage{listings}
-\usepackage{inconsolata}
+\setmonofont{IBM Plex Mono}
 \lstset{
   basicstyle=\footnotesize\ttfamily,
   breakatwhitespace=false,
@@ -180,7 +179,7 @@ Possiamo dividere le entità in quattro gruppi:
 A un livello di astrazione più alto abbiamo un evento, parte di uno spettacolo di un artista, che si svolge in un luogo, di cui vengono venduti i biglietti e in cui ci sono dei fornitori che offrono dei servizi.
 
 \vspace*{1em}
-% \includegraphics[width=\textwidth]{ERScheletro.png}
+\includegraphics[width=\textwidth]{ERScheletro.png}
  
 \subsection{Sviluppo delle componenti dello scheletro}
 
@@ -191,14 +190,14 @@ Un evento è composto da un solo spettacolo.\\
 Ogni spettacolo è eseguito da un artista che ha un nome d'arte, un artista può eseguire più spettacoli.
 Un artista può essere una persona (con nome, cognome e data di nascita) o un gruppo (con una data di formazione) a cui appartengono una o più persone.
 
-% \includegraphics[width=\textwidth]{ERSpettacoloArtista.png}
+\includegraphics[width=\textwidth]{ERSpettacoloArtista.png}
 
 \subsubsection*{Fornitore}
 
 Ogni fornitore può offrire servizi a più eventi e ogni evento può avere più fornitori di servizi, i servizi sono di diverse tipologie.\\
 Ogni fornitore può fornire vari tipi di servizi e ogni evento può aver necessità di diversi tipi di servizi.
 
-% \includegraphics[width=\textwidth]{ERFornitore.png}
+\includegraphics[width=\textwidth]{ERFornitore.png}
 
 \subsubsection*{Luogo, settore, posto}
 
@@ -209,7 +208,7 @@ Ogni settore ha un nome (che è univoco all'interno del luogo), una capienza mas
 In ogni settore sono presenti dei posti segnati con la lettera della fila e un numero (univoci all'interno del loro settore).
 
 \vspace*{.5em}
-% \includegraphics[width=\textwidth]{ERLuogo.png}
+\includegraphics[width=\textwidth]{ERLuogo.png}
 
 \subsubsection*{Biglietto}
 
@@ -217,14 +216,14 @@ Di ogni evento vendiamo diversi biglietti, ma ogni biglietto è valido per un so
 Ogni biglietto ha un codice univoco e un nominativo.
 
 \vspace*{.5em}
-% \includegraphics[width=\textwidth]{ERBiglietto.png}
+\includegraphics[width=\textwidth]{ERBiglietto.png}
 
 \subsection{Unione delle componenti nello schema finale}
 
 Ogni biglietto è associato a un posto.
 
 \vspace*{1em}
-% \includegraphics[width=\textwidth]{ER.png}
+\includegraphics[width=\textwidth]{ER.png}
 
 \subsection{Dizionario dei dati}
 
@@ -434,7 +433,6 @@ Per migliorare le prestazioni abbiamo preferito dunque lasciare una relazione ri
   Questa non è una forte restrizione poiché nella pratica si
   inserisce sempre l'evento con i relativi prezzi dei biglietti nello stesso momento.
 \end{quote}
-
 \begin{tabularx}{\textwidth}{|X|X|X|X|}
 \hline
   \multicolumn{4}{|l|}{\textbf{Operazione \ref{oploc1} + \ref{opsec1} (obbligatorio senza ridondanza)}} \\
@@ -582,7 +580,7 @@ Riguardo l'entità Persona e Gruppo riteniamo che non debbano essere accorpate e
 Abbiamo ritenuto inoltre di creare il seguente vincolo (RV10): un artista può essere una persona oppure un gruppo.
 Di seguito, viene mostrato lo schema concettuale ristrutturato.
 
-% \includegraphics[width=\textwidth]{ERRistrutturato.png}
+\includegraphics[width=\textwidth]{ERRistrutturato.png}
 
 \subsection{Normalizzazione}
 
@@ -622,7 +620,7 @@ Non esistono dipendenze non banali tra gli attributi delle entità.
 \hline
 \end{tabularx}
 
-% \includegraphics[width=\textwidth]{schema.png}
+\includegraphics[width=\textwidth]{schema.png}
 
 \section{Codice SQL}
 
