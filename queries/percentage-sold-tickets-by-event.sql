@@ -1,6 +1,6 @@
 -- tested
 SELECT
-  be.biglietti * 100.0 / SUM(s.capienza)
+  be.biglietti * 100.0 / SUM(s.capienza) percentage
 FROM
   settore_evento_costo AS sec,
   (

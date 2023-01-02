@@ -1,7 +1,7 @@
 -- tested
 SELECT
-    DISTINCT e.titolo,
-    l.nome
+    DISTINCT e.titolo ,
+    l.nome luogo
 FROM
     evento AS e,
     luogo AS l,

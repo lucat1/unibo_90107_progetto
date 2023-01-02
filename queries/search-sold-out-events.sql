@@ -12,13 +12,14 @@ WHERE
       settore_evento_costo AS sec
     WHERE
       p.settore = sec.settore
-      AND p.id NOT IN (
+      AND sec.evento = e.id
+      AND NOT EXISTS (
         SELECT
           posto
         FROM
           biglietto
         WHERE
           evento = e.id
+          AND posto = p.id
       )
-      AND sec.evento = e.id
   ) = 0

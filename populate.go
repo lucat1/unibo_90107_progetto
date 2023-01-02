@@ -509,11 +509,22 @@ func main() {
 	); err != nil {
 		log.Fatalf("Could not fill events data: %v", err)
 	}
+	c := 0
 	for i := range eventi {
-		eventi[i].ID = i + 1
+		eventi[i].ID = c
+		c++
 		n, a := randomTimestamp()
 		eventi[i].Inizio = n.String()[:19]
 		eventi[i].Fine = a.String()[:19]
+	}
+	for i := range spettacoli {
+		lID, _ := onlyIDs(luoghi)()
+		n, a := randomTimestamp()
+		inizio := n.String()[:19]
+		fine := a.String()[:19]
+		titolo := faker.Username()
+		eventi = append(eventi, Evento{ID: c, Spettacolo: spettacoli[i].ID, Luogo: lID.(int), Titolo: titolo, Inizio: inizio, Fine: fine})
+		c++
 	}
 	bulkInsert("evento", EventoFields(), eventi)
 	log.Printf("Popolato %d eventi", len(eventi))
@@ -571,13 +582,19 @@ func main() {
 	eventoFornitoreServizi := []EventoFornitoreServizio{}
 	if err = faker.FakeData(
 		&eventoFornitoreServizi,
-		options.WithCustomFieldProvider("Fornitore", onlyIDs(fornitori)),
-		options.WithCustomFieldProvider("Evento", onlyIDs(eventi)),
+		// options.WithCustomFieldProvider("Fornitore", onlyIDs(fornitori)),
+		// options.WithCustomFieldProvider("Evento", onlyIDs(eventi)),
+		options.WithRandomMapAndSliceMinSize(uint(len(eventi))),
+		options.WithRandomMapAndSliceMaxSize(uint(len(eventi))),
 	); err != nil {
 		log.Fatalf("Could not fill shows data: %v", err)
 	}
-	for _, efs := range eventoFornitoreServizi {
-		efs.Prezzo += 1.0
+	for i := range eventi {
+		eID := eventi[i].ID
+		fID, _ := onlyIDs(fornitori)()
+		eventoFornitoreServizi[i].Prezzo += 1.0
+		eventoFornitoreServizi[i].Fornitore = fID.(int)
+		eventoFornitoreServizi[i].Evento = eID
 	}
 	bulkInsert("evento_fornitore_servizio", EventoFornitoreServizioFields(), eventoFornitoreServizi)
 	log.Printf("Popolato %d evento fornitore servizio", len(eventoFornitoreServizi))
@@ -587,7 +604,7 @@ func main() {
 	for _, settoreEventoCosto := range settoreEventoCosti {
 		for _, posto := range posti {
 			if posto.Settore == settoreEventoCosto.Settore {
-				if rand.Intn(10) > 7 {
+				if settoreEventoCosto.Evento == eventi[0].ID || rand.Intn(10) > 7 {
 					var ticket Biglietto
 					ticket.Codice = i
 					ticket.Evento = settoreEventoCosto.Evento
