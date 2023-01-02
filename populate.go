@@ -354,7 +354,7 @@ func row() (interface{}, error) {
 func randomTimestamp() (time.Time, time.Time) {
 	randomTime := rand.Int63n(time.Now().Unix()-94608000) + 94608000
 	randomNow := time.Unix(randomTime, 0)
-	randomAfterNow := randomNow.Add(time.Hour * time.Duration(rand.Intn(25)))
+	randomAfterNow := randomNow.Add(time.Hour * time.Duration(rand.Intn(24)+1))
 	return randomNow, randomAfterNow
 }
 
