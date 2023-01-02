@@ -1,9 +1,12 @@
 SELECT
-    nome,
-    SUM(capienza) capienza_totale
+  l.id,
+  l.nome,
+  SUM(s.capienza) capienza_totale
 FROM
-    settore
-GROUP BY
-    luogo
+  settore AS s, luogo AS l
 WHERE
-    capienza_totale >= ...;
+  s.luogo = l.id
+GROUP BY
+  l.id
+HAVING
+  SUM(s.capienza) >= ...
