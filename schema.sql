@@ -48,8 +48,8 @@ CREATE TABLE spettacolo (
   prezzo_siae money NOT NULL,
   cachet money NOT NULL,
   CHECK (
-    cachet >= 0
-    AND prezzo_siae >= 0
+    cachet >= CAST(0 AS money)
+    AND prezzo_siae >= CAST(0 AS money)
   ),
   PRIMARY KEY (id),
   FOREIGN KEY (artista) REFERENCES artista,
@@ -73,7 +73,7 @@ CREATE TABLE luogo (
   citta text NOT NULL,
   prezzo money NOT NULL,
   -- per day
-  CHECK (prezzo >= 0),
+  CHECK (prezzo >= CAST(0 AS money)),
   PRIMARY KEY (id),
   UNIQUE (nome, indirizzo, citta)
 );
@@ -118,7 +118,7 @@ CREATE TABLE settore_evento_costo (
   evento int NOT NULL,
   -- prezzo per biglietto
   prezzo money NOT NULL,
-  CHECK (prezzo >= 0),
+  CHECK (prezzo >= CAST(0 AS money)),
   UNIQUE (settore, evento),
   FOREIGN KEY (settore) REFERENCES settore,
   FOREIGN KEY (evento) REFERENCES evento
@@ -147,7 +147,7 @@ CREATE TABLE evento_fornitore_servizio (
   evento int NOT NULL,
   prezzo money NOT NULL,
   -- for the whole job
-  CHECK (prezzo > 0),
+  CHECK (prezzo > CAST(0 AS money)),
   FOREIGN KEY (fornitore) REFERENCES fornitore,
   FOREIGN KEY (evento) REFERENCES evento,
   UNIQUE (fornitore, tipo, evento)
