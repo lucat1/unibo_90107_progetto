@@ -1,3 +1,4 @@
+-- tested and exported
 SELECT
     l.id,
     l.nome,
@@ -11,3 +12,5 @@ GROUP BY
     l.id
 HAVING
     SUM(s.capienza) >= ...
+ORDER BY
+  capienza_totale DESC
