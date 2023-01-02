@@ -624,6 +624,7 @@ Non esistono dipendenze non banali tra gli attributi delle entità.
 
 \subsection{Definizione dello schema}
 \lstinputlisting{schema.sql}
+\includegraphics[width=\textwidth]{schema.png}
 
 \vspace*{1em}
 
@@ -723,7 +724,7 @@ Nel nostro caso, abbiamo osservato che la query con il \texttt{NOT EXISTS}
 impiega in media \texttt{5ms}, rispetto alla versione con il \texttt{NOT IN}
 che può impiegare fino a \texttt{380ms}.}:
 \lstinputlisting{queries/search-free-seats-by-event-ne.sql}
-
+\pagebreak
 \textbf{Visualizzare la percentuale di biglietti venduti per evento}\\
 \label{percentage-sold-tickets-by-event}
 Si vuole mostrare la percentuale di biglietti venduti per un singolo evento.
@@ -780,7 +781,7 @@ con identificativo $1$.
 \subsubsection*{Trovare un biglietto dato il posto e l'evento}
 
 Risultato d'esempio per l'esecuzione dell'operazione \ref{search-ticket-by-seat}
-sull'evento con identificativo $1$ e sul posto numero $338$.
+sull'evento con identificativo $1$ e sul posto con identificativo $338$.
 
 \begin{center}
 \begin{tabular}{|l|l|l|l|}
@@ -922,7 +923,7 @@ sull'evento con identificativo $1$.
 Risultato d'esempio per l'esecuzione dell'operazione \ref{search-info-by-event}
 sull'evento con identificativo $1$.
 
-\textbf{Visualizzare tutti i posti per un evento}\\
+\textbf{Visualizzare tutti i posti per un evento}
 \begin{center}
 \begin{tabular}{|l|l|l|}
 \hline
@@ -935,7 +936,7 @@ sull'evento con identificativo $1$.
 \end{tabular}
 \end{center}
 
-\textbf{Visualizzare tutti i posti per un evento}\\
+\textbf{Visualizzare tutti i posti per un evento}
 \begin{center}
 \begin{tabular}{|l|l|l|}
 \hline
@@ -948,7 +949,7 @@ sull'evento con identificativo $1$.
 \end{tabular}
 \end{center}
 
-\textbf{Visualizzare tutti i posti per un evento}\\
+\textbf{Visualizzare tutti i posti per un evento}
 \begin{center}
 \begin{tabular}{|l|l|l|}
 \hline
@@ -961,7 +962,7 @@ sull'evento con identificativo $1$.
 \end{tabular}
 \end{center}
 
-\textbf{Visualizzare la percentuale di biglietti venduti per evento}\\
+\textbf{Visualizzare la percentuale di biglietti venduti per evento}
 Si vuole visualizzare la percentuale di biglietti venduti per l'evento con
 identificativo $1$.
 \begin{center}
