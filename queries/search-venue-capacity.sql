@@ -1,5 +1,5 @@
 SELECT
-    SUM(capienza)
+    SUM(capienza) capienza
 FROM
     settore
 WHERE
