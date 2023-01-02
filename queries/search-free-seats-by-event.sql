@@ -1,4 +1,3 @@
--- tested
 SELECT
   p.settore,
   p.fila,

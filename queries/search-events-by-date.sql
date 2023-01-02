@@ -1,4 +1,3 @@
--- tested
 SELECT
     *
 FROM

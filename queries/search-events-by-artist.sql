@@ -1,4 +1,3 @@
--- tested
 SELECT
     DISTINCT e.titolo ,
     l.nome luogo

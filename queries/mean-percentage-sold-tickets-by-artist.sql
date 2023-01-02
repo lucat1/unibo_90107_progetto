@@ -1,4 +1,3 @@
--- tested
 SELECT
   AVG(pbe.percentuale)
 FROM

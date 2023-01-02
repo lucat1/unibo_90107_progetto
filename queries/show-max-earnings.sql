@@ -1,4 +1,3 @@
--- tested and exported
 SELECT
   gs.spettacolo spettacolo,
   gs.guadagno guadagno

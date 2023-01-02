@@ -1,4 +1,3 @@
--- tested
 SELECT
     s.prezzo_siae + s.cachet + l.prezzo + SUM(efs.prezzo) AS "spesa"
 FROM

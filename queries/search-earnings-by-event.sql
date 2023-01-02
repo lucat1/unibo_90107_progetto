@@ -1,4 +1,3 @@
--- tested
 SELECT
   (ie.incasso - se.spesa) guadagno
 FROM

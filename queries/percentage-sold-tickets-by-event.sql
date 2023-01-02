@@ -1,4 +1,3 @@
--- tested
 SELECT
   be.biglietti * 100.0 / SUM(s.capienza) percentage
 FROM
