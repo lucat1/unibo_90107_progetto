@@ -547,15 +547,15 @@ coefficiente moltiplicativo $2$ per le operazioni di scrittura):
   \hline
   Operazione \ref{oploc1} + \ref{opsec1} & $2 \cdot 7 \cdot 4 = 56$ \\
   \hline
-  Operazione \ref{oploc2} & $2 \cdot 2100 = 4200$ \\
+  Operazione \ref{oploc2} & $2 \cdot 2 100 = 4 200$ \\
   \hline
-  Operazione \ref{oploc3} & $10 \cdot 15 \cdot 31 = 4650$ \\
+  Operazione \ref{oploc3} & $10 \cdot 15 \cdot 31 = 4 650$ \\
   \hline
   Operazione \ref{oploc4} & $2 \cdot 8 = 16$ \\
   \hline
   Operazione \ref{oploc5} & $2 \cdot 5 = 10$ \\
   \hline
-  \textbf{Totale} & $8932$ \\
+  \textbf{Totale} & $8 932$ \\
   \hline
 \end{tabular}
 \end{center}
@@ -568,15 +568,15 @@ coefficiente moltiplicativo $2$ per le operazioni di scrittura):
   \hline
   Operazione \ref{oploc1} + \ref{opsec1} & $2 \cdot 7 \cdot 4 = 56$ \\
   \hline
-  Operazione \ref{oploc2} & $14 \cdot 2100 = 29400$ \\
+  Operazione \ref{oploc2} & $14 \cdot 2 100 = 29 400$ \\
   \hline
-  Operazione \ref{oploc3} & $40 \cdot 15 \cdot 31 = 18600$ \\
+  Operazione \ref{oploc3} & $40 \cdot 15 \cdot 31 = 18 600$ \\
   \hline
   Operazione \ref{oploc4} & $14 \cdot 8 = 112$ \\
   \hline
   Operazione \ref{oploc5} & $14 \cdot 5 = 70$ \\
   \hline
-  \textbf{Totale} & $48238$ \\
+  \textbf{Totale} & $48 238$ \\
   \hline
 \end{tabular}
 \end{center}
@@ -633,17 +633,19 @@ Non esistono dipendenze non banali tra gli attributi delle entità.
 
 \section{Codice SQL}
 
+\subsection{Definizione dello schema}
+\lstinputlisting{schema.sql}
+
+\vspace*{1em}
+
 \subsection{Definizione delle viste}
 \lstinputlisting{views.sql}
 
-\subsection{Codifica delle operazioni}
-Alcune interrogazioni sono state inserite, anche se non sono presenti 
-nella specifica delle operazioni, perché utili alla comprensione o perché
-compongono le interrogazioni successive.
+\vspace*{1em}
 
-\begin{quote}
-  N.B.: i \texttt{...} si riferiscono a un input dato da un utente o da un'applicazione.
-\end{quote}
+\subsection{Codifica delle operazioni}
+Nelle seguenti interrogazioni, i \texttt{...} si riferiscono a un input dato da un utente o da un'applicazione.
+Due \texttt{...} diversi si riferiscono per due input diversi.
 
 \subsubsection{Inserire un artista}
 \lstinputlisting{queries/insert-artist.sql}
@@ -749,10 +751,6 @@ Si vogliono mostrare il titolo degli eventi che hanno fatto sold out.
 \subsubsection{Visualizzare gli eventi presenti in un arco temporale}
 Si vuole mostrare l'elenco di tutti gli eventi che si svolgono un range di date.
 \lstinputlisting{queries/search-events-by-date.sql}
-
-\begin{quote}
-  Nota: i due \texttt{...} presenti si riferiscono a un \emph{diverso} \texttt{input}.
-\end{quote}
 
 \subsubsection{Visualizzare tutti gli eventi che si svolgeranno in un determinato luogo}
 Si vuole mostrare l'elenco di tutti gli eventi che si svolgono in un determinato luogo.
