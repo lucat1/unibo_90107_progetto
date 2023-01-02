@@ -1,4 +1,4 @@
--- tested
+-- tested and exported with 7
 SELECT
   p.settore,
   p.fila,
