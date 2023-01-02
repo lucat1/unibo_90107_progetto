@@ -147,15 +147,15 @@ Infine, vogliamo tenere traccia di tutti i servizi erogati dalle aziende (masche
     \item \label{oploc3} Visualizzare tutti gli eventi di un artista (in media 15 volte al giorno)
     \item Visualizzare tutti gli eventi di uno spettacolo (in media 1 000 volte al mese)
     \item \label{oploc4} Visualizzare le spese di un evento (in media 8 volte al mese)
-    \item Visualizzare gli incassi di un evento (in media 2 volte al mese)
+    \item \label{search-incoming-by-events} Visualizzare gli incassi di un evento (in media 2 volte al mese)
     \item \label{oploc5} Visualizzare i guadagni di un evento (in media 5 volte al mese)
-    \item Visualizzare informazioni sui posti di un determinato evento (in media 1 750 volte al mese)
+    \item \label{search-info-by-event} Visualizzare informazioni sui posti di un determinato evento (in media 1 750 volte al mese)
     \item Visualizzare la percentuale media di biglietti venduti da un determinato artista (in media 100 volte all'anno)
-    \item Visualizzare quali eventi hanno fatto sold out (in media 20 volte all'anno)
-    \item Visualizzare gli eventi presenti in un arco temporale (in media 50 volte al giorno)
+    \item \label{search-sold-out-events} Visualizzare quali eventi hanno fatto sold out (in media 20 volte all'anno)
+    \item \label{search-events-by-date} Visualizzare gli eventi presenti in un arco temporale (in media 50 volte al giorno)
     \item Visualizzare tutti gli eventi che si svolgeranno in un determinato luogo (in media 10 volte al giorno)
     \item Visualizzare i guadagni dato uno spettacolo (in media 50 volte all'anno)
-    \item Visualizzare lo spettacolo che ha guadagnato di più (in media 20 volte all'anno)
+    \item \label{show-max-earnings} Visualizzare lo spettacolo che ha guadagnato di più (in media 20 volte all'anno)
 \end{enumerate}
 
 \section{Progettazione concettuale}
@@ -756,7 +756,7 @@ Si vuole mostrare il guadagno più alto raggiunto da uno show e il suo titolo.
 \section{Risultati delle interrogazioni}
 Abbiamo creato un'istanza di \emph{PostgreSQL} tramite \emph{Docker} e l'abbiamo popolato in automatico attraverso un programma scritto in \emph{Go} usando la libreria \emph{Faker} per creare dati casuali.
 In questo modo possiamo provare le nostre interrogazioni su grandi moli di dati.
-Di seguito, mostriamo alcune delle tabelle risultanti dalle interrogazioni.
+Di seguito, mostriamo alcuni risultati dalle interrogazioni più significative.
 
 % BEGIN
 \subsubsection*{Visualizzare i luoghi che soddisfano una capienza}
@@ -774,6 +774,53 @@ Risultato d'esempio per l'esecuzione dell'operazione \ref{search-venue-capacity-
 \hline
 \end{tabular}
 \end{center}
-% BEGIN
+
+\subsubsection*{Visualizzare la percentuale media di biglietti venduti da un artista}
+
+Risultato d'esempio per l'esecuzione dell'operazione \ref{mean-percentage-sold-tickets-by-artist}.
+
+\begin{center}
+\begin{tabular}{|l|}
+\hline
+\bfseries Media 
+\csvreader[head to column names]{csv/mean-percentage-sold-tickets-by-artist.csv}{}
+{\\\hline\media} \\
+\hline
+\multicolumn{1}{|c|}{$\ldots$}  \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsubsection*{Visualizzare la percentuale di biglietti venduti per evento}
+
+Risultato d'esempio per l'esecuzione dell'operazione \ref{percentage-sold-tickets-by-event}.
+
+\begin{center}
+\begin{tabular}{|l|}
+\hline
+\bfseries Media 
+\csvreader[head to column names]{csv/percentage-sold-tickets-by-event.csv}{}
+{\\\hline\media} \\
+\hline
+\multicolumn{1}{|c|}{$\ldots$}  \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsubsection*{Visualizzare i posti prenotati da un evento}
+
+Risultato d'esempio per l'esecuzione dell'operazione \ref{search-venue-capacity-limit}.
+
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+\bfseries ID & \bfseries Nome & \bfseries Capienza 
+\csvreader[head to column names]{csv/search-venue-capacity-limit.csv}{}
+{\\\hline\id\ & \nome & \capienza} \\
+\hline
+\multicolumn{3}{|c|}{$\ldots$}  \\
+\hline
+\end{tabular}
+\end{center}
 
 \end{document}
